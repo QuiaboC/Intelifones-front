@@ -1,6 +1,20 @@
+"use client";
+
 import { Cat } from "lucide-react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [produto, setProduto] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("https://fakestoreapi.com/products")
+      .then((response) => setProduto(response.data))
+      .catch((error) => console.log(error));
+  }, []);
+  console.log(produto);
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="flex justify-around p-7 items-center shadow-xl flex-wrap">
@@ -38,20 +52,20 @@ export default function Home() {
       </div>
 
       <div className="flex flex-wrap justify-center shadow gap-8 p-10">
-        {[1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12].map((item) => (
+        {produto.map((item) => (
           <div
-            key={item}
+            key={item.id}
             className="w-[253px] h-[385px] flex flex-col justify-between p-8 rounded-2xl shadow-xl"
           >
             <img
-              src="/globe.svg"
+              src={item.image}
               alt="Produto"
               className="w-full h-[120px] object-contain"
             />
 
-            <h2 className="text-[19px] font-medium">Nome do produto</h2>
+            <h2 className="text-[19px] font-medium truncate">{item.title}</h2>
 
-            <p className="text-[17px]">R$ 19,00</p>
+            <p className="text-[17px]">R$ {item.price}</p>
 
             <button className="bg-black text-white text-center py-2 rounded-lg hover:bg-white hover:text-black border transition cursor-pointer">
               Ver mais
@@ -61,7 +75,7 @@ export default function Home() {
       </div>
       <div className="w-screen flex justify-around items-center p-10 flex-wrap">
         <div className="flex flex-col items-center m-2">
-          <Cat/>
+          <Cat />
           <h1 className="text-[20px]">Escolha como pagar</h1>
           <p className="max-w-md text-center text-[15px]">
             Com Mercado Pago, você paga com cartão, boleto ou Pix. Você também
@@ -70,7 +84,9 @@ export default function Home() {
         </div>
         <div className="flex flex-col items-center m-2">
           <Cat />
-          <h1 className="text-[20px]">Frete grátis por ser sua primeira compra</h1>
+          <h1 className="text-[20px]">
+            Frete grátis por ser sua primeira compra
+          </h1>
           <p className="max-w-md text-center text-[15px]">
             Aproveite este benefício em milhões de produtos.
           </p>
@@ -79,10 +95,20 @@ export default function Home() {
           <Cat />
           <h1 className="text-[20px]">Segurança, do início ao fim</h1>
           <p className="max-w-md text-center text-[15px]">
-            Você não gostou do que comprou? Devolva! No Mercado Livre não há nada que você não possa fazer, porque você está sempre protegido.
+            Você não gostou do que comprou? Devolva! No Mercado Livre não há
+            nada que você não possa fazer, porque você está sempre protegido.
           </p>
         </div>
       </div>
     </div>
   );
+  /*data={posts.filter((post) => {
+          const matchName = post.name?.common
+            ?.toLowerCase()
+            .includes(nome.toLowerCase());
+
+          const matchRegion = region === "" || post.region === region;
+
+          return matchName && matchRegion;
+        })}*/
 }
