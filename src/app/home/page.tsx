@@ -1,11 +1,15 @@
 "use client";
 
-import { Cat } from "lucide-react";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   const [produto, setProduto] = useState([]);
+  const [nome, setNome] = useState("");
+  const [category, setCategory] = useState("");
+  const [aberto, setAberto] = useState(false);
 
   useEffect(() => {
     axios
@@ -13,30 +17,20 @@ export default function Home() {
       .then((response) => setProduto(response.data))
       .catch((error) => console.log(error));
   }, []);
+
   console.log(produto);
+
+  const produtosFiltrados = produto.filter((item) => {
+    const matchNome = item.title.toLowerCase().includes(nome.toLowerCase());
+
+    const matchCategoria = category === "" || item.category === category;
+
+    return matchNome && matchCategoria;
+  });
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="flex justify-around p-7 items-center shadow-xl flex-wrap">
-        <img src="/next.svg" alt="" width={120} height={40} />
-        <div className="flex p-1 gap-7 items-center m-3">
-          <span className="cursor-pointer font-semibold">Home</span>
-          <span className="cursor-pointer font-semibold">Inicio</span>
-          <span className="cursor-pointer font-semibold">Produtos</span>
-          <span className="cursor-pointer font-semibold">Contato</span>
-        </div>
-        <div className="flex gap-6 items-center">
-          <input
-            type="text"
-            placeholder="Digite aqui"
-            className="shadow p-2 rounded-2xl outline-none"
-          ></input>
-          <span className="cursor-pointer bg-black text-white p-2 px-5 rounded-2xl hover:bg-white hover:text-black transition shadow-xl">
-            Entrar
-          </span>
-        </div>
-      </div>
-
+      <Header />
       <div className="flex w-screen h-150 items-center justify-center gap-20 flex-wrap">
         <div className="m-2 flex flex-col gap-5">
           <h1 className="text-[30px]">Olá sou chrystian estou montando</h1>
@@ -51,8 +45,48 @@ export default function Home() {
         <img src="/next.svg" alt="" width={420} height={120} />
       </div>
 
+      <div className=" flex flex-row items-center gap-6">
+        <input
+          type="text"
+          value={nome}
+          onChange={(e) => {
+            setNome(e.target.value);
+
+            if (e.target.value === "") {
+              setCategory("");
+            }
+          }}
+          placeholder="Nome do produto"
+          className="shadow p-2 rounded-2xl outline-none"
+        />
+
+        <div className="relative w-fit">
+          <button
+            onClick={() => setAberto(!aberto)}
+            className="shadow p-2 rounded-2xl outline-none"
+          >
+            Categorias
+          </button>
+          {aberto && (
+            <div className="absolute top-full left-0 mt-2 w-[220px] bg-white shadow-xl rounded-xl p-4 z-50 flex flex-col gap-3">
+              {[...new Set(produto.map((item) => item.category))].map(
+                (categoria, index) => (
+                  <span
+                    key={index}
+                    className="cursor-pointer"
+                    onClick={() => setCategory(categoria)}
+                  >
+                    {categoria}
+                  </span>
+                ),
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+
       <div className="flex flex-wrap justify-center shadow gap-8 p-10">
-        {produto.map((item) => (
+        {produtosFiltrados.map((item) => (
           <div
             key={item.id}
             className="w-[253px] h-[385px] flex flex-col justify-between p-8 rounded-2xl shadow-xl"
@@ -65,7 +99,10 @@ export default function Home() {
 
             <h2 className="text-[19px] font-medium truncate">{item.title}</h2>
 
-            <p className="text-[17px]">R$ {item.price}</p>
+            <div className="flex flex-col gap-1">
+              <p className="text-[17px]">R$ {item.price}</p>
+              <p>Novo//semiNovo</p>
+            </div>
 
             <button className="bg-black text-white text-center py-2 rounded-lg hover:bg-white hover:text-black border transition cursor-pointer">
               Ver mais
@@ -73,42 +110,7 @@ export default function Home() {
           </div>
         ))}
       </div>
-      <div className="w-screen flex justify-around items-center p-10 flex-wrap">
-        <div className="flex flex-col items-center m-2">
-          <Cat />
-          <h1 className="text-[20px]">Escolha como pagar</h1>
-          <p className="max-w-md text-center text-[15px]">
-            Com Mercado Pago, você paga com cartão, boleto ou Pix. Você também
-            pode pagar em até 12x sem cartão com a Linha de Crédito.
-          </p>
-        </div>
-        <div className="flex flex-col items-center m-2">
-          <Cat />
-          <h1 className="text-[20px]">
-            Frete grátis por ser sua primeira compra
-          </h1>
-          <p className="max-w-md text-center text-[15px]">
-            Aproveite este benefício em milhões de produtos.
-          </p>
-        </div>
-        <div className="flex flex-col items-center m-2">
-          <Cat />
-          <h1 className="text-[20px]">Segurança, do início ao fim</h1>
-          <p className="max-w-md text-center text-[15px]">
-            Você não gostou do que comprou? Devolva! No Mercado Livre não há
-            nada que você não possa fazer, porque você está sempre protegido.
-          </p>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
-  /*data={posts.filter((post) => {
-          const matchName = post.name?.common
-            ?.toLowerCase()
-            .includes(nome.toLowerCase());
-
-          const matchRegion = region === "" || post.region === region;
-
-          return matchName && matchRegion;
-        })}*/
 }
