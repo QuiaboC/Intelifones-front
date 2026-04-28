@@ -33,7 +33,7 @@ export default function Home() {
       <Header />
       <div className="flex w-screen h-150 items-center justify-center gap-20 flex-wrap">
         <div className="m-2 flex flex-col gap-5">
-          <h1 className="text-[30px] font-medium">Intefones, qualidade na hora de comprar</h1>
+          <h1 className="text-[30px] font-medium">Intefones, qualidade na hora de comprar testando</h1>
           <p className="max-w-md text-[20px]">
             A Intelifones é a melhor loja para a compra de produtos relacionados a smartphones, sempre perto da sua casa
           </p>
