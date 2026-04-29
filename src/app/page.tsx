@@ -42,11 +42,11 @@ export default function Home() {
             placeholder="Senha"
             className="w-full shadow-sm rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500"
           />
-
-          <button className="w-full bg-blue-500 text-white p-3 rounded-sm hover:bg-blue-600 transition cursor-pointer mt-2">
-            <Link href="/home">Entrar</Link>
-          </button>
-
+          <Link href="/home">
+            <button className="w-full bg-blue-500 text-white p-3 rounded-sm hover:bg-blue-600 transition cursor-pointer mt-2">
+              Entrar
+            </button>
+          </Link>
           <p className="text-center text-sm">
             Ainda não possui uma conta?{" "}
             <Link

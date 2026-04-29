@@ -35,7 +35,7 @@ export default function Vendedor() {
         nome: form.nome,
         email: form.email,
         telefone: form.telefone,
-        cpfCnpj: form.Cnpj,
+        Cnpj: form.Cnpj,
         senha: form.senha,
       })
       .then((response) => {
