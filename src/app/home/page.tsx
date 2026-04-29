@@ -86,7 +86,7 @@ export default function Home() {
         </div>
 
         <div className="flex flex-wrap justify-center gap-8 p-10">
-          {produto.map((item) => (
+          {produtosFiltrados.map((item) => (
             <div
               key={item.id}
               className="w-[253px] h-[385px] flex flex-col justify-between p-8 rounded-2xl border"
