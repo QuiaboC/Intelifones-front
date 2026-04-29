@@ -5,9 +5,8 @@ export default function Home() {
   return (
     <div className="bg-slate-100 min-h-screen flex justify-center items-center px-6">
       <div className="bg-white shadow-xl w-[950px] rounded-2xl p-10 flex items-center gap-10">
-        
         <img
-          src="/vetor.png"
+          src="/vetorLogin.jpg"
           alt="Login"
           className="w-[400px] h-auto object-contain hidden md:block"
         />
@@ -45,9 +44,7 @@ export default function Home() {
           />
 
           <button className="w-full bg-blue-500 text-white p-3 rounded-sm hover:bg-blue-600 transition cursor-pointer mt-2">
-            <Link href="/home">
-              Entrar
-            </Link>
+            <Link href="/home">Entrar</Link>
           </button>
 
           <p className="text-center text-sm">
@@ -56,7 +53,14 @@ export default function Home() {
               href="/comprador"
               className="text-blue-500 cursor-pointer hover:underline"
             >
-              Cadastre-se aqui
+              Cadastre-se como Comprador
+            </Link>
+            {" ou "}
+            <Link
+              href="/vendedor"
+              className="text-blue-500 cursor-pointer hover:underline"
+            >
+              Cadastre-se como Vendedor
             </Link>
           </p>
         </div>

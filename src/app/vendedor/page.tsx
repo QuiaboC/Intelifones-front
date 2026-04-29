@@ -4,16 +4,18 @@ import { User, Lock } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Vendedor() {
   const [form, setForm] = useState({
     nome: "",
     email: "",
     telefone: "",
-    cpfCnpj: "",
+    Cnpj: "",
     senha: "",
     confirmarSenha: "",
   });
+  const router = useRouter();
 
   const handleChange = (e) => {
     setForm({
@@ -29,25 +31,25 @@ export default function Vendedor() {
     }
 
     axios
-      .post("coloque aqui", {
+      .post("http://localhost:3001/vendedores", {
         nome: form.nome,
         email: form.email,
         telefone: form.telefone,
-        cpfCnpj: form.cpfCnpj,
+        cpfCnpj: form.Cnpj,
         senha: form.senha,
       })
       .then((response) => {
         console.log(response.data);
-        alert("Vendedor cadastrado com sucesso!");
 
         setForm({
           nome: "",
           email: "",
           telefone: "",
-          cpfCnpj: "",
+          Cnpj: "",
           senha: "",
           confirmarSenha: "",
         });
+        router.push("/");
       })
       .catch((error) => {
         console.log(error);
@@ -63,14 +65,20 @@ export default function Vendedor() {
           className="w-[400px] h-auto object-contain hidden md:block"
         />
 
-        <div className="flex flex-col gap-5 w-full">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            cadastrarVendedor();
+          }}
+          className="flex flex-col gap-5 w-full"
+        >
           <h1 className="text-[30px] font-semibold text-center m-6">
             Seja um <span className="text-blue-400">vendedor</span>
           </h1>
 
           <p>
-            Transforme seu estoque em vendas. Cadastre-se como vendedor e alcance
-            novos clientes todos os dias.
+            Transforme seu estoque em vendas. Cadastre-se como vendedor e
+            alcance novos clientes todos os dias.
           </p>
 
           <p className="flex flex-row gap-2 text-blue-400 text-[14px]">
@@ -81,6 +89,7 @@ export default function Vendedor() {
           <input
             type="text"
             name="nome"
+            required
             placeholder="Nome completo"
             value={form.nome}
             onChange={handleChange}
@@ -90,6 +99,7 @@ export default function Vendedor() {
           <input
             type="email"
             name="email"
+            required
             placeholder="E-mail"
             value={form.email}
             onChange={handleChange}
@@ -99,6 +109,7 @@ export default function Vendedor() {
           <input
             type="tel"
             name="telefone"
+            required
             placeholder="Telefone"
             value={form.telefone}
             onChange={handleChange}
@@ -107,9 +118,10 @@ export default function Vendedor() {
 
           <input
             type="text"
-            name="cpfCnpj"
-            placeholder="CPF ou CNPJ"
-            value={form.cpfCnpj}
+            name="Cnpj"
+            required
+            placeholder="CNPJ"
+            value={form.Cnpj}
             onChange={handleChange}
             className="w-full shadow-sm rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500"
           />
@@ -122,6 +134,7 @@ export default function Vendedor() {
           <input
             type="password"
             name="senha"
+            required
             placeholder="Senha"
             value={form.senha}
             onChange={handleChange}
@@ -130,6 +143,7 @@ export default function Vendedor() {
 
           <input
             type="password"
+            required
             name="confirmarSenha"
             placeholder="Confirmar senha"
             value={form.confirmarSenha}
@@ -145,7 +159,7 @@ export default function Vendedor() {
           </div>
 
           <button
-            onClick={cadastrarVendedor}
+            type="submit"
             className="w-full bg-blue-500 text-white p-3 rounded-sm hover:bg-blue-600 transition cursor-pointer mt-2"
           >
             Cadastrar
@@ -160,7 +174,7 @@ export default function Vendedor() {
               Entrar
             </Link>
           </p>
-        </div>
+        </form>
       </div>
     </div>
   );

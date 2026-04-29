@@ -1,0 +1,28 @@
+{
+  "vendedores": [
+    {
+      "nome": "a",
+      "email": "luciana@gmail.com",
+      "telefone": "a",
+      "cpfCnpj": "a",
+      "senha": "12",
+      "id": 1
+    },
+    {
+      "nome": "a",
+      "email": "luciana@gmail.com",
+      "telefone": "12",
+      "cpfCnpj": "12",
+      "senha": "12",
+      "id": 2
+    },
+    {
+      "nome": "a",
+      "email": "lucianor1784@gmail.com",
+      "telefone": "12",
+      "cpfCnpj": "12",
+      "senha": "12",
+      "id": 3
+    }
+  ]
+}

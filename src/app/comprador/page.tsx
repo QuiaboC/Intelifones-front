@@ -4,6 +4,7 @@ import axios from "axios";
 import { User, Lock } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Comprador() {
   const [form, setForm] = useState({
@@ -14,6 +15,14 @@ export default function Comprador() {
     senha: "",
     confirmarSenha: "",
   });
+  const router = useRouter();
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const cadastrarComprador = () => {
     if (form.senha != form.confirmarSenha) {
@@ -22,7 +31,7 @@ export default function Comprador() {
     }
 
     axios
-      .post("api", {
+      .post("http://localhost:3001/compradores", {
         nome: form.nome,
         email: form.email,
         telefone: form.telefone,
@@ -40,6 +49,8 @@ export default function Comprador() {
           senha: "",
           confirmarSenha: "",
         });
+
+        router.push("/");
       })
       .catch((error) => {
         console.log(error);
@@ -54,7 +65,13 @@ export default function Comprador() {
           alt="Cadastro"
           className="w-[400px] h-auto object-contain hidden md:block"
         />
-        <div className=" flex flex-col gap-5">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            cadastrarComprador();
+          }}
+          className=" flex flex-col gap-5"
+        >
           <h1 className="text-[30px] font-semibold text-center m-6">
             Crie sua <span className="text-blue-400">conta</span>
           </h1>
@@ -69,49 +86,37 @@ export default function Comprador() {
           <input
             type="text"
             placeholder="Nome completo"
+            name="nome"
+            required
             value={form.nome}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                nome: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="shadow-sm rounded-sm p-2  outline-0 focus:ring-2 focus:ring-blue-500"
           />
           <input
             type="email"
             placeholder="E-mail"
+            name="email"
+            required
             value={form.email}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                email: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="w-full shadow-sm rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500"
           />
           <input
             type="text"
             placeholder="telefone"
+            required
+            name="telefone"
             value={form.telefone}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                telefone: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="w-full shadow-sm rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500"
           />
           <input
             type="text"
             placeholder="Endereço"
+            required
+            name="endereco"
             value={form.endereco}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                endereco: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="w-full shadow-sm rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500"
           />
           <p className="flex flex-row gap-2 text-blue-400 text-[15px]">
@@ -120,26 +125,20 @@ export default function Comprador() {
           </p>
           <input
             type="password"
+            required
             placeholder="Senha"
+            name="senha"
             value={form.senha}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                senha: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="w-full shadow-sm rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500"
           />
           <input
             type="password"
+            required
             placeholder="Confirmar senha"
+            name="confirmarSenha"
             value={form.confirmarSenha}
-            onChange={(e) =>
-              setForm({
-                ...form,
-                confirmarSenha: e.target.value,
-              })
-            }
+            onChange={handleChange}
             className="w-full shadow-sm rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500"
           />
           <div className="flex flex-row gap-3 justify-center">
@@ -149,7 +148,7 @@ export default function Comprador() {
             </p>
           </div>
           <button
-            onClick={cadastrarComprador}
+            type="submit"
             className=" w-full bg-blue-500 text-white p-3 rounded-sm hover:bg-blue-600 transition cursor-pointer mt-2"
           >
             Cadastrar
@@ -157,13 +156,13 @@ export default function Comprador() {
           <p className="text-center text-sm">
             Já tem uma conta? <a></a>
             <Link
-              href="/vendedor"
+              href="/"
               className="text-blue-500 cursor-pointer hover:underline"
             >
               Entrar
             </Link>
           </p>
-        </div>
+        </form>
       </div>
     </div>
   );
