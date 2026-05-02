@@ -2,7 +2,7 @@ import { Cat } from "lucide-react";
 
 export default function Footer() {
   return (
-    <div className="w-screen flex justify-around items-center p-10 flex-wrap">
+    <div className="w-full flex justify-around items-center p-10 flex-wrap">
       <div className="flex flex-col items-center m-2">
         <Cat />
         <h1 className="text-[20px]">Escolha como pagar</h1>

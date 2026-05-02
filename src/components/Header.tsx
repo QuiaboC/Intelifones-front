@@ -19,7 +19,7 @@ export default function Header() {
         </span>
 
         <span className="cursor-pointer text-[18px] hover:text-blue-400 transition">
-          Produtos
+          <Link href="/produtos">Produto</Link>
         </span>
 
         <span className="cursor-pointer text-[18px] hover:text-blue-400 transition">
