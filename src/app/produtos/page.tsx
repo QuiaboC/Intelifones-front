@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 export default function Produto() {
   const [produto, setProduto] = useState([]);
+  const [modalOpen, setModalOpen] = useState(null);
 
   useEffect(() => {
     axios
@@ -15,7 +16,6 @@ export default function Produto() {
       .then((reponse) => setProduto(reponse.data))
       .catch((error) => console.log(error));
   }, []);
-  
 
   const categorias = [
     "Todos",
@@ -30,7 +30,9 @@ export default function Produto() {
       <Header />
       <div className="bg-gray-200 min-h-screen flex flex-row p-5">
         <div className="w-[200px] h-auto p-2 flex flex-col gap-5">
-          <span className="font-semibold text-[17px]">Categorias relacionadas</span>
+          <span className="font-semibold text-[17px]">
+            Categorias relacionadas
+          </span>
           {[1, 2, 3, 5, 6].map((item, index) => (
             <div className="w-full h-[150px] bg-gray-700" key={index}></div>
           ))}
@@ -41,16 +43,60 @@ export default function Produto() {
               <ChevronsUpDown />
               Ordenar:
             </span>
-            <button className="p-2 text-left w-[200px] bg-white rounded-sm cursor-pointer flex justify-between">
-              <span>mais produtos</span>
-              <ChevronDown />
-            </button>
+            <div className="relative inline-block">
+              <button
+                className="p-2 text-left w-[200px] bg-white rounded-sm cursor-pointer flex justify-between"
+                onClick={() =>
+                  setModalOpen(
+                    modalOpen === "mais produtos" ? null : "mais produtos",
+                  )
+                }
+              >
+                <span>mais produtos</span>
+                <ChevronDown />
+              </button>
+              {modalOpen === "mais produtos" && (
+                <div className="absolute top-full left-0 w-[200px] mt-1 bg-white rounded-sm shadow-lg p-2 z-50">
+                  <button className="w-full text-left p-2 hover:bg-gray-100 rounded-sm">
+                    Mais vendidos
+                  </button>
+                  <button className="w-full text-left p-2 hover:bg-gray-100 rounded-sm">
+                    Menor preço
+                  </button>
+                  <button className="w-full text-left p-2 hover:bg-gray-100 rounded-sm">
+                    Maior preço
+                  </button>
+                </div>
+              )}
+            </div>
+
             <span className="font-semibold">Exibir</span>
-            <button className="bg-white p-2 text-left w-[200px] rounded-sm cursor-pointer flex justify-between">
-              <span>60 paginas</span>
-              <ChevronDown />
-            </button>
-            <span className="m-10 "><span className="font-semibold">{produto.length}</span> Produtos</span>
+            <div className="relative inline-block">
+              <button
+                className="bg-white p-2 text-left w-[200px] rounded-sm cursor-pointer flex justify-between"
+                onClick={() =>
+                  setModalOpen(modalOpen === "60 paginas" ? null : "60 paginas")
+                }
+              >
+                <span>60 paginas</span>
+                <ChevronDown />
+              </button>
+
+              {modalOpen === "60 paginas" && (
+                <div className="absolute top-full left-0 mt-1 w-[200px] bg-white rounded-sm shadow-lg p-2 z-50">
+                  <button
+                    onClick={() => setModalOpen(null)}
+                    className="w-full text-left p-2 hover:bg-gray-100 rounded-sm"
+                  >
+                    60 páginas
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <span className="m-10 ">
+              <span className="font-semibold">{produto.length}</span> Produtos
+            </span>
           </div>
           <div className="w-full h-[100px] flex flex-col justify-center gap-3 p-5">
             <div className="flex items-center gap-2">

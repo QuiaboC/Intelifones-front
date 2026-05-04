@@ -4,7 +4,7 @@ import { ChevronDown, MapPin, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function Header() {
+export default function Testando() {
   const [modal, setModal] = useState(false);
 
   return (
@@ -72,7 +72,7 @@ export default function Header() {
         <button className="bg-gray-200 p-2 px-5 rounded-xl text-gray-700 hover:bg-gray-300 transition cursor-pointer">
           Compras
         </button>
-        <ShoppingCart className="text-blue-400 cursor-pointer" />
+        <ShoppingCart className="text-gray-700 cursor-pointer" />
       </div>
     </div>
   );
