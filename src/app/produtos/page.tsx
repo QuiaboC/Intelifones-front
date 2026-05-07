@@ -120,7 +120,7 @@ export default function Produto() {
               <a
                 key={item.id}
                 className="bg-white w-[230px] h-[350px] p-5 flex flex-col justify-around gap-2 rounded-sm group hover:shadow-xl"
-                href=""
+                href={`/Detalhes/${item.id}`}
               >
                 <div className="w-full h-[180px] justify-center flex">
                   <img

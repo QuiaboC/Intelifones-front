@@ -5,6 +5,7 @@ import { User, Lock } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import HeaderCadastro from "@/components/HeaderCadastro";
 
 export default function Comprador() {
   const [form, setForm] = useState({
@@ -58,8 +59,10 @@ export default function Comprador() {
   };
 
   return (
-    <div className="bg-slate-100 min-h-screen flex justify-center items-center px-6">
-      <div className="bg-white shadow-xl w-[1000px] rounded-2xl p-10 flex items-center gap-10">
+    <div className="bg-slate-100 min-h-screen flex flex-col">
+      <HeaderCadastro />
+    <div className="flex justify-center items-center flex-1">
+      <div className="bg-white shadow-xl w-[1000px] rounded-2xl p-5 flex items-center gap-5">
         <img
           src="/vetor.png"
           alt="Cadastro"
@@ -164,6 +167,7 @@ export default function Comprador() {
           </p>
         </form>
       </div>
+    </div>
     </div>
   );
 }
