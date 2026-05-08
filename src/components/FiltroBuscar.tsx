@@ -2,11 +2,13 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function FiltroBuscar() {
   const [busca, setBusca] = useState("");
   const [filtros, setFiltros] = useState([]);
   const [modal, setModal] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchFiltros = async () => {
@@ -38,6 +40,11 @@ export default function FiltroBuscar() {
         onChange={(e) => {
           setBusca(e.target.value);
           setModal(e.target.value.length > 0);
+        }}
+        onKeyDown={(e) =>{
+          if (e.key === "Enter" ){
+            router.push(`/produtos?busca=${busca}`);
+          }
         }}
       />
 

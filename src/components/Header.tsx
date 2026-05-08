@@ -69,7 +69,9 @@ export default function Header() {
         <button className="bg-white p-2 px-5 rounded-xl text-blue-500 hover:bg-gray-300 transition cursor-pointer">
           Compras
         </button>
-        <ShoppingCart className="text-white cursor-pointer hover:text-gray-300 transition" />
+        <Link href="/carrinho">
+          <ShoppingCart className="text-white cursor-pointer hover:text-gray-300 transition" />
+        </Link>
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import {
   ShoppingCart,
   Handbag,
   UserRoundPen,
+  Tag,
 } from "lucide-react";
 
 export default function Perfil() {
@@ -26,6 +27,10 @@ export default function Perfil() {
             </span>
             <span className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent hover:border-blue-500 transition text-gray-400 text-[15px]">
               <ShoppingCart />
+              Carrinho
+            </span>
+            <span className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent hover:border-blue-500 transition text-gray-400 text-[15px]">
+              <Tag />
               Vendas
             </span>
             <span className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent hover:border-blue-500 transition text-gray-400 text-[15px]">
@@ -66,28 +71,28 @@ export default function Perfil() {
               <p className="text-gray-500 text-sm">Dados pessoais e da conta</p>
             </div>
 
-             <div className="w-[260px] bg-white p-6 rounded-xl hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
+            <div className="w-[260px] bg-white p-6 rounded-xl hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
               <UserRoundPen className="w-6 h-6 text-blue-500" />
               <h1 className="font-semibold text-[17px]">
                 Informações da Conta
               </h1>
               <p className="text-gray-500 text-sm">Dados pessoais e da conta</p>
             </div>
-             <div className="w-[260px] bg-white p-6 rounded-xl hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
+            <div className="w-[260px] bg-white p-6 rounded-xl hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
               <UserRoundPen className="w-6 h-6 text-blue-500" />
               <h1 className="font-semibold text-[17px]">
                 Informações da Conta
               </h1>
               <p className="text-gray-500 text-sm">Dados pessoais e da conta</p>
             </div>
-             <div className="w-[260px] bg-white p-6 rounded-xl hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
+            <div className="w-[260px] bg-white p-6 rounded-xl hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
               <UserRoundPen className="w-6 h-6 text-blue-500" />
               <h1 className="font-semibold text-[17px]">
                 Informações da Conta
               </h1>
               <p className="text-gray-500 text-sm">Dados pessoais e da conta</p>
             </div>
-             <div className="w-[260px] bg-white p-6 rounded-xl hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
+            <div className="w-[260px] bg-white p-6 rounded-xl hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
               <UserRoundPen className="w-6 h-6 text-blue-500" />
               <h1 className="font-semibold text-[17px]">
                 Informações da Conta
