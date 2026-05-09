@@ -4,7 +4,7 @@ import FiltroCategoria from "@/components/FiltroCategoria";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import axios from "axios";
-import { ChevronDown, ChevronsUpDown, List } from "lucide-react";
+import { ChevronDown, ChevronRight, ChevronsUpDown, List } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
@@ -13,34 +13,54 @@ export default function Produto() {
   const [modalOpen, setModalOpen] = useState(null);
   const buscaParams = useSearchParams();
   const busca = buscaParams.get("busca");
+  const categoria = buscaParams.get("categoria");
+  const [precoMin, setPrecoMin] = useState("");
+  const [precoMax, setPrecoMax] = useState("");
 
   useEffect(() => {
-  axios
-    .get("https://fakestoreapi.com/products")
-    .then((response) => {
-      const produtos = response.data;
-
-      const produtosFiltrados = busca
-        ? produtos.filter((item) =>
-            item.title
-              .toLowerCase()
-              .includes(busca.toLowerCase())
-          )
-        : produtos;
-
-      setProduto(produtosFiltrados);
-    })
-    .catch((error) => console.log(error));
-}, [busca]);
+    axios
+      .get("https://fakestoreapi.com/products")
+      .then((response) => {
+        let produtos = response.data;
+        if (busca) {
+          produtos = produtos.filter((item) =>
+            item.title.toLowerCase().includes(busca.toLowerCase()),
+          );
+        }
+        if (categoria) {
+          produtos = produtos.filter((item) => item.category === categoria);
+        }
+        setProduto(produtos);
+      })
+      .catch((error) => console.log(error));
+  }, [busca, categoria]);
 
   const menorPreco = () => {
     const produtosOrdenados = [...produto].sort((a, b) => a.price - b.price);
     setProduto(produtosOrdenados);
-  }
+  };
   const maiorPreco = () => {
     const produtosOrdenados = [...produto].sort((a, b) => b.price - a.price);
     setProduto(produtosOrdenados);
-  }
+  };
+  const filtrarPreco = () => {
+    const produtosFiltrados = produto.filter((item) => {
+      return item.price >= precoMin && item.price <= precoMax;
+    });
+
+    setProduto(produtosFiltrados);
+  };
+  const filtroPreco = (min, max) => {
+    const produtosFiltrados = produto.filter((item) => {
+      if (max) {
+        return item.price >= min && item.price <= max;
+      }
+
+      return item.price >= min;
+    });
+
+    setProduto(produtosFiltrados);
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -50,9 +70,61 @@ export default function Produto() {
           <span className="font-semibold text-[17px]">
             Categorias relacionadas
           </span>
-          {[1, 2, 3, 5, 6].map((item, index) => (
-            <div className="w-full h-[150px] bg-gray-700" key={index}></div>
-          ))}
+          <div className="w-full h-[150px] bg-white p-5 justify-around flex flex-col gap-2">
+            <h1 className="font-medium">Condição</h1>
+            <div className="flex flex-col gap-1">
+              <span className="text-[14px] cursor-pointer">Novo</span>
+              <span className="text-[14px] cursor-pointer">Usado</span>
+              <span className="text-[14px] cursor-pointer">Semi Novo</span>
+            </div>
+          </div>
+          <div className="w-full bg-white p-5 flex flex-col gap-4">
+            <h1 className="font-semibold text-[16px]">Preço</h1>
+
+            <div className="flex flex-col gap-3">
+              <span
+                onClick={() => filtroPreco(0, 200)}
+                className="text-[14px] cursor-pointer hover:text-blue-500 transition"
+              >
+                Até R$ 200
+              </span>
+
+              <span
+                onClick={() => filtroPreco(200, 350)}
+                className="text-[14px] cursor-pointer hover:text-blue-500 transition"
+              >
+                R$ 200 a R$ 350
+              </span>
+
+              <span
+                onClick={() => filtroPreco(350, null)}
+                className="text-[14px] cursor-pointer hover:text-blue-500 transition"
+              >
+                Mais de R$ 350
+              </span>
+
+              <div className="flex gap-2 mt-2">
+                <input
+                  type="number"
+                  placeholder="Mín"
+                  className="border border-gray-300 p-1 rounded-md outline-none w-full focus:border-blue-500"
+                  onChange={(e) => setPrecoMin(e.target.value)}
+                />
+                <input
+                  type="number"
+                  placeholder="Máx"
+                  className="border border-gray-300 p-1 rounded-md outline-none w-full focus:border-blue-500"
+                  onChange={(e) => setPrecoMax(e.target.value)}
+                />
+                <button
+                  onClick={filtrarPreco}
+                  className="bg-blue-500 rounded-full p-1 cursor-pointer hover:bg-blue-600"
+                >
+                  <ChevronRight className="text-white" />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="flex flex-col flex-1">
           <div className=" w-full h-[70px] flex flex-row justify-start gap-5 p-5 items-center">
@@ -74,10 +146,16 @@ export default function Produto() {
               </button>
               {modalOpen === "mais produtos" && (
                 <div className="absolute top-full left-0 w-[200px] mt-1 bg-white rounded-sm shadow-lg p-2 z-50">
-                  <button className="w-full text-left p-2 hover:bg-gray-100 rounded-sm cursor-pointer" onClick={menorPreco}>
+                  <button
+                    className="w-full text-left p-2 hover:bg-gray-100 rounded-sm cursor-pointer"
+                    onClick={menorPreco}
+                  >
                     Menor preço
                   </button>
-                  <button className="w-full text-left p-2 hover:bg-gray-100 rounded-sm cursor-pointer" onClick={maiorPreco}>
+                  <button
+                    className="w-full text-left p-2 hover:bg-gray-100 rounded-sm cursor-pointer"
+                    onClick={maiorPreco}
+                  >
                     Maior preço
                   </button>
                 </div>
@@ -112,7 +190,7 @@ export default function Produto() {
               <span className="font-semibold">{produto.length}</span> Produtos
             </span>
           </div>
-          <FiltroCategoria setProdutos={setProduto} />
+          <FiltroCategoria setProdutos={setProduto} categoria={categoria} />
           <div className="flex gap-10 flex-wrap justify-start flex-1 p-5">
             {produto.map((item) => (
               <a
@@ -129,11 +207,11 @@ export default function Produto() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <span className="truncate">
-                    {item.title}
-                  </span>
+                  <span className="truncate">{item.title}</span>
                   <div className="flex justify-between">
-                    <span className="font-semibold">R$ {item.price.toFixed(2).replace('.', ',')}</span>
+                    <span className="font-semibold">
+                      R$ {item.price.toFixed(2).replace(".", ",")}
+                    </span>
                     <span className="text-green-400">Usado</span>
                   </div>
                 </div>

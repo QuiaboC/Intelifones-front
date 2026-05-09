@@ -34,8 +34,8 @@ export default function FiltroBuscar() {
     <div className="relative">
       <input
         type="text"
-        placeholder="digite aqui"
-        className=" w-full rounded-xl bg-white p-2 outline-none"
+        placeholder="Digite aqui para buscar produtos..."
+        className=" w-full rounded-sm bg-white p-2 outline-none"
         value={busca}
         onChange={(e) => {
           setBusca(e.target.value);

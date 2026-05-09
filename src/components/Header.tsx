@@ -2,11 +2,30 @@
 
 import { ChevronDown, MapPin, ShoppingCart } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FiltroBuscar from "./FiltroBuscar";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const [modal, setModal] = useState(false);
+  const [categorias, setCategorias] = useState([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    const categoriaData = async () => {
+      try {
+        const response = await axios.get(
+          "https://fakestoreapi.com/products/categories",
+        );
+        setCategorias(response.data);
+      } catch (error) {
+        console.error("error no response", error);
+      }
+    };
+    categoriaData();
+  }, []);
+  console.log(categorias);
 
   return (
     <div className="sticky top-0 z-50 bg-blue-500 flex justify-around w-full px-10 py-4 items-center shadow-md">
@@ -31,8 +50,19 @@ export default function Header() {
               Categorias <ChevronDown />
             </span>
             {modal && (
-              <div className="absolute top-full left-0 mt-1 w-[200px] bg-white rounded-sm shadow-lg p-2 z-50">
-                <button className="cursor-pointer">Subcategoria 1</button>
+              <div className="absolute top-full left-0 mt-1 w-[200px] bg-white rounded-sm shadow-lg p-2 z-50 flex flex-col gap-2">
+                {categorias.map((item, index) => (
+                  <button
+                    key={index}
+                    className="cursor-pointer text-left hover:bg-gray-100 p-2 rounded"
+                    onClick={() => {
+                      router.push(`/produtos?categoria=${item}`);
+                      setModal(false);
+                    }}
+                  >
+                    {item}
+                  </button>
+                ))}
               </div>
             )}
           </div>
@@ -69,7 +99,7 @@ export default function Header() {
         <button className="bg-white p-2 px-5 rounded-xl text-blue-500 hover:bg-gray-300 transition cursor-pointer">
           Compras
         </button>
-        <Link href="/carrinho">
+        <Link href="/Perfil?aba=Carrinho">
           <ShoppingCart className="text-white cursor-pointer hover:text-gray-300 transition" />
         </Link>
       </div>

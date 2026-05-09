@@ -4,8 +4,8 @@ import axios from "axios";
 import { List } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export default function FiltroCategoria({ setProdutos }) {
-  const [categoria, setCategoria] = useState([]);
+export default function FiltroCategoria({ setProdutos, categoria }) {
+  const [categorias, setCategorias] = useState([]);
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todos");
 
   useEffect(() => {
@@ -15,14 +15,17 @@ export default function FiltroCategoria({ setProdutos }) {
           "https://fakestoreapi.com/products/categories",
         );
 
-        setCategoria(["Todos", ...response.data]);
+        setCategorias(["Todos", ...response.data]);
       } catch (error) {
         console.log(error);
       }
     };
+    if (categoria) {
+      setCategoriaSelecionada(categoria);
+    }
 
     filtro();
-  }, []);
+  }, [categoria]);
 
   const filtroCategoria = async (categoria) => {
     try {
@@ -47,7 +50,7 @@ export default function FiltroCategoria({ setProdutos }) {
       </div>
 
       <div className="flex flex-row gap-5 flex-wrap">
-        {categoria.map((item, index) => (
+        {categorias.map((item, index) => (
           <button
             key={index}
             className={`p-2.5 rounded-sm cursor-pointer border font-semibold transition
