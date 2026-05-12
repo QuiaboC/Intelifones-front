@@ -2,10 +2,9 @@ import axios from "axios";
 import { Plus } from "lucide-react";
 import { useState, useEffect } from "react";
 
-export default function Vendas() {
+export default function Vendas({ setPaginaAtiva}) {
   const [buscar, setBuscar] = useState("");
   const [filtros, setFiltros] = useState([]);
-
 
   useEffect(() => {
     const Produto = async () => {
@@ -24,9 +23,7 @@ export default function Vendas() {
   const deletarProduto = async (id) => {
     try {
       await axios.delete(`https://fakestoreapi.com/products/${id}`);
-      setFiltros((prevFiltros) =>
-        prevFiltros.filter((item) => item.id !== id),
-      );
+      setFiltros((prevFiltros) => prevFiltros.filter((item) => item.id !== id));
     } catch (error) {
       console.error("Erro ao deletar produto:", error);
     }
@@ -50,7 +47,10 @@ export default function Vendas() {
             onChange={(e) => setBuscar(e.target.value)}
             className="px-5 py-2 rounded-lg border border-gray-300 w-full max-w-md outline-none focus:border-blue-500"
           />
-          <button className=" flex gap-1 px-5 py-2 rounded-md bg-green-500 text-white font-medium hover:bg-green-600 transition cursor-pointer shadow-md">
+          <button
+            className=" flex gap-1 px-5 py-2 rounded-md bg-green-500 text-white font-medium hover:bg-green-600 transition cursor-pointer shadow-md"
+            onClick={() => setPaginaAtiva("Cadastro")}
+          >
             <Plus />
             Adicionar
           </button>

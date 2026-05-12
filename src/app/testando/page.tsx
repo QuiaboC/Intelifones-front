@@ -1,9 +1,10 @@
-import Vendas from "@/components/PerfilModal/Vendas";
+import Cadastro from "@/components/PerfilModal/Cadastro";
 
 export default function testando() {
   return (
     <div>
-      <Vendas />
+      <Cadastro />
+      <div ></div>
     </div>
   );
 }

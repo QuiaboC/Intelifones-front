@@ -86,7 +86,7 @@ export default function Header() {
         </div>
       </div>
       <div className="flex gap-3 items-center">
-        <Link href="/">
+        <Link href="/testando">
           <button className="bg-white p-2 px-5 rounded-xl text-blue-500 hover:bg-gray-300 transition cursor-pointer">
             Entrar
           </button>

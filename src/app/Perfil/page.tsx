@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Compras from "@/components/PerfilModal/Compras";
 import Vendas from "@/components/PerfilModal/Vendas";
 import Carrinho from "@/components/PerfilModal/Carrinho";
+import Informacao from "@/components/PerfilModal/Informacao";
 import {
   Info,
   List,
@@ -21,10 +22,11 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import Cadastro from "@/components/PerfilModal/Cadastro";
 
 export default function Perfil() {
   const [paginaAtiva, setPaginaAtiva] = useState("Perfil");
-  const aba =  useSearchParams().get("aba");
+  const aba = useSearchParams().get("aba");
 
   useEffect(() => {
     if (aba) {
@@ -58,8 +60,10 @@ export default function Perfil() {
               <Handbag />
               Compras
             </span>
-            <span className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent hover:border-blue-500 transition text-gray-400 text-[15px]"
-            onClick={(e) => setPaginaAtiva("Carrinho")}>
+            <span
+              className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent hover:border-blue-500 transition text-gray-400 text-[15px]"
+              onClick={(e) => setPaginaAtiva("Carrinho")}
+            >
               <ShoppingCart />
               Carrinho
             </span>
@@ -82,7 +86,11 @@ export default function Perfil() {
         </div>
         {paginaAtiva === "Carrinho" && <Carrinho />}
         {paginaAtiva === "Compras" && <Compras />}
-        {paginaAtiva === "Vendas" && <Vendas />}
+        {paginaAtiva === "Vendas" && <Vendas setPaginaAtiva={setPaginaAtiva} />}
+        {paginaAtiva === "Informacao" && <Informacao />}
+        {paginaAtiva === "Cadastro" && (
+          <Cadastro setPaginaAtiva={setPaginaAtiva} />
+        )}
         {paginaAtiva === "Perfil" && (
           <div className="flex flex-col flex-1 bg-gray-100 items-center py-10 px-30 flex-wrap">
             <div className="w-full p-5 flex flex-row items-center">
@@ -96,7 +104,10 @@ export default function Perfil() {
               </div>
             </div>
             <div className="flex flex-wrap gap-5 w-full mt-5">
-              <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
+              <div
+                className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2"
+                onClick={(e) => setPaginaAtiva("Informacao")}
+              >
                 <UserRoundPen className="w-6 h-6 text-blue-500" />
                 <h1 className="font-semibold text-[17px]">
                   Informações da Conta
