@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function Carrinho() {
   return (
-    <div className="flex flex-1 bg-gray-100 justify-center py-10 px-10">
+    <div className="flex flex-col flex-1 bg-gray-100 py-20 px-30 flex-wrap gap-5">
       <div className="w-full max-w-[1200px] flex flex-col lg:flex-row gap-6 items-start">
         <div className="bg-white flex-1 rounded-sm shadow-sm p-8 flex gap-5 items-start">
           <div className="bg-blue-100 p-4 rounded-full">

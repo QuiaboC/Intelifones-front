@@ -19,6 +19,7 @@ import {
   LockKeyhole,
   CreditCard,
   MessageSquare,
+  Store,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -39,47 +40,53 @@ export default function Perfil() {
       <Header />
       <div className="bg-gray-200 min-h-screen flex flex-row ">
         <div className="w-[250px] h-auto flex gap-5 flex-col bg-white items-center py-20">
-          <span className="flex gap-2 items-center font-bold text-[18px] mb-8 w-full py-3 px-4">
+          <span className="flex gap-2 items-center font-bold text-[17px] mb-8 w-full py-3 px-4">
             <List className="w-5 h-5" />
             Minha conta
           </span>
-          <div className="flex flex-col gap-5 w-full">
+          <div className="flex flex-col gap-1 w-full">
             <span
-              className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent hover:border-blue-500 transition text-gray-400 text-[15px]
-            "
-              onClick={(e) => setPaginaAtiva("Perfil")}
+              className={`flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 transition text-[15px]
+        ${paginaAtiva === "Perfil" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
+              onClick={() => setPaginaAtiva("Perfil")}
             >
-              <UserRoundPen />
+              <UserRoundPen className="w-4 h-4" />
               Perfil
             </span>
             <span
-              className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent hover:border-blue-500 transition text-gray-400 text-[15px]
-            "
-              onClick={(e) => setPaginaAtiva("Compras")}
+              className={`flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 transition text-[15px]
+        ${paginaAtiva === "Compras" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
+              onClick={() => setPaginaAtiva("Compras")}
             >
-              <Handbag />
+              <Handbag className="w-4 h-4" />
               Compras
             </span>
             <span
-              className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent hover:border-blue-500 transition text-gray-400 text-[15px]"
-              onClick={(e) => setPaginaAtiva("Carrinho")}
+              className={`flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 transition text-[15px]
+        ${paginaAtiva === "Carrinho" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
+              onClick={() => setPaginaAtiva("Carrinho")}
             >
-              <ShoppingCart />
+              <ShoppingCart className="w-4 h-4" />
               Carrinho
             </span>
             <span
-              className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent hover:border-blue-500 transition text-gray-400 text-[15px]"
-              onClick={(e) => setPaginaAtiva("Vendas")}
+              className={`flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 transition text-[15px]
+        ${paginaAtiva === "Vendas" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
+              onClick={() => setPaginaAtiva("Vendas")}
             >
-              <Tag />
+              <Store className="w-4 h-4" />
               Vendas
             </span>
-            <span className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent hover:border-blue-500 transition text-gray-400 text-[15px]">
-              <Info />
+            <span
+              className={`flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 transition text-[15px]
+        ${paginaAtiva === "Informacao" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
+              onClick={() => setPaginaAtiva("Informacao")}
+            >
+              <Info className="w-4 h-4" />
               Informações
             </span>
-            <span className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent hover:border-blue-500 transition text-gray-400 text-[15px]">
-              <LogOut />
+            <span className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent text-gray-500 hover:border-red-300 hover:text-red-500 hover:bg-red-50 transition text-[15px]">
+              <LogOut className="w-4 h-4" />
               Sair
             </span>
           </div>
@@ -87,7 +94,9 @@ export default function Perfil() {
         {paginaAtiva === "Carrinho" && <Carrinho />}
         {paginaAtiva === "Compras" && <Compras />}
         {paginaAtiva === "Vendas" && <Vendas setPaginaAtiva={setPaginaAtiva} />}
-        {paginaAtiva === "Informacao" && <Informacao />}
+        {paginaAtiva === "Informacao" && (
+          <Informacao setPaginaAtiva={setPaginaAtiva} />
+        )}
         {paginaAtiva === "Cadastro" && (
           <Cadastro setPaginaAtiva={setPaginaAtiva} />
         )}
@@ -99,8 +108,8 @@ export default function Perfil() {
                 className="w-20 h-20 rounded-full bg-amber-100 object-cover"
               />
               <div className="flex flex-col gap-2 ml-5">
-                <h1 className="font-bold text-[25px]">Cleiton Souza Paixao</h1>
-                <p className="text-gray-500 text-[16px]">email@example.com</p>
+                <h1 className="font-bold text-[22px]">Cleiton Souza Paixao</h1>
+                <p className="text-gray-500 text-[15px]">email@example.com</p>
               </div>
             </div>
             <div className="flex flex-wrap gap-5 w-full mt-5">
@@ -109,7 +118,7 @@ export default function Perfil() {
                 onClick={(e) => setPaginaAtiva("Informacao")}
               >
                 <UserRoundPen className="w-6 h-6 text-blue-500" />
-                <h1 className="font-semibold text-[17px]">
+                <h1 className="font-semibold text-[15px]">
                   Informações da Conta
                 </h1>
                 <p className="text-gray-500 text-sm">
@@ -119,7 +128,7 @@ export default function Perfil() {
 
               <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
                 <Shield className="w-6 h-6 text-blue-500" />
-                <h1 className="font-semibold text-[17px]">Segurança</h1>
+                <h1 className="font-semibold text-[15px]">Segurança</h1>
                 <p className="text-gray-500 text-sm">
                   Você configurou a segurança da sua conta
                 </p>
@@ -127,28 +136,28 @@ export default function Perfil() {
 
               <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
                 <MapPin className="w-6 h-6 text-blue-500" />
-                <h1 className="font-semibold text-[17px]">Localização</h1>
+                <h1 className="font-semibold text-[15px]">Localização</h1>
                 <p className="text-gray-500 text-sm">
                   Gerencie onde você pode ser encontrado
                 </p>
               </div>
               <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
                 <LockKeyhole className="w-6 h-6 text-blue-500" />
-                <h1 className="font-semibold text-[17px]">Privacidade</h1>
+                <h1 className="font-semibold text-[15px]">Privacidade</h1>
                 <p className="text-gray-500 text-sm">
                   Gerencie suas preferências de privacidade
                 </p>
               </div>
               <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
                 <CreditCard className="w-6 h-6 text-blue-500" />
-                <h1 className="font-semibold text-[17px]">Cartões</h1>
+                <h1 className="font-semibold text-[15px]">Cartões</h1>
                 <p className="text-gray-500 text-sm">
                   Gerencie seus cartões de pagamento
                 </p>
               </div>
               <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
                 <MessageSquare className="w-6 h-6 text-blue-500" />
-                <h1 className="font-semibold text-[17px]">Comunicação</h1>
+                <h1 className="font-semibold text-[15px]">Comunicação</h1>
                 <p className="text-gray-500 text-sm">
                   Gerencie suas preferências de comunicação
                 </p>

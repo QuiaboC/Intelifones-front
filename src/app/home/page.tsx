@@ -31,10 +31,8 @@ export default function Home() {
   }, []);
 
   const cadastrarProduto = async () => {
-  try {
-    const response = await axios.post(
-      "http://localhost:3001/produtos",
-      {
+    try {
+      const response = await axios.post("http://localhost:3001/produtos", {
         nome: form.nome,
         descricao: form.descricao,
         preco: Number(form.preco),
@@ -44,31 +42,29 @@ export default function Home() {
         categoria: {
           id: 1,
         },
-      }
-    );
-    console.log(response.data);
-    setForm({
-      nome: "",
-      descricao: "",
-      preco: "",
-      usado: false,
-      estadoConservacao: "",
-      ativo: true,
-      categoria: "",
-    });
+      });
+      console.log(response.data);
+      setForm({
+        nome: "",
+        descricao: "",
+        preco: "",
+        usado: false,
+        estadoConservacao: "",
+        ativo: true,
+        categoria: "",
+      });
 
-    const produtosAtualizados = await axios.get(
-      "http://localhost:3001/produtos"
-    );
+      const produtosAtualizados = await axios.get(
+        "http://localhost:3001/produtos",
+      );
 
-    setProduto(produtosAtualizados.data);
+      setProduto(produtosAtualizados.data);
 
-    setModalCadastro(false);
-
-  } catch (error) {
-    console.log(error);
-  }
-};
+      setModalCadastro(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   console.log(produto);
 
@@ -83,20 +79,21 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
-      <div className="flex w-screen h-150 items-center justify-center gap-20 flex-wrap">
+      <div className="flex w-screen min-h-[600px] items-center justify-center gap-20 flex-wrap bg-gradient-to-b from-blue-500 via-blue-500 to-white px-10 py-20">
         <div className="m-2 flex flex-col gap-5">
-          <h1 className="text-[30px] font-semibold">
-            <span className="text-blue-400">Intefones</span>, qualidade na hora de comprar
+          <h1 className="text-[30px] font-semibold text-white">
+            <span className="text-white">Intelifones</span>, qualidade na
+            hora de comprar
           </h1>
-          <p className="max-w-md text-[20px]">
+          <p className="max-w-md text-[20px] text-blue-50">
             A Intelifones é a melhor loja para a compra de produtos relacionados
             a smartphones, sempre perto da sua casa
           </p>
-          <p className="cursor-pointer bg-blue-400 text-white p-2.5 hover:bg-blue-500 hover:text-white transition w-fit rounded-xl">
+          <p className="cursor-pointer bg-white text-blue-500 font-medium p-2.5 hover:bg-blue-50 transition w-fit rounded-xl shadow-sm">
             Clique aqui!
           </p>
         </div>
-        <img src="/vetor2.png" alt="" width={420} height={120} />
+        <img src="/vetorHome.png" alt="" width={420} height={120} />
       </div>
 
       <div className="flex flex-col shadow p-5">

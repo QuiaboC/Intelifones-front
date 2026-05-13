@@ -28,33 +28,35 @@ export default function Header() {
   console.log(categorias);
 
   return (
-    <div className="sticky top-0 z-50 bg-blue-500 flex justify-around w-full px-10 py-4 items-center shadow-md">
-      <div>
+    <div className="sticky top-0 z-50 bg-blue-500 flex justify-between w-full px-10 py-4 items-center gap-8">
+      <div className="flex flex-col">
         <Link href="/home">
-          <h1 className="text-white text-[30px] font-semibold cursor-pointer hover:text-gray-300 transition">
+          <h1 className="text-white text-[26px] font-bold cursor-pointer hover:text-blue-100 transition">
             Intelifones
           </h1>
         </Link>
-        <p className="flex gap-2 font">
-          <MapPin size={20} className="text-white" /> localizacao
+        <p className="flex gap-1 items-center text-blue-100 text-[12px]">
+          <MapPin size={12} />
+          Localização
         </p>
       </div>
+
       <div className="flex-1 mx-12 ">
         <FiltroBuscar />
-        <div className="mt-2 flex gap-7 items-center">
-          <div className="relative border-r border-gray-300 pr-5">
+        <div className="mt-2 flex gap-6 items-center">
+          <div className="relative">
             <span
-              className="text-[16px] cursor-pointer hover:text-white transition flex gap-1"
+              className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition flex gap-1 items-center"
               onClick={() => setModal(!modal)}
             >
-              Categorias <ChevronDown />
+              Categorias <ChevronDown className="w-4 h-4" />
             </span>
             {modal && (
-              <div className="absolute top-full left-0 mt-1 w-[200px] bg-white rounded-sm shadow-lg p-2 z-50 flex flex-col gap-2">
+              <div className="absolute top-full left-0 mt-2 w-[200px] bg-white rounded-lg shadow-lg p-2 z-50 flex flex-col gap-1">
                 {categorias.map((item, index) => (
                   <button
                     key={index}
-                    className="cursor-pointer text-left hover:bg-gray-100 p-2 rounded"
+                    className="cursor-pointer text-left text-[15px] text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md transition"
                     onClick={() => {
                       router.push(`/produtos?categoria=${item}`);
                       setModal(false);
@@ -66,37 +68,37 @@ export default function Header() {
               </div>
             )}
           </div>
-          <span className="text-[16px] cursor-pointer hover:text-white transition">
+          <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
             Ofertas
           </span>
-          <span className="text-[16px] cursor-pointer hover:text-white transition">
+          <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
             Cupons
           </span>
-          <span className="text-[16px] cursor-pointer hover:text-white transition">
+          <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
             Vender
           </span>
-          <span className="text-[16px] cursor-pointer hover:text-white transition">
+          <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
             Contato
           </span>
           <Link href="/produtos">
-            <span className="text-[16px] cursor-pointer hover:text-white transition">
+            <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
               Produtos
             </span>
           </Link>
         </div>
       </div>
       <div className="flex gap-3 items-center">
-        <Link href="/testando">
-          <button className="bg-white p-2 px-5 rounded-xl text-blue-500 hover:bg-gray-300 transition cursor-pointer">
+        <Link href="/">
+          <button className="text-[13px] bg-white px-4 py-2 rounded-lg text-blue-500 font-medium hover:bg-blue-50 transition cursor-pointer">
             Entrar
           </button>
         </Link>
         <Link href="/Perfil">
-          <button className="bg-white p-2 px-5 rounded-xl text-blue-500 hover:bg-gray-300 transition cursor-pointer">
+          <button className="text-[13px] bg-white px-4 py-2 rounded-lg text-blue-500 font-medium hover:bg-blue-50 transition cursor-pointer">
             Criar conta
           </button>
         </Link>
-        <button className="bg-white p-2 px-5 rounded-xl text-blue-500 hover:bg-gray-300 transition cursor-pointer">
+        <button className="text-[13px] bg-white px-4 py-2 rounded-lg text-blue-500 font-medium hover:bg-blue-50 transition cursor-pointer">
           Compras
         </button>
         <Link href="/Perfil?aba=Carrinho">

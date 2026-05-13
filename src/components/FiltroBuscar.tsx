@@ -35,7 +35,7 @@ export default function FiltroBuscar() {
       <input
         type="text"
         placeholder="Digite aqui para buscar produtos..."
-        className=" w-full rounded-sm bg-white p-2 outline-none"
+        className=" w-full rounded-sm text-sm bg-white p-2 outline-none"
         value={busca}
         onChange={(e) => {
           setBusca(e.target.value);
