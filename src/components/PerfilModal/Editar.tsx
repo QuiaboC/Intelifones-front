@@ -9,25 +9,23 @@ import {
   AlignLeft,
   PackageCheck,
   ToggleRight,
-  ShieldCheck,
   ChevronRight,
   Hash,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-export default function Cadastro({ setPaginaAtiva }) {
+export default function Editar({ setPaginaAtiva, id }) {
   const [categorias, setCategorias] = useState([]);
   const [form, setForm] = useState({
     nome: "",
-    categoria: "",
+    categoria_id: "",
     preco: "",
     descricao: "",
-    imagem: "",
+    image: "",
     usado: "",
     estadoConservacao: "",
     quantidade: "",
-    ativo: "",
   });
 
   const handleChange = (
@@ -38,54 +36,36 @@ export default function Cadastro({ setPaginaAtiva }) {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleLimpar = () => {
-    setForm({
-      nome: "",
-      categoria: "",
-      preco: "",
-      descricao: "",
-      imagem: "",
-      usado: "",
-      estadoConservacao: "",
-      quantidade: "",
-      ativo: "",
-    });
-  };
+  useEffect(() => {
+    axios
+      .get(`http://localhost:8080/produtos/${id}`)
+      .then((res) => setForm(res.data));
 
-  const CadastroProduto = async (e: React.FormEvent) => {
+    axios
+      .get("http://localhost:8080/categorias")
+      .then((res) => setCategorias(res.data));
+  }, [id]);
+
+  const editarProduto = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/produtos", {
+      const response = await axios.put(`http://localhost:8080/produtos/${id}`, {
         nome: form.nome,
         descricao: form.descricao,
         preco: form.preco,
-        categoria_id: Number(form.categoria),
-        imagem: form.imagem,
+        categoria_id: Number(form.categoria_id),
+        image: form.image,
         usado: form.usado === "true",
         estadoConservacao: form.estadoConservacao,
         quantidade: Number(form.quantidade),
         ativo: true,
       });
-      console.log("Cadastrado com sucesso:", response.data);
+      console.log("Produto editado com sucesso:", response.data);
       setPaginaAtiva("Vendas");
     } catch (error) {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    const categorias = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/categorias");
-        setCategorias(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    categorias();
-  }, []);
-
-  console.log(categorias);
 
   return (
     <div className="flex flex-col flex-1 bg-gray-100 py-20 px-30 flex-wrap gap-5">
@@ -97,22 +77,22 @@ export default function Cadastro({ setPaginaAtiva }) {
           Vendas
         </span>
         <ChevronRight className="w-4 h-4 text-gray-500" />
-        <span className="text-[14px] text-blue-400">Cadastro</span>
+        <span className="text-[14px] text-blue-400">Editar</span>
       </div>
 
       <div className="flex flex-col gap-2 w-full max-w-2xl">
-        <h1 className="text-[22px] font-bold">Cadastro de Produto</h1>
-        <p>Cadastre novos produtos em nossa loja</p>
+        <h1 className="text-[22px] font-bold">Editar Produto</h1>
+        <p>Atualize as informações do produto</p>
       </div>
 
       <form
         className="w-full flex flex-col bg-white rounded-sm overflow-hidden shadow-sm max-w-5xl"
-        onSubmit={CadastroProduto}
+        onSubmit={editarProduto}
       >
         <div className="p-4 border-b border-gray-200">
           <span className="font-semibold text-[17px] flex gap-2">
             <Box className="text-blue-400" />
-            Novo produto
+            Editar produto
           </span>
         </div>
 
@@ -140,8 +120,8 @@ export default function Cadastro({ setPaginaAtiva }) {
               </label>
               <select
                 className="px-4 py-2 rounded-lg border border-gray-300 outline-none focus:border-blue-500 text-sm w-full bg-white"
-                name="categoria"
-                value={form.categoria}
+                name="categoria_id"
+                value={form.categoria_id}
                 onChange={handleChange}
               >
                 <option value="">Selecione...</option>
@@ -180,7 +160,7 @@ export default function Cadastro({ setPaginaAtiva }) {
                 placeholder="https://example.com/img.jpg"
                 className="px-4 py-2 rounded-lg border border-gray-300 outline-none focus:border-blue-500 text-sm w-full"
                 name="imagem"
-                value={form.imagem}
+                value={form.image}
                 onChange={handleChange}
               />
             </div>
@@ -257,16 +237,16 @@ export default function Cadastro({ setPaginaAtiva }) {
           <div className="flex justify-end gap-3 pt-1">
             <button
               type="button"
-              onClick={handleLimpar}
+              onClick={() => setPaginaAtiva("Vendas")}
               className="px-4 py-2 text-sm rounded-lg border border-gray-300 text-gray-500 hover:bg-gray-100 transition cursor-pointer"
             >
-              Limpar
+              Cancelar
             </button>
             <button
               type="submit"
               className="px-4 py-2 text-sm rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition cursor-pointer"
             >
-              Cadastrar Produto
+              Salvar Alterações
             </button>
           </div>
         </div>

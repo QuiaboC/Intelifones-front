@@ -25,7 +25,7 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/produtos")
+      .get("http://localhost:8080/produtos")
       .then((response) => setProduto(response.data))
       .catch((error) => console.log(error));
   }, []);
@@ -55,7 +55,7 @@ export default function Home() {
       });
 
       const produtosAtualizados = await axios.get(
-        "http://localhost:3001/produtos",
+        "http://localhost:8080/produtos",
       );
 
       setProduto(produtosAtualizados.data);

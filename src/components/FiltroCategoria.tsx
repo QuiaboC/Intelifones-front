@@ -11,15 +11,13 @@ export default function FiltroCategoria({ setProdutos, categoria }) {
   useEffect(() => {
     const filtro = async () => {
       try {
-        const response = await axios.get(
-          "https://fakestoreapi.com/products/categories",
-        );
-
+        const response = await axios.get("http://localhost:8080/categorias");
         setCategorias(["Todos", ...response.data]);
       } catch (error) {
         console.log(error);
       }
     };
+
     if (categoria) {
       setCategoriaSelecionada(categoria);
     }
@@ -27,14 +25,15 @@ export default function FiltroCategoria({ setProdutos, categoria }) {
     filtro();
   }, [categoria]);
 
-  const filtroCategoria = async (categoria) => {
+  const filtroCategoria = async (item) => {
+    setCategoriaSelecionada(item);
     try {
       const response =
-        categoria === "Todos"
-          ? await axios.get("https://fakestoreapi.com/products")
-          : await axios.get(
-              `https://fakestoreapi.com/products/category/${categoria}`,
-            );
+        item === "Todos"
+          ? await axios.get("http://localhost:8080/produtos")
+          : await axios.get("http://localhost:8080/produtos", {
+              params: { categoria_id: item.id },
+            });
 
       setProdutos(response.data);
     } catch (error) {
@@ -54,18 +53,14 @@ export default function FiltroCategoria({ setProdutos, categoria }) {
           <button
             key={index}
             className={`p-2.5 rounded-sm cursor-pointer border font-semibold transition
-                  ${
-                    categoriaSelecionada === item
-                      ? "bg-blue-500 text-white border-blue-500"
-                      : "bg-white border-blue-400 hover:bg-blue-500 hover:text-white"
-                  }
-            `}
-            onClick={() => {
-              filtroCategoria(item);
-              setCategoriaSelecionada(item);
-            }}
+              ${
+                categoriaSelecionada === item
+                  ? "bg-blue-500 text-white border-blue-500"
+                  : "bg-white border-blue-400 hover:bg-blue-500 hover:text-white"
+              }`}
+            onClick={() => filtroCategoria(item)}
           >
-            {item}
+            {item === "Todos" ? "Todos" : item.nome}
           </button>
         ))}
       </div>

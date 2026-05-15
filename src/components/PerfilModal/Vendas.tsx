@@ -2,14 +2,14 @@ import axios from "axios";
 import { Plus, SquarePen, Store, Trash2 } from "lucide-react";
 import { useState, useEffect } from "react";
 
-export default function Vendas({ setPaginaAtiva }) {
+export default function Vendas({ setPaginaAtiva, setProdutoId }) {
   const [buscar, setBuscar] = useState("");
   const [filtros, setFiltros] = useState([]);
 
   useEffect(() => {
     const Produto = async () => {
       try {
-        const response = await axios.get("https://fakestoreapi.com/products");
+        const response = await axios.get("http://localhost:8080/produtos");
         setFiltros(response.data);
       } catch (error) {
         console.error("Erro ao buscar produtos:", error);
@@ -22,7 +22,7 @@ export default function Vendas({ setPaginaAtiva }) {
 
   const deletarProduto = async (id) => {
     try {
-      await axios.delete(`https://fakestoreapi.com/products/${id}`);
+      await axios.delete(`http://localhost:8080/produtos/${id}`);
       setFiltros((prevFiltros) => prevFiltros.filter((item) => item.id !== id));
     } catch (error) {
       console.error("Erro ao deletar produto:", error);
@@ -31,13 +31,16 @@ export default function Vendas({ setPaginaAtiva }) {
 
   const filtrosFiltrados = buscar
     ? filtros.filter((filtro) =>
-        filtro.title.toLowerCase().includes(buscar.toLowerCase()),
+        filtro.nome.toLowerCase().includes(buscar.toLowerCase()),
       )
     : filtros;
 
   return (
     <div className="flex flex-col flex-1 bg-gray-100 py-20 px-30 flex-wrap gap-5">
-      <h1 className="text-[22px] font-bold flex items-center gap-2 text-blue-400"><Store />Vendas</h1>
+      <h1 className="text-[22px] font-bold flex items-center gap-2 text-blue-400">
+        <Store />
+        Vendas
+      </h1>
       <div className="flex flex-wrap gap-5 w-full items-center justify-between">
         <div className="flex items-center gap-5 w-300">
           <input
@@ -57,7 +60,9 @@ export default function Vendas({ setPaginaAtiva }) {
         </div>
 
         <div className="flex items-center gap-5 text-gray-600">
-          <span className="font-medium text-slate-900">{filtros.length} produtos</span>
+          <span className="font-medium text-slate-900">
+            {filtros.length} produtos
+          </span>
         </div>
       </div>
       <div className="w-full flex flex-col bg-white rounded-sm overflow-hidden">
@@ -77,10 +82,10 @@ export default function Vendas({ setPaginaAtiva }) {
                 />
                 <div className="flex flex-col gap-1">
                   <span className="font-semibold text-[16px]">
-                    {item.title}
+                    {item.nome}
                   </span>
                   <span className="text-blue-500 font-medium">
-                    R$ {item.price.toFixed(2)}
+                    R$ {Number(item.preco).toFixed(2)}
                   </span>
                   <span className="text-gray-500 text-sm">
                     Produto feito para venda
@@ -88,15 +93,16 @@ export default function Vendas({ setPaginaAtiva }) {
                 </div>
               </div>
               <div className="flex flex-col gap-2 w-full lg:w-[200px]">
-                <button className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition cursor-pointer flex gap-2 justify-center items-center text-sm">
-                  <SquarePen className="w-4"/>
+                <button className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition cursor-pointer flex gap-2 justify-center items-center text-sm"
+                onClick={() => {setPaginaAtiva("Editar"), setProdutoId(item.id)}}>
+                  <SquarePen className="w-4" />
                   Editar
                 </button>
                 <button
                   className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition cursor-pointer flex gap-2 justify-center text-sm items-center"
                   onClick={() => deletarProduto(item.id)}
                 >
-                <Trash2 className="w-4"/>
+                  <Trash2 className="w-4" />
                   Deletar
                 </button>
               </div>

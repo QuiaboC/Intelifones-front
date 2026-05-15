@@ -19,7 +19,7 @@ export default function Produto() {
 
   useEffect(() => {
     axios
-      .get("https://fakestoreapi.com/products")
+      .get("http://localhost:8080/produtos")
       .then((response) => {
         let produtos = response.data;
         if (busca) {
@@ -36,16 +36,16 @@ export default function Produto() {
   }, [busca, categoria]);
 
   const menorPreco = () => {
-    const produtosOrdenados = [...produto].sort((a, b) => a.price - b.price);
+    const produtosOrdenados = [...produto].sort((a, b) => a.preco - b.preco);
     setProduto(produtosOrdenados);
   };
   const maiorPreco = () => {
-    const produtosOrdenados = [...produto].sort((a, b) => b.price - a.price);
+    const produtosOrdenados = [...produto].sort((a, b) => b.preco - a.preco);
     setProduto(produtosOrdenados);
   };
   const filtrarPreco = () => {
     const produtosFiltrados = produto.filter((item) => {
-      return item.price >= precoMin && item.price <= precoMax;
+      return item.preco >= precoMin && item.preco <= precoMax;
     });
 
     setProduto(produtosFiltrados);
@@ -53,10 +53,10 @@ export default function Produto() {
   const filtroPreco = (min, max) => {
     const produtosFiltrados = produto.filter((item) => {
       if (max) {
-        return item.price >= min && item.price <= max;
+        return item.preco >= min && item.preco <= max;
       }
 
-      return item.price >= min;
+      return item.preco >= min;
     });
 
     setProduto(produtosFiltrados);
@@ -207,12 +207,12 @@ export default function Produto() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <span className="truncate">{item.title}</span>
+                  <span className="truncate">{item.nome}</span>
                   <div className="flex justify-between">
                     <span className="font-semibold">
-                      R$ {item.price.toFixed(2).replace(".", ",")}
+                      R$ {item.preco.toFixed(2).replace(".", ",")}
                     </span>
-                    <span className="text-green-400">Usado</span>
+                    <span className="text-green-400">{item.estadoConservacao}</span>
                   </div>
                 </div>
               </a>

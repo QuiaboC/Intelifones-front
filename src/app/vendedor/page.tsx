@@ -25,37 +25,26 @@ export default function Vendedor() {
     });
   };
 
-  const cadastrarVendedor = () => {
-    if (form.senha !== form.confirmarSenha) {
-      alert("As senhas não coincidem");
-      return;
-    }
-
-    axios
-      .post("http://localhost:3001/vendedores", {
-        nome: form.nome,
-        email: form.email,
-        telefone: form.telefone,
-        Cnpj: form.Cnpj,
-        senha: form.senha,
-      })
-      .then((response) => {
-        console.log(response.data);
-
-        setForm({
-          nome: "",
-          email: "",
-          telefone: "",
-          Cnpj: "",
-          senha: "",
-          confirmarSenha: "",
-        });
-        router.push("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const cadastrarVendedor = async () => {
+  if (form.senha !== form.confirmarSenha) {
+    alert("As senhas não coincidem");
+    return;
+  }
+  try {
+    const response = await axios.post("http://localhost:8080/vendedores", {
+      nome: form.nome,
+      email: form.email,
+      telefone: form.telefone,
+      cpfCnpj: form.Cnpj,
+      senha: form.senha,
+      ativo: true,
+    });
+    console.log(response.data);
+    router.push("/");
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   return (
     <div className="bg-slate-100 min-h-screen flex flex-col">

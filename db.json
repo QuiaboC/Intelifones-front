@@ -1,109 +1,103 @@
 {
+  "vendedores": [
+    {
+      "nome": "chrystian",
+      "email": "chrystian12003@hotmail.com",
+      "telefone": "81987743092",
+      "cpfCnpj": "123456",
+      "senha": "foda",
+      "ativo": true,
+      "id": "onYmsRG-qZU"
+    }
+  ],
+  "vendas": [],
   "produtos": [
     {
-      "id": 1,
-      "nome": "iPhone 13",
-      "descricao": "Smartphone Apple",
-      "preco": 5000,
-      "usado": false,
-      "estadoConservacao": "Novo",
+      "id": "3",
+      "nome": "Motorola Edge 40",
+      "descricao": "Smartphone Motorola com 256GB, carregamento turbo 68W",
+      "preco": 2199.99,
+      "usado": true,
+      "estadoConservacao": "seminovo",
       "ativo": true,
-      "categoria": {
-        "id": 1,
-        "nome": "Todos"
-      }
+      "quantidade": 5,
+      "categoria_id": 1,
+      "image": "https://picsum.photos/seed/motorola/200"
     },
     {
-      "id": 2,
-      "nome": "f",
-      "descricao": "f",
-      "preco": 12,
+      "id": "4",
+      "nome": "Capinha iPhone 13",
+      "descricao": "Capinha transparente antichoque compatível com iPhone 13",
+      "preco": 49.99,
       "usado": false,
       "estadoConservacao": "novo",
       "ativo": true,
-      "categoria": {
-        "id": 1,
-        "nome": "Todos"
-      }
+      "quantidade": 50,
+      "categoria_id": 2,
+      "image": "https://picsum.photos/seed/capinha/200"
     },
     {
-      "id": 3,
-      "nome": "samsung",
-      "descricao": "foda",
-      "preco": 12,
-      "usado": true,
-      "estadoConservacao": "semiNovo",
-      "ativo": true,
-      "categoria": {
-        "id": 1,
-        "nome": "Todos"
-      }
-    },
-    {
-      "nome": "foda",
-      "descricao": "foda",
-      "preco": 12,
-      "usado": true,
-      "estadoConservacao": "Novo",
-      "ativo": true,
-      "categoria": {
-        "id": 1
-      },
-      "id": 4
-    },
-    {
-      "nome": "foda",
-      "descricao": "foda",
-      "preco": 12,
+      "id": "5",
+      "nome": "Carregador USB-C 65W",
+      "descricao": "Carregador rápido universal USB-C compatível com todos os modelos",
+      "preco": 129.99,
       "usado": false,
-      "estadoConservacao": "Novo",
+      "estadoConservacao": "novo",
       "ativo": true,
-      "categoria": {
-        "id": 1
-      },
-      "id": 5
+      "quantidade": 30,
+      "categoria_id": 2,
+      "image": "https://picsum.photos/seed/carregador/200"
     },
     {
-      "nome": "oi",
-      "descricao": "oi",
-      "preco": 12,
+      "id": "6",
+      "nome": "Fone Bluetooth JBL",
+      "descricao": "Fone de ouvido sem fio com cancelamento de ruído e 30h de bateria",
+      "preco": 399.99,
       "usado": true,
-      "estadoConservacao": "Novo",
+      "estadoConservacao": "seminovo",
       "ativo": true,
-      "categoria": {
-        "id": 1
-      },
-      "id": 6
+      "quantidade": 8,
+      "categoria_id": 2,
+      "image": "https://picsum.photos/seed/fone/200"
     },
     {
-      "nome": "oifoda",
-      "descricao": "oi",
-      "preco": 12,
-      "usado": true,
-      "estadoConservacao": "Novo",
-      "ativo": true,
-      "categoria": {
-        "id": 1
-      },
-      "id": 7
-    },
-    {
-      "nome": "fida",
-      "descricao": "12",
-      "preco": 12,
+      "id": "7",
+      "nome": "iPad Pro 11",
+      "descricao": "Tablet Apple com chip M2, tela Liquid Retina e 128GB",
+      "preco": 6999.99,
       "usado": false,
-      "estadoConservacao": "Novo",
+      "estadoConservacao": "novo",
       "ativo": true,
-      "categoria": {
-        "id": 1
-      },
-      "id": 8
+      "quantidade": 15,
+      "categoria_id": 3,
+      "image": "https://picsum.photos/seed/ipad/200"
+    },
+    {
+      "id": "8",
+      "nome": "Samsung Galaxy Tab S8",
+      "descricao": "Tablet Samsung com tela AMOLED 11 polegadas e 256GB",
+      "preco": 4299.99,
+      "usado": true,
+      "estadoConservacao": "usado",
+      "ativo": true,
+      "quantidade": 3,
+      "categoria_id": 3,
+      "image": "https://picsum.photos/seed/tab/200"
     }
   ],
   "categorias": [
     {
-      "id": 1,
-      "nome": "Todos"
+      "id": "1",
+      "nome": "Smartphones"
+    },
+    {
+      "id": "2",
+      "nome": "Acessórios"
+    },
+    {
+      "id": "3",
+      "nome": "Tablets"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

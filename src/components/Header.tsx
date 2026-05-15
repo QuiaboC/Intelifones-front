@@ -52,7 +52,7 @@ export default function Header() {
               Categorias <ChevronDown className="w-4 h-4" />
             </span>
             {modal && (
-              <div className="absolute top-full left-0 mt-2 w-[200px] bg-white rounded-lg shadow-lg p-2 z-50 flex flex-col gap-1">
+              <div className="absolute top-full left-0 mt-2 w-[200px] bg-white rounded-sm shadow-lg p-2 z-50 flex flex-col gap-1">
                 {categorias.map((item, index) => (
                   <button
                     key={index}
