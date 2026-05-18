@@ -1,7 +1,7 @@
 "use client";
 
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
+import Footer from "@/components/Header/Footer";
+import Header from "@/components/Header/Header";
 import Compras from "@/components/PerfilModal/Compras";
 import Vendas from "@/components/PerfilModal/Vendas";
 import Carrinho from "@/components/PerfilModal/Carrinho";
@@ -29,7 +29,7 @@ import Editar from "@/components/PerfilModal/Editar";
 export default function Perfil() {
   const [paginaAtiva, setPaginaAtiva] = useState("Perfil");
   const aba = useSearchParams().get("aba");
-  const [ProdutoId, setProdutoId] = useState(null)
+  const [ProdutoId, setProdutoId] = useState(null);
 
   useEffect(() => {
     if (aba) {
@@ -95,14 +95,18 @@ export default function Perfil() {
         </div>
         {paginaAtiva === "Carrinho" && <Carrinho />}
         {paginaAtiva === "Compras" && <Compras />}
-        {paginaAtiva === "Vendas" && <Vendas setPaginaAtiva={setPaginaAtiva} setProdutoId={setProdutoId}/>}
+        {paginaAtiva === "Vendas" && (
+          <Vendas setPaginaAtiva={setPaginaAtiva} setProdutoId={setProdutoId} />
+        )}
         {paginaAtiva === "Informacao" && (
           <Informacao setPaginaAtiva={setPaginaAtiva} />
         )}
         {paginaAtiva === "Cadastro" && (
           <Cadastro setPaginaAtiva={setPaginaAtiva} />
         )}
-        {paginaAtiva === "Editar" && (<Editar setPaginaAtiva={setPaginaAtiva} id={ProdutoId}/>)}
+        {paginaAtiva === "Editar" && (
+          <Editar setPaginaAtiva={setPaginaAtiva} id={ProdutoId} />
+        )}
         {paginaAtiva === "Perfil" && (
           <div className="flex flex-col flex-1 bg-gray-100 items-center py-10 px-30 flex-wrap">
             <div className="w-full p-5 flex flex-row items-center">

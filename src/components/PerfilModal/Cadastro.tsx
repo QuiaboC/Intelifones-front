@@ -58,7 +58,7 @@ export default function Cadastro({ setPaginaAtiva }) {
       const response = await axios.post("http://localhost:8080/produtos", {
         nome: form.nome,
         descricao: form.descricao,
-        preco: form.preco,
+        preco: Number(form.preco),
         categoria_id: Number(form.categoria),
         imagem: form.imagem,
         usado: form.usado === "true",

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Lock, Mail } from "lucide-react";
-import HeaderCadastro from "@/components/HeaderCadastro";
+import HeaderCadastro from "@/components/Header/HeaderCadastro";
 
 export default function Home() {
   return (

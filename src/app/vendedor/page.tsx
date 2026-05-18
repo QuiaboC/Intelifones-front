@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import HeaderCadastro from "@/components/HeaderCadastro";
+import HeaderCadastro from "@/components/Header/HeaderCadastro";
 
 export default function Vendedor() {
   const [form, setForm] = useState({
@@ -26,25 +26,25 @@ export default function Vendedor() {
   };
 
   const cadastrarVendedor = async () => {
-  if (form.senha !== form.confirmarSenha) {
-    alert("As senhas não coincidem");
-    return;
-  }
-  try {
-    const response = await axios.post("http://localhost:8080/vendedores", {
-      nome: form.nome,
-      email: form.email,
-      telefone: form.telefone,
-      cpfCnpj: form.Cnpj,
-      senha: form.senha,
-      ativo: true,
-    });
-    console.log(response.data);
-    router.push("/");
-  } catch (error) {
-    console.log(error);
-  }
-};
+    if (form.senha !== form.confirmarSenha) {
+      alert("As senhas não coincidem");
+      return;
+    }
+    try {
+      const response = await axios.post("http://localhost:8080/vendedores", {
+        nome: form.nome,
+        email: form.email,
+        telefone: form.telefone,
+        cpfCnpj: form.Cnpj,
+        senha: form.senha,
+        ativo: true,
+      });
+      console.log(response.data);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="bg-slate-100 min-h-screen flex flex-col">

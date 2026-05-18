@@ -9,21 +9,28 @@ export default function FiltroCategoria({ setProdutos, categoria }) {
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todos");
 
   useEffect(() => {
-    const filtro = async () => {
-      try {
-        const response = await axios.get("http://localhost:8080/categorias");
-        setCategorias(["Todos", ...response.data]);
-      } catch (error) {
-        console.log(error);
+  const filtro = async () => {
+    try {
+      const response = await axios.get("http://localhost:8080/categorias");
+      const dados = response.data;
+      setCategorias(["Todos", ...dados]);
+
+      if (categoria) {
+        const encontrada = dados.find((c) => String(c.id) === String(categoria));
+        if (encontrada) {
+          setCategoriaSelecionada(encontrada);
+          const res = await axios.get("http://localhost:8080/produtos", {
+            params: { categoria_id: encontrada.id },
+          });
+          setProdutos(res.data);
+        }
       }
-    };
-
-    if (categoria) {
-      setCategoriaSelecionada(categoria);
+    } catch (error) {
+      console.log(error);
     }
-
-    filtro();
-  }, [categoria]);
+  };
+  filtro();
+}, [categoria]);
 
   const filtroCategoria = async (item) => {
     setCategoriaSelecionada(item);
@@ -45,14 +52,14 @@ export default function FiltroCategoria({ setProdutos, categoria }) {
     <div className="w-full h-[100px] flex flex-col justify-center gap-3 p-5">
       <div className="flex items-center gap-2">
         <List className="w-5 h-5" />
-        <span className="font-semibold text-lg">Categorias</span>
+        <span className="font-medium text-lg">Categorias</span>
       </div>
 
       <div className="flex flex-row gap-5 flex-wrap">
         {categorias.map((item, index) => (
           <button
             key={index}
-            className={`p-2.5 rounded-sm cursor-pointer border font-semibold transition
+            className={`p-2.5 rounded-sm cursor-pointer border font-medium transition text-[15px]
               ${
                 categoriaSelecionada === item
                   ? "bg-blue-500 text-white border-blue-500"

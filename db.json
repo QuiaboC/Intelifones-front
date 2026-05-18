@@ -13,28 +13,16 @@
   "vendas": [],
   "produtos": [
     {
-      "id": "3",
-      "nome": "Motorola Edge 40",
-      "descricao": "Smartphone Motorola com 256GB, carregamento turbo 68W",
-      "preco": 2199.99,
-      "usado": true,
-      "estadoConservacao": "seminovo",
-      "ativo": true,
-      "quantidade": 5,
-      "categoria_id": 1,
-      "image": "https://picsum.photos/seed/motorola/200"
-    },
-    {
-      "id": "4",
-      "nome": "Capinha iPhone 13",
+      "nome": "Capinha iPhone foda",
       "descricao": "Capinha transparente antichoque compatível com iPhone 13",
       "preco": 49.99,
+      "categoria_id": 2,
+      "image": "https://picsum.photos/seed/capinha/200",
       "usado": false,
       "estadoConservacao": "novo",
-      "ativo": true,
       "quantidade": 50,
-      "categoria_id": 2,
-      "image": "https://picsum.photos/seed/capinha/200"
+      "ativo": true,
+      "id": "4"
     },
     {
       "id": "5",
@@ -73,16 +61,28 @@
       "image": "https://picsum.photos/seed/ipad/200"
     },
     {
-      "id": "8",
       "nome": "Samsung Galaxy Tab S8",
       "descricao": "Tablet Samsung com tela AMOLED 11 polegadas e 256GB",
       "preco": 4299.99,
-      "usado": true,
-      "estadoConservacao": "usado",
-      "ativo": true,
-      "quantidade": 3,
       "categoria_id": 3,
-      "image": "https://picsum.photos/seed/tab/200"
+      "image": "https://http2.mlstatic.com/D_NQ_NP_2X_927772-MLA95972157557_102025-F.webp",
+      "usado": false,
+      "estadoConservacao": "usado",
+      "quantidade": 3,
+      "ativo": true,
+      "id": "8"
+    },
+    {
+      "nome": "Teclado Mecânico Gamer Ajazz AK992 Gasket 98% Numérico Switch Red Branco",
+      "descricao": "foda",
+      "preco": 450,
+      "categoria_id": 2,
+      "image": "https://http2.mlstatic.com/D_NQ_NP_2X_927772-MLA95972157557_102025-F.webp",
+      "usado": false,
+      "estadoConservacao": "novo",
+      "quantidade": 50,
+      "ativo": true,
+      "id": "Y1D40ieHmIU"
     }
   ],
   "categorias": [

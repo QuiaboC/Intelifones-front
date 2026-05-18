@@ -15,9 +15,7 @@ export default function Header() {
   useEffect(() => {
     const categoriaData = async () => {
       try {
-        const response = await axios.get(
-          "https://fakestoreapi.com/products/categories",
-        );
+        const response = await axios.get("http://localhost:8080/categorias");
         setCategorias(response.data);
       } catch (error) {
         console.error("error no response", error);
@@ -40,7 +38,6 @@ export default function Header() {
           Localização
         </p>
       </div>
-
       <div className="flex-1 mx-12 ">
         <FiltroBuscar />
         <div className="mt-2 flex gap-6 items-center">
@@ -53,16 +50,16 @@ export default function Header() {
             </span>
             {modal && (
               <div className="absolute top-full left-0 mt-2 w-[200px] bg-white rounded-sm shadow-lg p-2 z-50 flex flex-col gap-1">
-                {categorias.map((item, index) => (
+                {categorias.map((item) => (
                   <button
-                    key={index}
+                    key={item.id}
                     className="cursor-pointer text-left text-[15px] text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md transition"
                     onClick={() => {
-                      router.push(`/produtos?categoria=${item}`);
+                      router.push(`/produtos?categoria=${item.id}`);
                       setModal(false);
                     }}
                   >
-                    {item}
+                    {item.nome}
                   </button>
                 ))}
               </div>

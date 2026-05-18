@@ -73,16 +73,11 @@ export default function Compras() {
             </span>
 
             {modal && (
-              <div className="absolute top-full left-0 mt-1 w-[200px] bg-white rounded-sm shadow-lg p-2 z-50 flex flex-col gap-2">
+              <div className="absolute top-full left-0 mt-2 w-[200px] bg-white rounded-sm shadow-lg p-2 z-50 flex flex-col gap-1">
                 {categorias.map((item, index) => (
                   <button
                     key={index}
-                    className={`p-2.5 rounded-sm cursor-pointer border font-semibold transition
-          ${
-            categoriaSelecionada === item
-              ? "bg-blue-500 text-white border-blue-500"
-              : "bg-white border-blue-400 hover:bg-blue-500 hover:text-white"
-          }`}
+                    className="cursor-pointer text-left text-[15px] text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md transition"
                     onClick={() => {
                       filtroCategoria(item);
                       setCategoriaSelecionada(item);

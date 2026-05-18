@@ -52,7 +52,7 @@ export default function Editar({ setPaginaAtiva, id }) {
       const response = await axios.put(`http://localhost:8080/produtos/${id}`, {
         nome: form.nome,
         descricao: form.descricao,
-        preco: form.preco,
+        preco: Number(form.preco),
         categoria_id: Number(form.categoria_id),
         image: form.image,
         usado: form.usado === "true",
@@ -159,7 +159,7 @@ export default function Editar({ setPaginaAtiva, id }) {
                 type="url"
                 placeholder="https://example.com/img.jpg"
                 className="px-4 py-2 rounded-lg border border-gray-300 outline-none focus:border-blue-500 text-sm w-full"
-                name="imagem"
+                name="image"
                 value={form.image}
                 onChange={handleChange}
               />
