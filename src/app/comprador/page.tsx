@@ -62,7 +62,7 @@ export default function Comprador() {
     <div className="bg-slate-100 min-h-screen flex flex-col">
       <HeaderCadastro />
       <div className="flex justify-center items-center flex-1">
-        <div className="bg-white shadow-xl w-[1000px] rounded-2xl p-5 flex items-center gap-5">
+        <div className="bg-white shadow-xl w-[1000px] rounded-2xl p-4 flex items-center gap-5">
           <img
             src="/vetor.png"
             alt="Cadastro"
@@ -73,17 +73,17 @@ export default function Comprador() {
               e.preventDefault();
               cadastrarComprador();
             }}
-            className=" flex flex-col gap-5"
+            className=" flex flex-col gap-5 flex-1"
           >
-            <h1 className="text-[30px] font-semibold text-center m-6">
+            <h1 className="text-[22px] font-semibold text-center m-6">
               Crie sua <span className="text-blue-400">conta</span>
             </h1>
-            <p>
+            <p className="text-sm">
               Cadastre-se e aproveite as melhores ofertas em peças e acessórios
               para celular.
             </p>
-            <p className="flex flex-row gap-2 text-blue-400 text-[14px]">
-              <User />
+            <p className="flex flex-row gap-2 text-blue-400 text-[15px] items-center">
+              <User className="w-4 h-4"/>
               dados pessoais
             </p>
             <input
@@ -93,7 +93,7 @@ export default function Comprador() {
               required
               value={form.nome}
               onChange={handleChange}
-              className="shadow-sm rounded-sm p-2  outline-0 focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
             <input
               type="email"
@@ -102,7 +102,7 @@ export default function Comprador() {
               required
               value={form.email}
               onChange={handleChange}
-              className="w-full shadow-sm rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
             <input
               type="text"
@@ -111,7 +111,7 @@ export default function Comprador() {
               name="telefone"
               value={form.telefone}
               onChange={handleChange}
-              className="w-full shadow-sm rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
             <input
               type="text"
@@ -120,10 +120,10 @@ export default function Comprador() {
               name="endereco"
               value={form.endereco}
               onChange={handleChange}
-              className="w-full shadow-sm rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
-            <p className="flex flex-row gap-2 text-blue-400 text-[15px]">
-              <Lock />
+            <p className="flex flex-row gap-2 text-blue-400 text-[15px] items-center">
+              <Lock className="w-4 h-4"/>
               Segurança
             </p>
             <input
@@ -133,7 +133,7 @@ export default function Comprador() {
               name="senha"
               value={form.senha}
               onChange={handleChange}
-              className="w-full shadow-sm rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
             <input
               type="password"
@@ -142,11 +142,11 @@ export default function Comprador() {
               name="confirmarSenha"
               value={form.confirmarSenha}
               onChange={handleChange}
-              className="w-full shadow-sm rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500"
+              className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
             <div className="flex flex-row gap-3 justify-center">
               <input type="checkbox" required />
-              <p className="text-[15px]">
+              <p className="text-sm text-gray-400">
                 Aceito os termos de uso e a política de privacidade.
               </p>
             </div>
@@ -156,7 +156,7 @@ export default function Comprador() {
             >
               Cadastrar
             </button>
-            <p className="text-center text-sm">
+            <p className="text-center text-sm text-gray-400">
               Já tem uma conta? <a></a>
               <Link
                 href="/"
