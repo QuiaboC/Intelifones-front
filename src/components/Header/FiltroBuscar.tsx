@@ -13,7 +13,7 @@ export default function FiltroBuscar() {
   useEffect(() => {
     const fetchFiltros = async () => {
       try {
-        const response = await axios.get("https://fakestoreapi.com/products");
+        const response = await axios.get("http://localhost:8080/produtos");
 
         setFiltros(response.data);
       } catch (error) {
@@ -26,7 +26,7 @@ export default function FiltroBuscar() {
 
   const filtrosFiltrados = busca
     ? filtros.filter((filtro) =>
-        filtro.title.toLowerCase().includes(busca.toLowerCase()),
+        filtro.nome.toLowerCase().includes(busca.toLowerCase()),
       )
     : [];
 
@@ -57,11 +57,11 @@ export default function FiltroBuscar() {
                 href={`/Detalhes/${filtro.id}`}
                 className="block p-2 hover:bg-gray-100 cursor-pointer rounded transition"
               >
-                {filtro.title}
+                {filtro.nome}
               </a>
             ))
           ) : (
-            <div className="text-gray-500 p-2">Nenhum resultado encontrado</div>
+            <div className="text-gray-500 p-2">Nenhum produto encontrado</div>
           )}
         </div>
       )}

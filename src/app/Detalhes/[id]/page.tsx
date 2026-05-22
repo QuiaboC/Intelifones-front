@@ -16,7 +16,7 @@ export default function Testando() {
     const ProdutoId = async () => {
       try {
         const response = await axios.get(
-          `https://fakestoreapi.com/products/${params.id}`,
+          `http://localhost:8080/produtos/${params.id}`,
         );
         setProduto(response.data);
       } catch (error) {
@@ -43,14 +43,26 @@ export default function Testando() {
           </div>
           <div className="flex flex-col flex-1 gap-5 justify-around">
             <div className="flex flex-col gap-5">
-              <h1 className="font-semibold text-[24px]">{produto.title}</h1>
+              <h1 className="font-semibold text-[24px]">{produto.nome}</h1>
               <p className="font-medium text-[20px]">Categoria: Celular</p>
-              <p className="text-gray-600">{produto.description}</p>
+              <p className="text-gray-600">{produto.descricao}</p>
               <p className="text-[32px] font-bold text-blue-500">
-                R$ {produto.price?.toFixed(2)}
+                R$ {produto.preco?.toFixed(2)}
               </p>
-              <span className="flex gap-1">
-                Estado do produto:<p className="text-red-500">Usado</p>
+              <span className="flex gap-2 items-center">
+                Estado do produto:
+                <span
+                  className={`text-[15px] px-2 py-1 rounded-full 
+                ${
+                  produto.estadoConservacao === "novo"
+                    ? "bg-green-100 text-green-600"
+                    : produto.estadoConservacao === "seminovo"
+                      ? "bg-yellow-100 text-yellow-600"
+                      : "bg-red-100 text-red-600"
+                }`}
+                >
+                  {produto.estadoConservacao}
+                </span>
               </span>
             </div>
 
