@@ -83,6 +83,18 @@
       "quantidade": 50,
       "ativo": true,
       "id": "Y1D40ieHmIU"
+    },
+    {
+      "nome": "foda",
+      "descricao": "foda",
+      "preco": 50,
+      "categoria_id": 1,
+      "image": "https://http2.mlstatic.com/D_NQ_NP_2X_745106-MLA108725011239_032026-F.webp",
+      "usado": false,
+      "estadoConservacao": "novo",
+      "quantidade": 5,
+      "ativo": true,
+      "id": "lTc3jaImKqY"
     }
   ],
   "categorias": [

@@ -23,7 +23,7 @@ export default function Cadastro({ setPaginaAtiva }) {
     categoria: "",
     preco: "",
     descricao: "",
-    imagem: "",
+    image: "",
     usado: "",
     estadoConservacao: "",
     quantidade: "",
@@ -44,7 +44,7 @@ export default function Cadastro({ setPaginaAtiva }) {
       categoria: "",
       preco: "",
       descricao: "",
-      imagem: "",
+      image: "",
       usado: "",
       estadoConservacao: "",
       quantidade: "",
@@ -60,7 +60,7 @@ export default function Cadastro({ setPaginaAtiva }) {
         descricao: form.descricao,
         preco: Number(form.preco),
         categoria_id: Number(form.categoria),
-        imagem: form.imagem,
+        image: form.image,
         usado: form.usado === "true",
         estadoConservacao: form.estadoConservacao,
         quantidade: Number(form.quantidade),
@@ -179,8 +179,8 @@ export default function Cadastro({ setPaginaAtiva }) {
                 type="url"
                 placeholder="https://example.com/img.jpg"
                 className="px-4 py-2 rounded-lg border border-gray-300 outline-none focus:border-blue-500 text-sm w-full"
-                name="imagem"
-                value={form.imagem}
+                name="image"
+                value={form.image}
                 onChange={handleChange}
               />
             </div>
