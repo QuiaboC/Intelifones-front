@@ -18,7 +18,7 @@ export default function CardDefault() {
           <div className="flex h-full flex-col justify-center p-5 gap-2 max-w-70">
             <span className="text-gray-400">Cadastre-se</span>
             <h1 className="font-medium text-2xl">Para aproveitar descontos</h1>
-            <a className="bg-blue-400 w-30 p-2 rounded-sm text-white hover:bg-blue-500 cursor-pointer text-center">
+            <a className="bg-blue-400 w-30 p-2 rounded-sm text-white hover:bg-blue-500 cursor-pointer text-center" href="/comprador">
               Cadastrar
             </a>
           </div>

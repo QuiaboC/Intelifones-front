@@ -23,7 +23,7 @@ export default function Header() {
     };
     categoriaData();
   }, []);
-  console.log(categorias);
+ 
 
   return (
     <div className="sticky top-0 z-50 bg-blue-500 flex justify-between w-full px-10 py-4 items-center gap-8">
@@ -65,18 +65,27 @@ export default function Header() {
               </div>
             )}
           </div>
-          <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
-            Ofertas
-          </span>
-          <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
-            Cupons
-          </span>
-          <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
-            Vender
-          </span>
-          <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
-            Contato
-          </span>
+          <Link href="/produtos">
+            <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
+              Ofertas
+            </span>
+          </Link>
+          <Link href="/produtos">
+            <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
+              Cupons
+            </span>
+          </Link>
+
+          <Link href="/vendedor">
+            <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
+              Vender
+            </span>
+          </Link>
+          <a href="#contato">
+            <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
+              Contato
+            </span>
+          </a>
           <Link href="/produtos">
             <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
               Produtos

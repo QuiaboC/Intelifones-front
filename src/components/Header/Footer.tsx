@@ -22,7 +22,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="w-full border-t border-gray-200 bg-white">
+    <footer className="w-full border-t border-gray-200 bg-white" id="contato">
       <div className="flex justify-around items-start flex-wrap gap-5 px-10 py-10">
         {itens.map((item, index) => {
           const Icone = item.icone;

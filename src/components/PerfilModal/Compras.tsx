@@ -24,8 +24,6 @@ export default function Compras() {
     };
     Produto();
   }, []);
-  console.log(produtoFiltrado);
-  console.log(categorias);
 
   const filtro = busca
     ? produtoFiltrado.filter((filtro) =>

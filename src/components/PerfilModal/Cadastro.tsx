@@ -85,8 +85,6 @@ export default function Cadastro({ setPaginaAtiva }) {
     categorias();
   }, []);
 
-  console.log(categorias);
-
   return (
     <div className="flex flex-col flex-1 bg-gray-100 py-20 px-30 flex-wrap gap-5">
       <div className="flex flex-row gap-2 items-center">

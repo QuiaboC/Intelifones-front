@@ -8,75 +8,9 @@ import { Plus } from "lucide-react";
 import CardInfo from "@/components/HomeComp/cardInfo";
 import CardProduto from "@/components/HomeComp/cardProduto";
 import CardDefault from "@/components/HomeComp/cardDefault";
+import Link from "next/link";
 
 export default function Home() {
-  const [produto, setProduto] = useState([]);
-  const [nome, setNome] = useState("");
-  const [category, setCategory] = useState("");
-  const [aberto, setAberto] = useState(false);
-  const [modalCadastro, setModalCadastro] = useState(false);
-  const [form, setForm] = useState({
-    nome: "",
-    descricao: "",
-    preco: "",
-    usado: false,
-    estadoConservacao: "",
-    ativo: true,
-    categoria: "",
-  });
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:8080/produtos")
-      .then((response) => setProduto(response.data))
-      .catch((error) => console.log(error));
-  }, []);
-
-  const cadastrarProduto = async () => {
-    try {
-      const response = await axios.post("http://localhost:3001/produtos", {
-        nome: form.nome,
-        descricao: form.descricao,
-        preco: Number(form.preco),
-        usado: form.usado,
-        estadoConservacao: form.estadoConservacao,
-        ativo: form.ativo,
-        categoria: {
-          id: 1,
-        },
-      });
-      console.log(response.data);
-      setForm({
-        nome: "",
-        descricao: "",
-        preco: "",
-        usado: false,
-        estadoConservacao: "",
-        ativo: true,
-        categoria: "",
-      });
-
-      const produtosAtualizados = await axios.get(
-        "http://localhost:8080/produtos",
-      );
-
-      setProduto(produtosAtualizados.data);
-
-      setModalCadastro(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  console.log(produto);
-
-  const produtosFiltrados = produto.filter((item) => {
-    const matchNome = item.nome.toLowerCase().includes(nome.toLowerCase());
-
-    const matchCategoria = category === "" || item.categoria.nome === category;
-
-    return matchNome && matchCategoria;
-  });
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -91,9 +25,11 @@ export default function Home() {
             A Intelifones é a melhor loja para a compra de produtos relacionados
             a smartphones, sempre perto da sua casa
           </p>
-          <p className="cursor-pointer bg-white text-blue-500 font-medium p-2.5 hover:bg-blue-50 transition w-fit rounded-xl shadow-sm">
-            Clique aqui!
-          </p>
+          <Link href="/">
+            <p className="cursor-pointer bg-white text-blue-500 font-medium p-2.5 hover:bg-blue-50 transition w-fit rounded-xl shadow-sm">
+              Clique aqui!
+            </p>
+          </Link>
         </div>
         <img src="/vetorHome.png" alt="" width={420} height={120} />
       </div>
@@ -105,8 +41,15 @@ export default function Home() {
             Intelifones
           </h1>
           <div className="flex gap-5 items-center">
-            <span className="text-white text-[22px] font-bold">Faça login para aproveita nossa melhores ofertas!</span>
-            <a href="/" className="text-[15px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold hover:bg-blue-50 transition cursor-pointer">Entrar</a>
+            <span className="text-white text-[22px] font-bold">
+              Faça login para aproveita nossa melhores ofertas!
+            </span>
+            <Link
+              href="/"
+              className="text-[15px] bg-white px-4 py-2 rounded-lg text-blue-500 font-bold hover:bg-blue-50 transition cursor-pointer"
+            >
+              Entrar
+            </Link>
           </div>
         </div>
       </div>

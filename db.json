@@ -95,6 +95,18 @@
       "quantidade": 5,
       "ativo": true,
       "id": "lTc3jaImKqY"
+    },
+    {
+      "nome": "Teclado Mecânico Gamer 60% Switch Huano Brow Red Pc Computador Switch Vermelho Português Brasil - Titorion",
+      "descricao": "Idioma: Português Brasil.\nLayout: 60%.\nCor da retroiluminação: Rainbow.\nTeclado mecânico com tecnologia 60%.\nDimensões compactas de 35x12x4 cm, ideal para setups otimizados.\nTeclas com sistema Double Injection, alta durabilidade.\nHot Swap para troca de switches sem complicação.\nAnti-Ghosting permite pressionar várias teclas simultaneamente.\nCabo de 1,5m para mobilidade sem restrições.",
+      "preco": 159.9,
+      "categoria_id": 2,
+      "image": "https://http2.mlstatic.com/D_NQ_NP_2X_738186-MLA99518020132_112025-F.webp",
+      "usado": false,
+      "estadoConservacao": "novo",
+      "quantidade": 50,
+      "ativo": true,
+      "id": "L0nYurMD9Pk"
     }
   ],
   "categorias": [

@@ -11,7 +11,6 @@ export default function CardProduto() {
       .catch((error) => console.log(error));
   }, []);
 
-  console.log(produto);
 
   return (
     <div className="w-full flex justify-center bg-white">

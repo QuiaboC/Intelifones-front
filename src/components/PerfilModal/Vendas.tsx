@@ -18,8 +18,6 @@ export default function Vendas({ setPaginaAtiva, setProdutoId }) {
     Produto();
   }, []);
 
-  console.log(filtros);
-
   const deletarProduto = async (id) => {
     try {
       await axios.delete(`http://localhost:8080/produtos/${id}`);
@@ -69,32 +67,51 @@ export default function Vendas({ setPaginaAtiva, setProdutoId }) {
         <div className="p-5 border-b border-gray-200">
           <span className="font-medium text-gray-700">Últimas vendas</span>
         </div>
-        <div className="flex flex-col w-full">
+        <div className="flex flex-col w-full overflow-hidden">
           {filtrosFiltrados.map((item) => (
             <div
               key={item.id}
-              className="flex flex-col lg:flex-row justify-between gap-5 items-start lg:items-center p-5 border-b border-gray-200 hover:bg-gray-50 transition"
+              className="flex flex-col lg:flex-row justify-between gap-5 items-start lg:items-center p-5 border-b border-gray-200 hover:bg-gray-50 transition overflow-hidden"
             >
-              <div className="flex gap-5 items-center">
+              <div className="flex gap-5 items-center min-w-0 flex-1">
                 <img
                   src={item.image}
-                  className="w-20 h-20 rounded-xl bg-amber-100 object-cover"
+                  className="w-20 h-20 rounded-xl bg-amber-100 object-cover shrink-0"
                 />
                 <div className="flex flex-col gap-1">
-                  <span className="font-semibold text-[16px]">
-                    {item.nome}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-[16px] truncate">
+                      {item.nome}
+                    </span>
+                    <span
+                      className={`text-xs px-2 py-1 rounded-full shrink-0
+        ${
+          item.estadoConservacao === "novo"
+            ? "bg-green-100 text-green-600"
+            : item.estadoConservacao === "seminovo"
+              ? "bg-yellow-100 text-yellow-600"
+              : "bg-red-100 text-red-600"
+        }`}
+                    >
+                      {item.estadoConservacao}
+                    </span>
+                  </div>
                   <span className="text-blue-500 font-medium">
                     R$ {Number(item.preco).toFixed(2)}
                   </span>
-                  <span className="text-gray-500 text-sm">
-                    Produto feito para venda
+                  <span className="text-gray-500 text-sm truncate max-w-sm">
+                    {item.descricao}
                   </span>
                 </div>
               </div>
-              <div className="flex flex-col gap-2 w-full lg:w-[200px]">
-                <button className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition cursor-pointer flex gap-2 justify-center items-center text-sm"
-                onClick={() => {setPaginaAtiva("Editar"), setProdutoId(item.id)}}>
+              <div className="flex flex-col gap-2 w-full lg:w-[200px] shrink-0">
+                <button
+                  className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition cursor-pointer flex gap-2 justify-center items-center text-sm"
+                  onClick={() => {
+                    setPaginaAtiva("Editar");
+                    setProdutoId(item.id);
+                  }}
+                >
                   <SquarePen className="w-4" />
                   Editar
                 </button>

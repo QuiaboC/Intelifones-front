@@ -14,7 +14,7 @@ export default function Informacao({ setPaginaAtiva }) {
       <div className="flex flex-row gap-2 items-center">
         <span
           className="text-[14px] cursor-pointer hover:text-blue-400"
-          onClick={(e) => setPaginaAtiva("Perfil")}
+          onClick={(e) => setPaginaAtiva("PerfilUsuario")}
         >
           Perfil
         </span>

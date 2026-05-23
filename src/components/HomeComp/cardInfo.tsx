@@ -29,7 +29,7 @@ export default function CardInfo() {
     {
       label: "Cadastre-se",
       descricao: "Encontre os melhores produtos com qualidade",
-      href: "/produtos",
+      href: "/comprador",
       icone: UserPlus,
     },
   ];
