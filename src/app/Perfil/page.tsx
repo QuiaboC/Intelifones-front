@@ -13,12 +13,6 @@ import {
   ShoppingCart,
   Handbag,
   UserRoundPen,
-  Tag,
-  Shield,
-  MapPin,
-  LockKeyhole,
-  CreditCard,
-  MessageSquare,
   Store,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -26,17 +20,33 @@ import { useSearchParams } from "next/navigation";
 import Cadastro from "@/components/PerfilModal/Cadastro";
 import Editar from "@/components/PerfilModal/Editar";
 import PerfilUsuario from "@/components/PerfilModal/PerfilUsuario";
+import { useRouter } from "next/navigation";
 
 export default function Perfil() {
   const [paginaAtiva, setPaginaAtiva] = useState("PerfilUsuario");
   const aba = useSearchParams().get("aba");
   const [ProdutoId, setProdutoId] = useState(null);
+  const [role, setRole] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
+    const roleUsuario = localStorage.getItem("role") || "";
+    setRole(roleUsuario);
+
     if (aba) {
+      if (aba === "Vendas" && roleUsuario !== "VENDEDOR") {
+        setPaginaAtiva("PerfilUsuario");
+        return;
+      }
+
       setPaginaAtiva(aba);
     }
   }, [aba]);
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    router.push("/");
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -72,14 +82,16 @@ export default function Perfil() {
               <ShoppingCart className="w-4 h-4" />
               Carrinho
             </span>
-            <span
-              className={`flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 transition text-[15px]
-        ${paginaAtiva === "Vendas" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
-              onClick={() => setPaginaAtiva("Vendas")}
-            >
-              <Store className="w-4 h-4" />
-              Vendas
-            </span>
+            {role === "VENDEDOR" && (
+              <span
+                className={`flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 transition text-[15px]
+    ${paginaAtiva === "Vendas" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
+                onClick={() => setPaginaAtiva("Vendas")}
+              >
+                <Store className="w-4 h-4" />
+                Vendas
+              </span>
+            )}
             <span
               className={`flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 transition text-[15px]
         ${paginaAtiva === "Informacao" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
@@ -88,7 +100,8 @@ export default function Perfil() {
               <Info className="w-4 h-4" />
               Informações
             </span>
-            <span className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent text-gray-500 hover:border-red-300 hover:text-red-500 hover:bg-red-50 transition text-[15px]">
+            <span onClick={logout}
+            className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent text-gray-500 hover:border-red-300 hover:text-red-500 hover:bg-red-50 transition text-[15px]">
               <LogOut className="w-4 h-4" />
               Sair
             </span>
@@ -96,7 +109,7 @@ export default function Perfil() {
         </div>
         {paginaAtiva === "Carrinho" && <Carrinho />}
         {paginaAtiva === "Compras" && <Compras />}
-        {paginaAtiva === "Vendas" && (
+        {paginaAtiva === "Vendas" && role === "VENDEDOR" && (
           <Vendas setPaginaAtiva={setPaginaAtiva} setProdutoId={setProdutoId} />
         )}
         {paginaAtiva === "Informacao" && (
@@ -108,7 +121,9 @@ export default function Perfil() {
         {paginaAtiva === "Editar" && (
           <Editar setPaginaAtiva={setPaginaAtiva} id={ProdutoId} />
         )}
-        {paginaAtiva === "PerfilUsuario" && (<PerfilUsuario setPaginaAtiva={setPaginaAtiva}/>)}
+        {paginaAtiva === "PerfilUsuario" && (
+          <PerfilUsuario setPaginaAtiva={setPaginaAtiva} />
+        )}
       </div>
       <Footer />
     </div>

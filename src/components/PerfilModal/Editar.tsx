@@ -13,7 +13,7 @@ import {
   Hash,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "@/services/api";
 
 export default function Editar({ setPaginaAtiva, id }) {
   const [categorias, setCategorias] = useState([]);
@@ -22,9 +22,7 @@ export default function Editar({ setPaginaAtiva, id }) {
     categoria_id: "",
     preco: "",
     descricao: "",
-    image: "",
     usado: "",
-    estadoConservacao: "",
     quantidade: "",
   });
 
@@ -37,26 +35,29 @@ export default function Editar({ setPaginaAtiva, id }) {
   };
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:8080/produtos/${id}`)
-      .then((res) => setForm(res.data));
+    api.get(`/produtos/${id}`).then((res) => {
+      setForm({
+        nome: res.data.nome,
+        descricao: res.data.descricao,
+        preco: res.data.preco,
+        quantidade: res.data.quantidade,
+        usado: String(res.data.usado),
+        categoria_id: res.data.categoria.id,
+      });
+    });
 
-    axios
-      .get("http://localhost:8080/categorias")
-      .then((res) => setCategorias(res.data));
+    api.get("/categorias").then((res) => setCategorias(res.data));
   }, [id]);
 
   const editarProduto = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:8080/produtos/${id}`, {
+      const response = await api.put(`/produtos/${id}`, {
         nome: form.nome,
         descricao: form.descricao,
         preco: Number(form.preco),
         categoria_id: Number(form.categoria_id),
-        image: form.image,
         usado: form.usado === "true",
-        estadoConservacao: form.estadoConservacao,
         quantidade: Number(form.quantidade),
         ativo: true,
       });
@@ -125,9 +126,10 @@ export default function Editar({ setPaginaAtiva, id }) {
                 onChange={handleChange}
               >
                 <option value="">Selecione...</option>
-                {categorias.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.nome}
+
+                {categorias.map((categoria) => (
+                  <option key={categoria.id} value={categoria.id}>
+                    {categoria.nome}
                   </option>
                 ))}
               </select>
@@ -149,42 +151,9 @@ export default function Editar({ setPaginaAtiva, id }) {
                 onChange={handleChange}
               />
             </div>
-
-            <div className="flex flex-col gap-2 flex-1">
-              <label className="text-sm text-gray-500 flex gap-2 items-center">
-                <Image className="text-blue-400 w-4 h-4" />
-                URL da imagem
-              </label>
-              <input
-                type="url"
-                placeholder="https://example.com/img.jpg"
-                className="px-4 py-2 rounded-lg border border-gray-300 outline-none focus:border-blue-500 text-sm w-full"
-                name="image"
-                value={form.image}
-                onChange={handleChange}
-              />
-            </div>
           </div>
 
           <div className="flex flex-row gap-5">
-            <div className="flex flex-col gap-2 flex-1">
-              <label className="text-sm text-gray-500 flex gap-2 items-center">
-                <PackageCheck className="text-blue-400 w-4 h-4" />
-                Estado de conservação
-              </label>
-              <select
-                className="px-4 py-2 rounded-lg border border-gray-300 outline-none focus:border-blue-500 text-sm w-full bg-white"
-                name="estadoConservacao"
-                value={form.estadoConservacao}
-                onChange={handleChange}
-              >
-                <option value="">Selecione...</option>
-                <option value="novo">Novo</option>
-                <option value="seminovo">Seminovo</option>
-                <option value="usado">Usado</option>
-              </select>
-            </div>
-
             <div className="flex flex-col gap-2 flex-1">
               <label className="text-sm text-gray-500 flex gap-2 items-center">
                 <ToggleRight className="text-blue-400 w-4 h-4" />

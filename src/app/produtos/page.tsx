@@ -3,7 +3,7 @@
 import FiltroCategoria from "@/components/Header/FiltroCategoria";
 import Footer from "@/components/Header/Footer";
 import Header from "@/components/Header/Header";
-import axios from "axios";
+import api from "@/services/api";
 import { ChevronDown, ChevronRight, ChevronsUpDown, List } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -19,8 +19,8 @@ export default function Produto() {
   const [precoMax, setPrecoMax] = useState("");
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/produtos")
+    api
+      .get("/produtos")
       .then((response) => {
         let produtos = response.data;
         if (busca) {
@@ -30,8 +30,8 @@ export default function Produto() {
         }
         if (categoria) {
           produtos = produtos.filter(
-            (item) => item.categoria_id === Number(categoria),
-          ); 
+            (item) => item.categoria?.id === Number(categoria),
+          );
         }
         setProduto(produtos);
         setProdutosTodos(produtos);
@@ -70,9 +70,9 @@ export default function Produto() {
     setProduto(produtosFiltrados);
   };
 
-  const filtroCondicao = (condicaoSelecionada) => {
+  const filtroCondicao = (usado) => {
     const produtosFiltrados = produtosTodos.filter((item) => {
-      return item.estadoConservacao === condicaoSelecionada;
+      return item.usado === usado;
     });
 
     setProduto(produtosFiltrados);
@@ -86,26 +86,21 @@ export default function Produto() {
           <span className="font-semibold text-[16px]">
             Categorias relacionadas
           </span>
-          <div className="w-full h-[150px] bg-white p-5 justify-around flex flex-col gap-2">
+          <div className="w-full h-[150px] bg-white p-5 justify-around flex flex-col gap-1">
             <h1 className="font-medium text-[15px]">Condição</h1>
             <div className="flex flex-col gap-1">
               <span
                 className="text-[14px] cursor-pointer hover:text-blue-500"
-                onClick={() => filtroCondicao("novo")}
+                onClick={() => filtroCondicao(false)}
               >
                 Novo
               </span>
+
               <span
                 className="text-[14px] cursor-pointer hover:text-blue-500"
-                onClick={() => filtroCondicao("usado")}
+                onClick={() => filtroCondicao(true)}
               >
                 Usado
-              </span>
-              <span
-                className="text-[14px] cursor-pointer hover:text-blue-500"
-                onClick={() => filtroCondicao("seminovo")}
-              >
-                Semi Novo
               </span>
             </div>
           </div>
@@ -245,16 +240,13 @@ export default function Produto() {
                       R$ {item.preco.toFixed(2).replace(".", ",")}
                     </span>
                     <span
-                      className={`text-xs px-2 py-1 rounded-full 
-                ${
-                  item.estadoConservacao === "novo"
-                    ? "bg-green-100 text-green-600"
-                    : item.estadoConservacao === "seminovo"
-                      ? "bg-yellow-100 text-yellow-600"
-                      : "bg-red-100 text-red-600"
-                }`}
+                      className={`text-xs px-2 py-1 rounded-full shrink-0 ${
+                        item.usado
+                          ? "bg-red-500 text-white"
+                          : "bg-emerald-500 text-white"
+                      }`}
                     >
-                      {item.estadoConservacao}
+                      {item.usado ? "Usado" : "Novo"}
                     </span>
                   </div>
                 </div>

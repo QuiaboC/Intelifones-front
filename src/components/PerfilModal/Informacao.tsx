@@ -6,7 +6,6 @@ import {
   Building2,
   Pencil,
 } from "lucide-react";
-import Link from "next/link";
 
 export default function Informacao({ setPaginaAtiva }) {
   return (

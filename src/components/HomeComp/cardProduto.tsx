@@ -1,16 +1,15 @@
-import axios from "axios";
+import api from "@/services/api";
 import { useEffect, useState } from "react";
 
 export default function CardProduto() {
   const [produto, setProduto] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/produtos")
+    api
+      .get("/produtos")
       .then((response) => setProduto(response.data))
       .catch((error) => console.log(error));
   }, []);
-
 
   return (
     <div className="w-full flex justify-center bg-white">
@@ -40,16 +39,13 @@ export default function CardProduto() {
                 {item.descricao}
               </span>
               <span
-                className={`text-xs px-2 py-1 rounded-full 
-                ${
-                  item.estadoConservacao === "novo"
-                    ? "bg-green-100 text-green-600"
-                    : item.estadoConservacao === "seminovo"
-                      ? "bg-yellow-100 text-yellow-600"
-                      : "bg-red-100 text-red-600"
+                className={`text-xs px-2 py-1 rounded-full shrink-0 ${
+                  item.usado
+                    ? "bg-red-500 text-white"
+                    : "bg-emerald-500 text-white"
                 }`}
               >
-                {item.estadoConservacao}
+                {item.usado ? "Usado" : "Novo"}
               </span>
             </a>
           ))}

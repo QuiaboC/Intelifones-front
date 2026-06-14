@@ -1,11 +1,11 @@
 "use client";
 
-import axios from "axios";
 import { User, Lock } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import HeaderCadastro from "@/components/Header/HeaderCadastro";
+import api from "@/services/api";
 
 export default function Comprador() {
   const [form, setForm] = useState({
@@ -15,6 +15,7 @@ export default function Comprador() {
     endereco: "",
     senha: "",
     confirmarSenha: "",
+    role: "COMPRADOR",
   });
   const router = useRouter();
 
@@ -25,44 +26,33 @@ export default function Comprador() {
     });
   };
 
-  const cadastrarComprador = () => {
-    if (form.senha != form.confirmarSenha) {
-      alert("As senhas não são iguais");
+  const cadastrarComprador = async () => {
+    if (form.senha !== form.confirmarSenha) {
+      alert("As senhas não coincidem");
       return;
     }
-
-    axios
-      .post("http://localhost:3001/compradores", {
+    try {
+      const response = await api.post("/auth/register", {
         nome: form.nome,
         email: form.email,
         telefone: form.telefone,
         endereco: form.endereco,
         senha: form.senha,
-      })
-      .then((response) => {
-        console.log(response.data);
-
-        setForm({
-          nome: "",
-          email: "",
-          telefone: "",
-          endereco: "",
-          senha: "",
-          confirmarSenha: "",
-        });
-
-        router.push("/");
-      })
-      .catch((error) => {
-        console.log(error);
+        role: form.role,
+        ativo: true,
       });
+      console.log(response.data);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="bg-slate-100 min-h-screen flex flex-col">
       <HeaderCadastro />
       <div className="flex justify-center items-center flex-1">
-        <div className="bg-white shadow-xl w-[1000px] rounded-2xl p-4 flex items-center gap-5">
+        <div className="bg-white shadow-xl max-w-[1000px] w-full rounded-2xl p-4 flex items-center gap-5">
           <img
             src="/vetor.png"
             alt="Cadastro"
@@ -83,7 +73,7 @@ export default function Comprador() {
               para celular.
             </p>
             <p className="flex flex-row gap-2 text-blue-400 text-[15px] items-center">
-              <User className="w-4 h-4"/>
+              <User className="w-4 h-4" />
               dados pessoais
             </p>
             <input
@@ -123,7 +113,7 @@ export default function Comprador() {
               className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
             <p className="flex flex-row gap-2 text-blue-400 text-[15px] items-center">
-              <Lock className="w-4 h-4"/>
+              <Lock className="w-4 h-4" />
               Segurança
             </p>
             <input

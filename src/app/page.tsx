@@ -1,8 +1,34 @@
+"use client";
+
 import Link from "next/link";
 import { Lock, Mail } from "lucide-react";
 import HeaderCadastro from "@/components/Header/HeaderCadastro";
+import { useState } from "react";
+import api from "@/services/api";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  const login = async () => {
+    try {
+      const response = await api.post("/auth/login", {
+        email,
+        senha,
+      });
+
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("nome", response.data.nome);
+      localStorage.setItem("role", response.data.role);
+
+      localStorage.setItem("email", response.data.email);
+      router.push("/home");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
       <HeaderCadastro />
@@ -22,28 +48,33 @@ export default function Home() {
               em peças e acessórios para celular.
             </p>
             <p className="flex flex-row gap-2 text-blue-400 text-[15px] items-center">
-              <Mail className="w-4 h-4"/>
+              <Mail className="w-4 h-4" />
               Dados de acesso
             </p>
             <input
               type="email"
               placeholder="E-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
             <p className="flex flex-row gap-2 text-blue-400 text-[15px] items-center">
-              <Lock className="w-4 h-4"/>
+              <Lock className="w-4 h-4" />
               Segurança
             </p>
             <input
               type="password"
               placeholder="Senha"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
               className="w-full shadow-sm rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
-            <Link href="/home">
-              <button className="w-full bg-blue-500 text-white p-3 rounded-sm hover:bg-blue-600 transition cursor-pointer mt-2">
-                Entrar
-              </button>
-            </Link>
+            <button
+              onClick={login}
+              className="w-full bg-blue-500 text-white p-3 rounded-sm hover:bg-blue-600 transition cursor-pointer mt-2"
+            >
+              Entrar
+            </button>
             <p className="text-center text-sm text-gray-400">
               Ainda não possui uma conta?{" "}
               <Link

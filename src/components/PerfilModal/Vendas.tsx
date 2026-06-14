@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "@/services/api";
 import { Plus, SquarePen, Store, Trash2 } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -9,7 +9,7 @@ export default function Vendas({ setPaginaAtiva, setProdutoId }) {
   useEffect(() => {
     const Produto = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/produtos");
+        const response = await api.get("/produtos");
         setFiltros(response.data);
       } catch (error) {
         console.error("Erro ao buscar produtos:", error);
@@ -20,7 +20,7 @@ export default function Vendas({ setPaginaAtiva, setProdutoId }) {
 
   const deletarProduto = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/produtos/${id}`);
+      await api.delete(`/produtos/${id}`);
       setFiltros((prevFiltros) => prevFiltros.filter((item) => item.id !== id));
     } catch (error) {
       console.error("Erro ao deletar produto:", error);
@@ -83,24 +83,22 @@ export default function Vendas({ setPaginaAtiva, setProdutoId }) {
                     <span className="font-semibold text-[16px] truncate">
                       {item.nome}
                     </span>
+
                     <span
-                      className={`text-xs px-2 py-1 rounded-full shrink-0
-        ${
-          item.estadoConservacao === "novo"
-            ? "bg-green-100 text-green-600"
-            : item.estadoConservacao === "seminovo"
-              ? "bg-yellow-100 text-yellow-600"
-              : "bg-red-100 text-red-600"
-        }`}
+                      className={`text-xs px-2 py-1 rounded-full shrink-0 ${
+                        item.usado
+                          ? "bg-red-500 text-white"
+                          : "bg-emerald-500 text-white"
+                      }`}
                     >
-                      {item.estadoConservacao}
+                      {item.usado ? "Usado" : "Novo"}
                     </span>
                   </div>
                   <span className="text-blue-500 font-medium">
                     R$ {Number(item.preco).toFixed(2)}
                   </span>
                   <span className="text-gray-500 text-sm truncate max-w-sm">
-                    {item.descricao}
+                    produtos disponiveis: {item.quantidade}
                   </span>
                 </div>
               </div>

@@ -2,22 +2,19 @@
 
 import Footer from "@/components/Header/Footer";
 import Header from "@/components/Header/Header";
-import axios from "axios";
+import api from "@/services/api";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { ShoppingCart } from "lucide-react";
 
 export default function Testando() {
   const params = useParams();
-
   const [produto, setProduto] = useState([]);
 
   useEffect(() => {
     const ProdutoId = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/produtos/${params.id}`,
-        );
+        const response = await api.get(`/produtos/${params.id}`);
         setProduto(response.data);
       } catch (error) {
         console.log(error);
@@ -26,7 +23,6 @@ export default function Testando() {
     ProdutoId();
   }, []);
 
-  console.log(produto);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -49,21 +45,23 @@ export default function Testando() {
               <p className="text-[32px] font-bold text-blue-500">
                 R$ {produto.preco?.toFixed(2)}
               </p>
-              <span className="flex gap-2 items-center">
-                Estado do produto:
-                <span
-                  className={`text-[15px] px-2 py-1 rounded-full 
-                ${
-                  produto.estadoConservacao === "novo"
-                    ? "bg-green-100 text-green-600"
-                    : produto.estadoConservacao === "seminovo"
-                      ? "bg-yellow-100 text-yellow-600"
-                      : "bg-red-100 text-red-600"
-                }`}
-                >
-                  {produto.estadoConservacao}
+              <div className="flex gap-1 flex-col ">
+                <span className="flex gap-2 items-center">
+                  Estado do produto:
+                  <span
+                    className={`text-xs px-2 py-1 rounded-full shrink-0 ${
+                      produto.usado
+                        ? "bg-red-500 text-white"
+                        : "bg-emerald-500 text-white"
+                    }`}
+                  >
+                    {produto.usado ? "Usado" : "Novo"}
+                  </span>
                 </span>
-              </span>
+                <span className="flex items-center">
+                  Quantidade no estoque: {produto.quantidade}
+                </span>
+              </div>
             </div>
 
             <div className="flex flex-col gap-4 max-w-[250px]">
@@ -78,7 +76,6 @@ export default function Testando() {
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );

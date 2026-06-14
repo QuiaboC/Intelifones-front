@@ -11,19 +11,31 @@ export default function Header() {
   const [modal, setModal] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const router = useRouter();
+  const [logado, setLogado] = useState(false);
+  const [nome, setNome] = useState("")
+
 
   useEffect(() => {
     const categoriaData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/categorias");
+        const response = await axios.get(
+          "http://localhost:8080/api/categorias",
+        );
         setCategorias(response.data);
       } catch (error) {
         console.error("error no response", error);
       }
     };
+    const token = localStorage.getItem("token");
+    setNome(localStorage.getItem("nome") || "");
+    setLogado(!!token);
     categoriaData();
   }, []);
- 
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    router.push("/");
+  };
 
   return (
     <div className="sticky top-0 z-50 bg-blue-500 flex justify-between w-full px-10 py-4 items-center gap-8">
@@ -94,22 +106,39 @@ export default function Header() {
         </div>
       </div>
       <div className="flex gap-3 items-center">
-        <Link href="/">
-          <button className="text-[13px] bg-white px-4 py-2 rounded-lg text-blue-500 font-medium hover:bg-blue-50 transition cursor-pointer">
-            Entrar
-          </button>
-        </Link>
-        <Link href="/Perfil">
-          <button className="text-[13px] bg-white px-4 py-2 rounded-lg text-blue-500 font-medium hover:bg-blue-50 transition cursor-pointer">
-            Criar conta
-          </button>
-        </Link>
-        <button className="text-[13px] bg-white px-4 py-2 rounded-lg text-blue-500 font-medium hover:bg-blue-50 transition cursor-pointer">
-          Compras
-        </button>
-        <Link href="/Perfil?aba=Carrinho">
-          <ShoppingCart className="text-white cursor-pointer hover:text-gray-300 transition" />
-        </Link>
+        {logado ? (
+          <>
+          <h1 className="text-white">olá, {nome}</h1>
+            <Link href="/Perfil">
+              <button className="text-[13px] bg-white px-4 py-2 rounded-lg text-blue-500 font-medium hover:bg-gray-300 transition cursor-pointer">
+                Meu Perfil
+              </button>
+            </Link>
+
+            <button
+              onClick={logout}
+              className="text-[13px] bg-red-500 px-4 py-2 rounded-lg text-white font-medium cursor-pointer hover:bg-red-600 transition cursor-pointer"
+            >
+              Sair
+            </button>
+            <Link href="/Perfil?aba=Carrinho">
+              <ShoppingCart className="text-white cursor-pointer hover:text-gray-300 transition" />
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link href="/">
+              <button className="text-[13px] bg-white px-4 py-2 rounded-lg text-blue-500 font-medium hover:bg-blue-50 transition cursor-pointer">
+                Entrar
+              </button>
+            </Link>
+            <Link href="/Perfil">
+              <button className="text-[13px] bg-white px-4 py-2 rounded-lg text-blue-500 font-medium hover:bg-blue-50 transition cursor-pointer">
+                Criar conta
+              </button>
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );

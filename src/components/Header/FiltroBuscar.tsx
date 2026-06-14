@@ -13,7 +13,7 @@ export default function FiltroBuscar() {
   useEffect(() => {
     const fetchFiltros = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/produtos");
+        const response = await axios.get("http://localhost:8080/api/produtos");
 
         setFiltros(response.data);
       } catch (error) {

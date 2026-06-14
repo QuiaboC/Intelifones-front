@@ -5,16 +5,13 @@ import {
   Pencil,
   Tag,
   DollarSign,
-  Image,
   AlignLeft,
-  PackageCheck,
   ToggleRight,
-  ShieldCheck,
   ChevronRight,
   Hash,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "@/services/api";
 
 export default function Cadastro({ setPaginaAtiva }) {
   const [categorias, setCategorias] = useState([]);
@@ -23,9 +20,7 @@ export default function Cadastro({ setPaginaAtiva }) {
     categoria: "",
     preco: "",
     descricao: "",
-    image: "",
     usado: "",
-    estadoConservacao: "",
     quantidade: "",
     ativo: "",
   });
@@ -44,9 +39,7 @@ export default function Cadastro({ setPaginaAtiva }) {
       categoria: "",
       preco: "",
       descricao: "",
-      image: "",
       usado: "",
-      estadoConservacao: "",
       quantidade: "",
       ativo: "",
     });
@@ -55,14 +48,12 @@ export default function Cadastro({ setPaginaAtiva }) {
   const CadastroProduto = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/produtos", {
+      const response = await api.post("/produtos", {
         nome: form.nome,
         descricao: form.descricao,
         preco: Number(form.preco),
         categoria_id: Number(form.categoria),
-        image: form.image,
         usado: form.usado === "true",
-        estadoConservacao: form.estadoConservacao,
         quantidade: Number(form.quantidade),
         ativo: true,
       });
@@ -76,7 +67,9 @@ export default function Cadastro({ setPaginaAtiva }) {
   useEffect(() => {
     const categorias = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/categorias");
+        const response = await api.get(
+          "/categorias",
+        );
         setCategorias(response.data);
       } catch (error) {
         console.log(error);
@@ -167,42 +160,9 @@ export default function Cadastro({ setPaginaAtiva }) {
                 onChange={handleChange}
               />
             </div>
-
-            <div className="flex flex-col gap-2 flex-1">
-              <label className="text-sm text-gray-500 flex gap-2 items-center">
-                <Image className="text-blue-400 w-4 h-4" />
-                URL da imagem
-              </label>
-              <input
-                type="url"
-                placeholder="https://example.com/img.jpg"
-                className="px-4 py-2 rounded-lg border border-gray-300 outline-none focus:border-blue-500 text-sm w-full"
-                name="image"
-                value={form.image}
-                onChange={handleChange}
-              />
-            </div>
           </div>
 
           <div className="flex flex-row gap-5">
-            <div className="flex flex-col gap-2 flex-1">
-              <label className="text-sm text-gray-500 flex gap-2 items-center">
-                <PackageCheck className="text-blue-400 w-4 h-4" />
-                Estado de conservação
-              </label>
-              <select
-                className="px-4 py-2 rounded-lg border border-gray-300 outline-none focus:border-blue-500 text-sm w-full bg-white"
-                name="estadoConservacao"
-                value={form.estadoConservacao}
-                onChange={handleChange}
-              >
-                <option value="">Selecione...</option>
-                <option value="novo">Novo</option>
-                <option value="seminovo">Seminovo</option>
-                <option value="usado">Usado</option>
-              </select>
-            </div>
-
             <div className="flex flex-col gap-2 flex-1">
               <label className="text-sm text-gray-500 flex gap-2 items-center">
                 <ToggleRight className="text-blue-400 w-4 h-4" />

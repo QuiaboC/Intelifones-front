@@ -1,10 +1,7 @@
 "use client";
 
-import axios from "axios";
-import { useEffect, useState } from "react";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Header/Footer";
-import { Plus } from "lucide-react";
 import CardInfo from "@/components/HomeComp/cardInfo";
 import CardProduto from "@/components/HomeComp/cardProduto";
 import CardDefault from "@/components/HomeComp/cardDefault";

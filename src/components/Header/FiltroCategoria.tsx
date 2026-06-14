@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import api from "@/services/api";
 import { List } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -9,38 +9,41 @@ export default function FiltroCategoria({ setProdutos, categoria }) {
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todos");
 
   useEffect(() => {
-  const filtro = async () => {
-    try {
-      const response = await axios.get("http://localhost:8080/categorias");
-      const dados = response.data;
-      setCategorias(["Todos", ...dados]);
+    const filtro = async () => {
+      try {
+        const response = await api.get("/categorias");
+        const dados = response.data;
+        setCategorias(["Todos", ...dados]);
 
-      if (categoria) {
-        const encontrada = dados.find((c) => String(c.id) === String(categoria));
-        if (encontrada) {
-          setCategoriaSelecionada(encontrada);
-          const res = await axios.get("http://localhost:8080/produtos", {
-            params: { categoria_id: encontrada.id },
-          });
-          setProdutos(res.data);
+        if (categoria) {
+          const encontrada = dados.find(
+            (c) => String(c.id) === String(categoria),
+          );
+          if (encontrada) {
+            setCategoriaSelecionada(encontrada);
+            const res = await api.get(`/produtos/categoria/${encontrada.id}`);
+            setProdutos(res.data);
+          }
         }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  filtro();
-}, [categoria]);
+    };
+    filtro();
+  }, [categoria]);
 
   const filtroCategoria = async (item) => {
+    console.log("Categoria clicada:", item);
+
     setCategoriaSelecionada(item);
+
     try {
       const response =
         item === "Todos"
-          ? await axios.get("http://localhost:8080/produtos")
-          : await axios.get("http://localhost:8080/produtos", {
-              params: { categoria_id: item.id },
-            });
+          ? await api.get("/produtos")
+          : await api.get(`/produtos/categoria/${item.id}`);
+
+      console.log(response.data);
 
       setProdutos(response.data);
     } catch (error) {

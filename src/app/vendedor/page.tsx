@@ -3,7 +3,7 @@
 import { User, Lock } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import axios from "axios";
+import api from "@/services/api";
 import { useRouter } from "next/navigation";
 import HeaderCadastro from "@/components/Header/HeaderCadastro";
 
@@ -12,9 +12,10 @@ export default function Vendedor() {
     nome: "",
     email: "",
     telefone: "",
-    Cnpj: "",
+    endereco: "",
     senha: "",
     confirmarSenha: "",
+    role: "VENDEDOR",
   });
   const router = useRouter();
 
@@ -31,12 +32,13 @@ export default function Vendedor() {
       return;
     }
     try {
-      const response = await axios.post("http://localhost:8080/vendedores", {
+      const response = await api.post("/auth/register", {
         nome: form.nome,
         email: form.email,
         telefone: form.telefone,
-        cpfCnpj: form.Cnpj,
+        endereco: form.endereco,
         senha: form.senha,
+        role: form.role,
         ativo: true,
       });
       console.log(response.data);
@@ -104,10 +106,10 @@ export default function Vendedor() {
             />
             <input
               type="text"
-              name="Cnpj"
+              name="endereco"
               required
-              placeholder="CNPJ"
-              value={form.Cnpj}
+              placeholder="Ex: Santo aleixo"
+              value={form.endereco}
               onChange={handleChange}
               className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
