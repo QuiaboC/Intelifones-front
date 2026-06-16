@@ -20,9 +20,22 @@ export default function Comprador() {
   const router = useRouter();
 
   const handleChange = (e) => {
+    let { name, value } = e.target;
+
+    if (name === "nome") {
+      value = value.replace(/[0-9]/g, "");
+    }
+
+    if (name === "telefone") {
+      value = value.replace(/\D/g, "");
+
+      if (value.length <= 11) {
+        value = value.replace(/^(\d{2})(\d{5})(\d{0,4})$/, "($1) $2-$3");
+      }
+    }
     setForm({
       ...form,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
@@ -82,6 +95,7 @@ export default function Comprador() {
               name="nome"
               required
               value={form.nome}
+              maxLength={100}
               onChange={handleChange}
               className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
@@ -91,6 +105,7 @@ export default function Comprador() {
               name="email"
               required
               value={form.email}
+              maxLength={150}
               onChange={handleChange}
               className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
@@ -100,6 +115,7 @@ export default function Comprador() {
               required
               name="telefone"
               value={form.telefone}
+              maxLength={15}
               onChange={handleChange}
               className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
@@ -109,6 +125,7 @@ export default function Comprador() {
               required
               name="endereco"
               value={form.endereco}
+              maxLength={255}
               onChange={handleChange}
               className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />
@@ -122,6 +139,8 @@ export default function Comprador() {
               placeholder="Senha"
               name="senha"
               value={form.senha}
+              minLength={6}
+              maxLength={50}
               onChange={handleChange}
               className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />

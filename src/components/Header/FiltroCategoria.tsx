@@ -4,7 +4,11 @@ import api from "@/services/api";
 import { List } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export default function FiltroCategoria({ setProdutos, categoria }) {
+export default function FiltroCategoria({
+  setProdutos,
+  setProdutosTodos,
+  categoria,
+}) {
   const [categorias, setCategorias] = useState([]);
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todos");
 
@@ -22,7 +26,9 @@ export default function FiltroCategoria({ setProdutos, categoria }) {
           if (encontrada) {
             setCategoriaSelecionada(encontrada);
             const res = await api.get(`/produtos/categoria/${encontrada.id}`);
+
             setProdutos(res.data);
+            setProdutosTodos(res.data);
           }
         }
       } catch (error) {
@@ -46,6 +52,7 @@ export default function FiltroCategoria({ setProdutos, categoria }) {
       console.log(response.data);
 
       setProdutos(response.data);
+      setProdutosTodos(response.data);
     } catch (error) {
       console.log(error);
     }

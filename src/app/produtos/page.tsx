@@ -217,7 +217,11 @@ export default function Produto() {
               Produtos
             </span>
           </div>
-          <FiltroCategoria setProdutos={setProduto} categoria={categoria} />
+          <FiltroCategoria
+            setProdutos={setProduto}
+            setProdutosTodos={setProdutosTodos}
+            categoria={categoria}
+          />
           <div className="flex gap-10 flex-wrap justify-start flex-1 p-5">
             {produto.map((item) => (
               <a
