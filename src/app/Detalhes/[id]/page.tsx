@@ -6,10 +6,12 @@ import api from "@/services/api";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { ShoppingCart } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function Testando() {
   const params = useParams();
   const [produto, setProduto] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const ProdutoId = async () => {
@@ -17,11 +19,24 @@ export default function Testando() {
         const response = await api.get(`/produtos/${params.id}`);
         setProduto(response.data);
       } catch (error) {
-        console.log(error);
+        console.error("Erro ao buscar produto:", error);
       }
     };
     ProdutoId();
-  }, []);
+  }, [params?.id]);
+
+  const CompraProduto = async () => {
+    try{
+      const response = await api.post("/carrinho", {
+        produtoId: produto.id,
+        quantidade: 1, 
+      });
+      console.log("cadastro concluido", response.data);
+      router.push("/Perfil?aba=Carrinho")
+    }catch(error){
+      console.log(error)
+    }
+  }
 
 
   return (
@@ -32,8 +47,8 @@ export default function Testando() {
         <div className="bg-white rounded-2xl shadow-lg p-8 flex gap-10 min-h-[700px] w-full max-w-[1400px]">
           <div className="flex justify-center items-center flex-1 bg-gray-100">
             <img
-              src={produto.image}
-              alt=""
+              src={`http://localhost:8080/uploads/produtos/${produto.imagem}`}
+              alt="Imagem de produto"
               className="w-[300px] h-[300px] object-contain"
             />
           </div>
@@ -65,10 +80,10 @@ export default function Testando() {
             </div>
 
             <div className="flex flex-col gap-4 max-w-[250px]">
-              <button className="bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition cursor-pointer">
+              <button className="bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition cursor-pointer" onClick={CompraProduto}>
                 Comprar agora
               </button>
-              <button className="flex gap-2 bg-gray-200 text-gray-800 py-3 px-4 rounded-lg justify-center hover:bg-gray-300 transition cursor-pointer">
+              <button className="flex gap-2 bg-gray-200 text-gray-800 py-3 px-4 rounded-lg justify-center hover:bg-gray-300 transition cursor-pointer"  onClick={CompraProduto}>
                 Adicionar ao carrinho
                 <ShoppingCart />
               </button>

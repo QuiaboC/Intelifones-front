@@ -1,21 +1,21 @@
-import axios from "axios";
+import { useRouter } from "next/navigation";
 import { use, useEffect, useState } from "react";
 import { ChevronDown, ShoppingCart, Store } from "lucide-react";
+import api from "@/services/api";
 
-export default function Compras() {
+export default function Compras({setPaginaAtiva}) {
   const [busca, setBusca] = useState("");
   const [produtoFiltrado, setProdutoFiltrado] = useState([]);
   const [modal, setModal] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const [categoriaSelecionada, setCategoriaSelecionada] = useState("Todos");
+  const router = useRouter();
 
   useEffect(() => {
     const Produto = async () => {
       try {
-        const response = await axios.get("https://fakestoreapi.com/products");
-        const categoriasResponse = await axios.get(
-          "https://fakestoreapi.com/products/categories",
-        );
+        const response = await api.get("/pedidos/historico");
+        const categoriasResponse = await api.get("/categorias");
         setCategorias(["Todos", ...categoriasResponse.data]);
         setProdutoFiltrado(response.data);
       } catch (error) {
@@ -24,25 +24,42 @@ export default function Compras() {
     };
     Produto();
   }, []);
+  console.log(produtoFiltrado);
 
   const filtro = busca
     ? produtoFiltrado.filter((filtro) =>
-        filtro.title.toLowerCase().includes(busca.toLowerCase()),
+        filtro.produto.nome.toLowerCase().includes(busca.toLowerCase()),
       )
     : produtoFiltrado;
 
   const filtroCategoria = async (categoria) => {
     try {
-      const response =
+      const response = await api.get("/pedidos/historico");
+
+      const dados =
         categoria === "Todos"
-          ? await axios.get("https://fakestoreapi.com/products")
-          : await axios.get(
-              `https://fakestoreapi.com/products/category/${categoria}`,
+          ? response.data
+          : response.data.filter(
+              (item) => item.produto.categoria.nome === categoria.nome,
             );
 
-      setProdutoFiltrado(response.data);
+      setProdutoFiltrado(dados);
+      setCategoriaSelecionada(categoria === "Todos" ? "Todos" : categoria.nome);
+      setModal(false);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const CompraProduto = async (produtoId) => {
+    try {
+      await api.post("/carrinho", {
+        produtoId,
+        quantidade: 1,
+      });
+      setPaginaAtiva("Carrinho")
+    } catch (error) {
+      console.log(error.response?.data || error);
     }
   };
 
@@ -75,19 +92,16 @@ export default function Compras() {
                 {categorias.map((item, index) => (
                   <button
                     key={index}
+                    onClick={() => filtroCategoria(item)}
                     className="cursor-pointer text-left text-[15px] text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md transition"
-                    onClick={() => {
-                      filtroCategoria(item);
-                      setCategoriaSelecionada(item);
-                    }}
                   >
-                    {item}
+                    {item === "Todos" ? "Todos" : item.nome}
                   </button>
                 ))}
               </div>
             )}
           </div>
-          <span className="font-medium">9 compras</span>
+          <span className="font-medium">{produtoFiltrado.length} compras</span>
         </div>
       </div>
       <div className="w-full flex flex-col bg-white rounded-sm overflow-hidden shadow-sm">
@@ -102,29 +116,32 @@ export default function Compras() {
             >
               <div className="flex gap-5 items-center">
                 <img
-                  src={item.image}
+                  src={`http://localhost:8080/uploads/produtos/${item.produto.imagem}`}
                   className="w-20 h-20 rounded-xl bg-amber-100 object-cover"
                 />
                 <div className="flex flex-col gap-1">
                   <span className="font-semibold text-[16px]">
-                    {item.title}
+                    {item.produto.nome}
                   </span>
                   <span className="text-blue-500 font-medium">
-                    R$ {item.price.toFixed(2)}
+                    R$ {item.produto.preco.toFixed(2)}
                   </span>
                   <span className="text-gray-500 text-sm">
-                    Produto feito para compra
+                    {item.produto.descricao}
                   </span>
                 </div>
               </div>
               <div className="flex flex-col gap-2 w-full lg:w-[200px]">
                 <a
                   className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition cursor-pointer text-center text-sm"
-                  href={`/Detalhes/${item.id}`}
+                  href={`/Detalhes/${item.produto.id}`}
                 >
                   Ver compra
                 </a>
-                <button className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition cursor-pointer text-sm">
+                <button
+                  className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition cursor-pointer text-sm"
+                  onClick={() => CompraProduto(item.produto.id)}
+                >
                   Comprar novamente
                 </button>
               </div>

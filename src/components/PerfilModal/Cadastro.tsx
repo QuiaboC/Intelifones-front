@@ -24,6 +24,7 @@ export default function Cadastro({ setPaginaAtiva }) {
     quantidade: "",
     ativo: "",
   });
+  const [imagem, setImagem] = useState<File | null>(null);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -46,30 +47,45 @@ export default function Cadastro({ setPaginaAtiva }) {
   };
 
   const CadastroProduto = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await api.post("/produtos", {
-        nome: form.nome,
-        descricao: form.descricao,
-        preco: Number(form.preco),
-        categoria_id: Number(form.categoria),
-        usado: form.usado === "true",
-        quantidade: Number(form.quantidade),
-        ativo: true,
-      });
-      console.log("Cadastrado com sucesso:", response.data);
-      setPaginaAtiva("Vendas");
-    } catch (error) {
-      console.log(error);
+  e.preventDefault();
+
+  try {
+    const response = await api.post("/produtos", {
+      nome: form.nome,
+      descricao: form.descricao,
+      preco: Number(form.preco),
+      categoria_id: Number(form.categoria),
+      usado: form.usado === "true",
+      quantidade: Number(form.quantidade),
+      ativo: true,
+    });
+
+    const produto = response.data;
+
+    if (imagem) {
+      const formData = new FormData();
+
+      formData.append("arquivo", imagem);
+
+      await api.post(
+        `/produtos/${produto.id}/imagem`,
+        formData,
+      );
     }
-  };
+
+    console.log("Produto cadastrado com sucesso!");
+
+    setPaginaAtiva("Vendas");
+
+  } catch (error) {
+    console.log(error);
+  }
+};
 
   useEffect(() => {
     const categorias = async () => {
       try {
-        const response = await api.get(
-          "/categorias",
-        );
+        const response = await api.get("/categorias");
         setCategorias(response.data);
       } catch (error) {
         console.log(error);
@@ -158,6 +174,16 @@ export default function Cadastro({ setPaginaAtiva }) {
                 name="preco"
                 value={form.preco}
                 onChange={handleChange}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-sm text-gray-500">Imagem do produto</label>
+
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setImagem(e.target.files?.[0] || null)}
+                className="px-4 py-2 rounded-lg border border-gray-300"
               />
             </div>
           </div>

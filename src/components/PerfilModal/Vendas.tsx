@@ -75,7 +75,7 @@ export default function Vendas({ setPaginaAtiva, setProdutoId }) {
             >
               <div className="flex gap-5 items-center min-w-0 flex-1">
                 <img
-                  src={item.image}
+                  src={`http://localhost:8080/uploads/produtos/${item.imagem}`}
                   className="w-20 h-20 rounded-xl bg-amber-100 object-cover shrink-0"
                 />
                 <div className="flex flex-col gap-1">
