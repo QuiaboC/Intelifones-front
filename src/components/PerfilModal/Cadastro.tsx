@@ -75,7 +75,7 @@ export default function Cadastro({ setPaginaAtiva }) {
 
     console.log("Produto cadastrado com sucesso!");
 
-    setPaginaAtiva("Vendas");
+    setPaginaAtiva("MeusProdutos");
 
   } catch (error) {
     console.log(error);
@@ -101,7 +101,7 @@ export default function Cadastro({ setPaginaAtiva }) {
           className="text-[14px] cursor-pointer hover:text-blue-400"
           onClick={() => setPaginaAtiva("Vendas")}
         >
-          Vendas
+          Meus produtos
         </span>
         <ChevronRight className="w-4 h-4 text-gray-500" />
         <span className="text-[14px] text-blue-400">Cadastro</span>

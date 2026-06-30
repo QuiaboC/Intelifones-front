@@ -34,7 +34,7 @@ export default function Testando() {
       console.log("cadastro concluido", response.data);
       router.push("/Perfil?aba=Carrinho")
     }catch(error){
-      console.log(error)
+      alert(error.response.data.message);
     }
   }
 

@@ -67,7 +67,7 @@ export default function Compras({setPaginaAtiva}) {
     <div className="flex flex-col flex-1 bg-gray-100 py-20 px-30 flex-wrap gap-5">
       <h1 className="text-[22px] font-bold text-blue-400 flex gap-2 items-center">
         <ShoppingCart />
-        Compras
+        Minhas Compras
       </h1>
       <div className="flex flex-wrap gap-5 w-full items-center justify-between">
         <input

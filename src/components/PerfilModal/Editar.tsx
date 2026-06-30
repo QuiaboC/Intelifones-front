@@ -17,6 +17,7 @@ import api from "@/services/api";
 
 export default function Editar({ setPaginaAtiva, id }) {
   const [categorias, setCategorias] = useState([]);
+  const [imagem, setImagem] = useState<File | null>(null);
   const [form, setForm] = useState({
     nome: "",
     categoria_id: "",
@@ -61,8 +62,20 @@ export default function Editar({ setPaginaAtiva, id }) {
         quantidade: Number(form.quantidade),
         ativo: true,
       });
-      console.log("Produto editado com sucesso:", response.data);
-      setPaginaAtiva("Vendas");
+
+      const produto = response.data;
+
+      if (imagem) {
+        const formData = new FormData();
+
+        formData.append("arquivo", imagem);
+
+        await api.post(`/produtos/${produto.id}/imagem`, formData);
+      }
+
+      console.log("Produto cadastrado com sucesso!");
+
+      setPaginaAtiva("MeusProdutos");
     } catch (error) {
       console.log(error);
     }
@@ -73,9 +86,9 @@ export default function Editar({ setPaginaAtiva, id }) {
       <div className="flex flex-row gap-2 items-center">
         <span
           className="text-[14px] cursor-pointer hover:text-blue-400"
-          onClick={() => setPaginaAtiva("Vendas")}
+          onClick={() => setPaginaAtiva("MeusProdutos")}
         >
-          Vendas
+          Meus produtos
         </span>
         <ChevronRight className="w-4 h-4 text-gray-500" />
         <span className="text-[14px] text-blue-400">Editar</span>
@@ -149,6 +162,16 @@ export default function Editar({ setPaginaAtiva, id }) {
                 name="preco"
                 value={form.preco}
                 onChange={handleChange}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label className="text-sm text-gray-500">Imagem do produto</label>
+
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setImagem(e.target.files?.[0] || null)}
+                className="px-4 py-2 rounded-lg border border-gray-300"
               />
             </div>
           </div>

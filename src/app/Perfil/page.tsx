@@ -3,7 +3,7 @@
 import Footer from "@/components/Header/Footer";
 import Header from "@/components/Header/Header";
 import Compras from "@/components/PerfilModal/Compras";
-import Vendas from "@/components/PerfilModal/Vendas";
+import MeusProdutos from "@/components/PerfilModal/MeusProdutos";
 import Carrinho from "@/components/PerfilModal/Carrinho";
 import Informacao from "@/components/PerfilModal/Informacao";
 import {
@@ -22,11 +22,14 @@ import Editar from "@/components/PerfilModal/Editar";
 import PerfilUsuario from "@/components/PerfilModal/PerfilUsuario";
 import { useRouter } from "next/navigation";
 import Checkout from "@/components/PerfilModal/Checkout";
+import Vendas from "@/components/PerfilModal/Vendas";
+import Detalhes from "@/components/PerfilModal/Detalhes";
 
 export default function Perfil() {
   const [paginaAtiva, setPaginaAtiva] = useState("PerfilUsuario");
   const aba = useSearchParams().get("aba");
   const [ProdutoId, setProdutoId] = useState(null);
+  const [PedidoId, setPedidoId] = useState(null);
   const [role, setRole] = useState("");
   const router = useRouter();
   const [dadosCheckout, setDadosCheckout] = useState({ total: 0, qTotal: 0 });
@@ -87,11 +90,11 @@ export default function Perfil() {
             {role === "VENDEDOR" && (
               <span
                 className={`flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 transition text-[15px]
-    ${paginaAtiva === "Vendas" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
-                onClick={() => setPaginaAtiva("Vendas")}
+    ${paginaAtiva === "MeusProdutos" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
+                onClick={() => setPaginaAtiva("MeusProdutos")}
               >
                 <Store className="w-4 h-4" />
-                Vendas
+                Meus Produtos
               </span>
             )}
             <span
@@ -101,6 +104,14 @@ export default function Perfil() {
             >
               <Info className="w-4 h-4" />
               Informações
+            </span>
+            <span
+              className={`flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 transition text-[15px]
+        ${paginaAtiva === "Vendas" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
+              onClick={() => setPaginaAtiva("Vendas")}
+            >
+              <UserRoundPen className="w-4 h-4" />
+              Vendas
             </span>
             <span
               onClick={logout}
@@ -120,8 +131,15 @@ export default function Perfil() {
         {paginaAtiva === "Compras" && (
           <Compras setPaginaAtiva={setPaginaAtiva} />
         )}
-        {paginaAtiva === "Vendas" && role === "VENDEDOR" && (
-          <Vendas setPaginaAtiva={setPaginaAtiva} setProdutoId={setProdutoId} />
+        {paginaAtiva === "Vendas" && <Vendas setPaginaAtiva={setPaginaAtiva} setPedidoId={setPedidoId}/>}
+        {paginaAtiva == "Detalhes" && (
+          <Detalhes setPaginaAtiva={setPaginaAtiva} id={PedidoId}/>
+        )}
+        {paginaAtiva === "MeusProdutos" && role === "VENDEDOR" && (
+          <MeusProdutos
+            setPaginaAtiva={setPaginaAtiva}
+            setProdutoId={setProdutoId}
+          />
         )}
         {paginaAtiva === "Informacao" && (
           <Informacao setPaginaAtiva={setPaginaAtiva} />
