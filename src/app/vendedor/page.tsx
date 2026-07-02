@@ -12,7 +12,7 @@ export default function Vendedor() {
     nome: "",
     email: "",
     telefone: "",
-    endereco: "",
+    cpf: "",
     senha: "",
     confirmarSenha: "",
     role: "VENDEDOR",
@@ -33,6 +33,16 @@ export default function Vendedor() {
         value = value.replace(/^(\d{2})(\d{5})(\d{0,4})$/, "($1) $2-$3");
       }
     }
+    if (name === "cpf") {
+      value = value.replace(/\D/g, "");
+
+      if (value.length <= 11) {
+        value = value.replace(
+          /^(\d{3})(\d{3})(\d{3})(\d{0,2})$/,
+          "$1.$2.$3-$4",
+        );
+      }
+    }
     setForm({
       ...form,
       [name]: value,
@@ -48,10 +58,9 @@ export default function Vendedor() {
         nome: form.nome,
         email: form.email,
         telefone: form.telefone,
-        endereco: form.endereco,
+        cpf: form.cpf,
         senha: form.senha,
         role: form.role,
-        ativo: true,
       });
       console.log(response.data);
       router.push("/");
@@ -121,11 +130,11 @@ export default function Vendedor() {
             />
             <input
               type="text"
-              name="endereco"
+              name="cpf"
               required
-              placeholder="Ex: Santo aleixo"
-              value={form.endereco}
-              maxLength={255}
+              placeholder="Ex: 123.456.789-00"
+              value={form.cpf}
+              maxLength={14}
               onChange={handleChange}
               className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />

@@ -60,7 +60,6 @@ export default function Editar({ setPaginaAtiva, id }) {
         categoria_id: Number(form.categoria_id),
         usado: form.usado === "true",
         quantidade: Number(form.quantidade),
-        ativo: true,
       });
 
       const produto = response.data;

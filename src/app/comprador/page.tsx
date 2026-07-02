@@ -12,7 +12,7 @@ export default function Comprador() {
     nome: "",
     email: "",
     telefone: "",
-    endereco: "",
+    cpf: "",
     senha: "",
     confirmarSenha: "",
     role: "COMPRADOR",
@@ -29,8 +29,18 @@ export default function Comprador() {
     if (name === "telefone") {
       value = value.replace(/\D/g, "");
 
-      if (value.length <= 11) {
-        value = value.replace(/^(\d{2})(\d{5})(\d{0,4})$/, "($1) $2-$3");
+    if (value.length <= 11) {
+      value = value.replace(/^(\d{2})(\d{5})(\d{0,4})$/, "($1) $2-$3");
+    }
+    if (name === "cpf") {
+      value = value.replace(/\D/g, "");
+
+    if (value.length <= 11) {
+      value = value.replace(
+        /^(\d{3})(\d{3})(\d{3})(\d{0,2})$/,
+        "$1.$2.$3-$4",
+          );
+        }
       }
     }
     setForm({
@@ -49,10 +59,9 @@ export default function Comprador() {
         nome: form.nome,
         email: form.email,
         telefone: form.telefone,
-        endereco: form.endereco,
+        cpf: form.cpf,
         senha: form.senha,
         role: form.role,
-        ativo: true,
       });
       console.log(response.data);
       router.push("/");
@@ -121,11 +130,11 @@ export default function Comprador() {
             />
             <input
               type="text"
-              placeholder="Endereço"
+              placeholder="CPF"
               required
-              name="endereco"
-              value={form.endereco}
-              maxLength={255}
+              name="cpf"
+              value={form.cpf}
+              maxLength={14}
               onChange={handleChange}
               className="w-full rounded-sm p-2 outline-0 focus:ring-2 focus:ring-blue-500 border border-gray-200 text-sm"
             />

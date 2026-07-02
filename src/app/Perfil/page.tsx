@@ -24,6 +24,8 @@ import { useRouter } from "next/navigation";
 import Checkout from "@/components/PerfilModal/Checkout";
 import Vendas from "@/components/PerfilModal/Vendas";
 import Detalhes from "@/components/PerfilModal/Detalhes";
+import Localizacao from "@/components/PerfilModal/Localizacao/Localizacao";
+import CadastroEndereco from "@/components/PerfilModal/Localizacao/CadastrarEndereco";
 
 export default function Perfil() {
   const [paginaAtiva, setPaginaAtiva] = useState("PerfilUsuario");
@@ -131,15 +133,23 @@ export default function Perfil() {
         {paginaAtiva === "Compras" && (
           <Compras setPaginaAtiva={setPaginaAtiva} />
         )}
-        {paginaAtiva === "Vendas" && <Vendas setPaginaAtiva={setPaginaAtiva} setPedidoId={setPedidoId}/>}
+        {paginaAtiva === "Vendas" && (
+          <Vendas setPaginaAtiva={setPaginaAtiva} setPedidoId={setPedidoId} />
+        )}
         {paginaAtiva == "Detalhes" && (
-          <Detalhes setPaginaAtiva={setPaginaAtiva} id={PedidoId}/>
+          <Detalhes setPaginaAtiva={setPaginaAtiva} id={PedidoId} />
         )}
         {paginaAtiva === "MeusProdutos" && role === "VENDEDOR" && (
           <MeusProdutos
             setPaginaAtiva={setPaginaAtiva}
             setProdutoId={setProdutoId}
           />
+        )}
+        {paginaAtiva === "CadastroEndereco" && (
+          <CadastroEndereco setPaginaAtiva={setPaginaAtiva} />
+        )}
+        {paginaAtiva === "Localizacao" && (
+          <Localizacao setPaginaAtiva={setPaginaAtiva} />
         )}
         {paginaAtiva === "Informacao" && (
           <Informacao setPaginaAtiva={setPaginaAtiva} />

@@ -22,7 +22,6 @@ export default function Cadastro({ setPaginaAtiva }) {
     descricao: "",
     usado: "",
     quantidade: "",
-    ativo: "",
   });
   const [imagem, setImagem] = useState<File | null>(null);
 
@@ -42,7 +41,6 @@ export default function Cadastro({ setPaginaAtiva }) {
       descricao: "",
       usado: "",
       quantidade: "",
-      ativo: "",
     });
   };
 
@@ -57,7 +55,6 @@ export default function Cadastro({ setPaginaAtiva }) {
       categoria_id: Number(form.categoria),
       usado: form.usado === "true",
       quantidade: Number(form.quantidade),
-      ativo: true,
     });
 
     const produto = response.data;
@@ -99,7 +96,7 @@ export default function Cadastro({ setPaginaAtiva }) {
       <div className="flex flex-row gap-2 items-center">
         <span
           className="text-[14px] cursor-pointer hover:text-blue-400"
-          onClick={() => setPaginaAtiva("Vendas")}
+          onClick={() => setPaginaAtiva("MeusProdutos")}
         >
           Meus produtos
         </span>

@@ -113,7 +113,9 @@ export default function PerfilUsuario({ setPaginaAtiva }) {
             </p>
           </div>
 
-          <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
+          <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2"
+          onClick={(e) => setPaginaAtiva("Localizacao")}
+          >
             <MapPin className="w-6 h-6 text-blue-500" />
             <h1 className="font-semibold text-[15px]">Localização</h1>
             <p className="text-gray-500 text-sm">

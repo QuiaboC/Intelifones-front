@@ -15,7 +15,7 @@ export default function Informacao({ setPaginaAtiva }) {
   const [form, setForm] = useState({
     nome: "",
     telefone: "",
-    endereco: "",
+    cpf: "",
     ativo: "",
   });
 
@@ -26,7 +26,7 @@ export default function Informacao({ setPaginaAtiva }) {
       setForm({
         nome: res.data.nome,
         telefone: res.data.telefone,
-        endereco: res.data.endereco,
+        cpf: res.data.cpf,
         ativo: res.data.ativo
       });
     })
@@ -36,19 +36,36 @@ export default function Informacao({ setPaginaAtiva }) {
   console.log(form);
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  e: React.ChangeEvent<
+    HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+  >,
+) => {
+  const { name } = e.target;
+  let { value } = e.target;
+
+  if (name === "cpf") {
+    value = value.replace(/\D/g, ""); // Remove tudo que não é número
+
+    if (value.length <= 11) {
+      value = value.replace(
+        /^(\d{3})(\d{3})(\d{3})(\d{0,2})$/,
+        "$1.$2.$3-$4"
+      );
+    }
+  }
+
+  setForm({
+    ...form,
+    [name]: value,
+  });
+};
 
   const atualizarUsuario = async () => {
     try {
       const response = await api.put("/usuarios/me", {
         nome: form.nome,
         telefone: form.telefone,
-        endereco: form.endereco,
+        cpf: form.cpf,
       });
       console.log(response.data);
       setPaginaAtiva("Perfil")
@@ -123,9 +140,10 @@ export default function Informacao({ setPaginaAtiva }) {
               </div>
               <input
                 type="text"
-                placeholder="Endereco"
-                value={form.endereco}
-                name="endereco"
+                placeholder="cpf"
+                value={form.cpf}
+                maxLength={14}
+                name="cpf"
                 onChange={handleChange}
                 className="px-4 py-2 rounded-lg border border-gray-300 w-full max-w-md outline-none focus:border-blue-500 text-sm"
               />

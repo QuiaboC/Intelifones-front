@@ -231,7 +231,7 @@ export default function Produto() {
               >
                 <div className="w-full h-[180px] justify-center flex">
                   <img
-                    src={item.image}
+                    src={`http://localhost:8080/uploads/produtos/${item.imagem}`}
                     alt=""
                     className="w-full h-full transition-transform duration-300 group-hover:scale-110"
                   />
