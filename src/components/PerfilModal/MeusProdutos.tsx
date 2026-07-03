@@ -97,9 +97,15 @@ export default function MeusProdutos({ setPaginaAtiva, setProdutoId }) {
                   <span className="text-blue-500 font-medium">
                     R$ {Number(item.preco).toFixed(2)}
                   </span>
-                  <span className="text-gray-500 text-sm truncate max-w-sm">
-                    produtos disponiveis: {item.quantidade}
-                  </span>
+                  {item.quantidade === 0 ? (
+                    <span className="text-red-500 text-sm truncate max-w-sm">
+                      produto indisponível
+                    </span>
+                  ) : (
+                    <span className="text-gray-500 text-sm truncate max-w-sm">
+                      produtos disponiveis: {item.quantidade}
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="flex flex-col gap-2 w-full lg:w-[200px] shrink-0">

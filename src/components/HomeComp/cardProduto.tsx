@@ -24,8 +24,8 @@ export default function CardProduto() {
             >
               <div className="flex justify-center w-full p-4 bg-gray-100">
                 <img
-                  src={item.image}
-                  alt={item.nome}
+                  src={`http://localhost:8080/uploads/produtos/${item.imagem}`}
+                  alt="Imagem de produto"
                   className="w-40 h-40 object-contain"
                 />
               </div>

@@ -20,7 +20,7 @@ export default function Produto() {
 
   useEffect(() => {
     api
-      .get("/produtos")
+      .get("/produtos/disponiveis")
       .then((response) => {
         let produtos = response.data;
         if (busca) {

@@ -1,11 +1,13 @@
 "use client";
 
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import api from "@/services/api";
+import { useSearchParams } from "next/navigation";
 
 export default function FiltroBuscar() {
-  const [busca, setBusca] = useState("");
+  const searchParams = useSearchParams();
+  const [busca, setBusca] = useState(searchParams.get("busca") || "");
   const [filtros, setFiltros] = useState([]);
   const [modal, setModal] = useState(false);
   const router = useRouter();
@@ -13,7 +15,7 @@ export default function FiltroBuscar() {
   useEffect(() => {
     const fetchFiltros = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/produtos");
+        const response = await api.get("/produtos");
 
         setFiltros(response.data);
       } catch (error) {

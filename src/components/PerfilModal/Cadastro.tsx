@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "@/services/api";
+import { toast } from "react-toastify/unstyled";
 
 export default function Cadastro({ setPaginaAtiva }) {
   const [categorias, setCategorias] = useState([]);
@@ -70,11 +71,11 @@ export default function Cadastro({ setPaginaAtiva }) {
       );
     }
 
-    console.log("Produto cadastrado com sucesso!");
-
+    toast.success("Produto cadastrado com sucesso!");
     setPaginaAtiva("MeusProdutos");
 
   } catch (error) {
+    toast.error("Erro ao cadastrar produto!");
     console.log(error);
   }
 };

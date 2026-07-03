@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify/unstyled";
 
 export default function Testando() {
   const params = useParams();
@@ -25,19 +26,19 @@ export default function Testando() {
     ProdutoId();
   }, [params?.id]);
 
+  console.log(produto);
+
   const CompraProduto = async () => {
-    try{
+    try {
       const response = await api.post("/carrinho", {
         produtoId: produto.id,
-        quantidade: 1, 
+        quantidade: 1,
       });
-      console.log("cadastro concluido", response.data);
-      router.push("/Perfil?aba=Carrinho")
-    }catch(error){
-      alert(error.response.data.message);
+      toast.success("Produto adicionado ao carrinho com sucesso!");
+    } catch (error) {
+      toast.error("Erro ao adicionar produto ao carrinho!");
     }
-  }
-
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -55,7 +56,7 @@ export default function Testando() {
           <div className="flex flex-col flex-1 gap-5 justify-around">
             <div className="flex flex-col gap-5">
               <h1 className="font-semibold text-[24px]">{produto.nome}</h1>
-              <p className="font-medium text-[20px]">Categoria: Celular</p>
+              <p className="font-medium text-[20px]">Categoria: {produto.categoria?.nome}</p>
               <p className="text-gray-600">{produto.descricao}</p>
               <p className="text-[32px] font-bold text-blue-500">
                 R$ {produto.preco?.toFixed(2)}
@@ -76,14 +77,31 @@ export default function Testando() {
                 <span className="flex items-center">
                   Quantidade no estoque: {produto.quantidade}
                 </span>
+                <span className="flex items-center">
+                  Telefone de contato: {produto.vendedor?.telefone}
+                </span>
+              </div>
+              <div className="flex items-center gap-3 flex-direction-row">
+                <img
+                  src={`http://localhost:8080/uploads/usuarios/${produto.vendedor?.imagem}`}
+                  alt="Imagem do vendedor"
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <span className="font-medium text-blue-500">{produto.vendedor?.nome}</span>
               </div>
             </div>
 
             <div className="flex flex-col gap-4 max-w-[250px]">
-              <button className="bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition cursor-pointer" onClick={CompraProduto}>
+              <button
+                className="bg-blue-500 text-white py-3 px-4 rounded-lg hover:bg-blue-600 transition cursor-pointer"
+                onClick={CompraProduto}
+              >
                 Comprar agora
               </button>
-              <button className="flex gap-2 bg-gray-200 text-gray-800 py-3 px-4 rounded-lg justify-center hover:bg-gray-300 transition cursor-pointer"  onClick={CompraProduto}>
+              <button
+                className="flex gap-2 bg-gray-200 text-gray-800 py-3 px-4 rounded-lg justify-center hover:bg-gray-300 transition cursor-pointer"
+                onClick={CompraProduto}
+              >
                 Adicionar ao carrinho
                 <ShoppingCart />
               </button>

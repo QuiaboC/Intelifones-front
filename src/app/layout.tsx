@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono,Inter, Poppins } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Poppins } from "next/font/google";
 import "./globals.css";
+import { ToastContainer } from "react-toastify/unstyled";
+import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,11 +34,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${inter.className} $h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${inter.className} $h-full antialiased`}>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          toastStyle={{ background: "#1E293B", color: "#fff" }}
+        />
+      </body>
     </html>
   );
 }

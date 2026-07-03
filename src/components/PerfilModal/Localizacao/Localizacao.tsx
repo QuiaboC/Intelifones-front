@@ -2,7 +2,7 @@ import api from "@/services/api";
 import { MapPin, Plus, SquarePen, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export default function Localizacao({ setPaginaAtiva }) {
+export default function Localizacao({ setPaginaAtiva, setEnderecoId }) {
   const [enderecos, setEnderecos] = useState([]);
   const [buscar, setBuscar] = useState("");
 
@@ -30,6 +30,16 @@ export default function Localizacao({ setPaginaAtiva }) {
     console.error("Erro ao definir endereço principal:", error);
   }
 };
+
+const deletarEndereco = async (id) => {
+  try {
+    await api.delete(`/usuarios/enderecos/${id}`);
+    setEnderecos((prev) => prev.filter((endereco) => endereco.id !== id));
+    console.log("Endereço deletado com sucesso");
+  }catch(error) {
+    console.log(error)
+  }
+}
 
   return (
     <div className="flex flex-col flex-1 bg-gray-100 py-20 px-30 flex-wrap gap-5">
@@ -113,12 +123,18 @@ export default function Localizacao({ setPaginaAtiva }) {
                   </button>
                 )}
 
-                <button className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition cursor-pointer flex justify-center items-center gap-2 text-sm">
+                <button className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition cursor-pointer flex justify-center items-center gap-2 text-sm"
+                  onClick={() => {
+                    setEnderecoId(item.id);
+                    setPaginaAtiva("EditarEndereco");
+                  }}
+                >
                   <SquarePen className="w-4 h-4" />
                   Editar
                 </button>
 
-                <button className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition cursor-pointer flex justify-center items-center gap-2 text-sm">
+                <button className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition cursor-pointer flex justify-center items-center gap-2 text-sm"
+                onClick={() => deletarEndereco(item.id)}>
                   <Trash2 className="w-4 h-4" />
                   Excluir
                 </button>

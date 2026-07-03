@@ -4,33 +4,59 @@ import { ChevronDown, MapPin, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import FiltroBuscar from "./FiltroBuscar";
-import axios from "axios";
 import { useRouter } from "next/navigation";
+import api from "@/services/api";
 
 export default function Header() {
   const [modal, setModal] = useState(false);
   const [categorias, setCategorias] = useState([]);
+  const [endereco, setEndereco] = useState([]);
   const router = useRouter();
   const [logado, setLogado] = useState(false);
-  const [nome, setNome] = useState("")
-
+  const [usuario, setUsuario] = useState(null);
 
   useEffect(() => {
     const categoriaData = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:8080/api/categorias",
-        );
+        const response = await api.get("/categorias");
         setCategorias(response.data);
       } catch (error) {
         console.error("error no response", error);
       }
     };
-    const token = localStorage.getItem("token");
-    setNome(localStorage.getItem("nome") || "");
-    setLogado(!!token);
+
+    const verificarLogin = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setLogado(false);
+        setUsuario(null);
+        return;
+      }
+      try {
+        const response = await api.get("/usuarios/me");
+        setUsuario(response.data);
+        setLogado(true);
+      } catch (error) {
+        console.error("Sessão inválida ou expirada", error);
+        localStorage.removeItem("token");
+        setLogado(false);
+        setUsuario(null);
+      }
+    };
+
+    const Endereco = async () => {
+      try {
+        const res = await api.get("/usuarios/enderecos");
+        setEndereco(res.data);
+      } catch (error) {
+        console.error("Erro ao buscar endereço", error);
+      }
+    };
+    Endereco();
     categoriaData();
+    verificarLogin();
   }, []);
+  console.log("Endereços:", endereco);
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -45,9 +71,14 @@ export default function Header() {
             Intelifones
           </h1>
         </Link>
-        <p className="flex gap-1 items-center text-blue-100 text-[12px]">
+        <p
+          className="flex gap-1 items-center text-blue-100 text-[12px] cursor-pointer"
+          onClick={() => router.push("/Perfil?aba=Localizacao")}
+        >
           <MapPin size={12} />
-          Localização
+          {endereco.length > 0
+            ? `${(endereco.find((e) => e.principal) || endereco[0]).cidade}, ${(endereco.find((e) => e.principal) || endereco[0]).bairro}`
+            : "Localização não definida"}
         </p>
       </div>
       <div className="flex-1 mx-12 ">
@@ -82,9 +113,9 @@ export default function Header() {
               Ofertas
             </span>
           </Link>
-          <Link href="/produtos">
+          <Link href="/Perfil?aba=Compras">
             <span className="text-[15px] text-blue-100 cursor-pointer hover:text-white transition">
-              Cupons
+              Compras
             </span>
           </Link>
 
@@ -108,7 +139,21 @@ export default function Header() {
       <div className="flex gap-3 items-center">
         {logado ? (
           <>
-          <h1 className="text-white">olá, {nome}</h1>
+            <div className="flex gap-2 items-center cursor-pointer" onClick={() => router.push("/Perfil")}>
+              <img
+                src={
+                  usuario?.imagem
+                    ? `http://localhost:8080/uploads/usuarios/${usuario.imagem}`
+                    : "/vetorHome.png"
+                }
+                alt="Imagem do usuário"
+                className="w-10 h-10 rounded-full"
+              />
+              <h1 className="text-white truncate max-w-[120px]">
+                {usuario?.nome}
+              </h1>
+            </div>
+
             <Link href="/Perfil">
               <button className="text-[13px] bg-white px-4 py-2 rounded-lg text-blue-500 font-medium hover:bg-gray-300 transition cursor-pointer">
                 Meu Perfil

@@ -26,12 +26,14 @@ import Vendas from "@/components/PerfilModal/Vendas";
 import Detalhes from "@/components/PerfilModal/Detalhes";
 import Localizacao from "@/components/PerfilModal/Localizacao/Localizacao";
 import CadastroEndereco from "@/components/PerfilModal/Localizacao/CadastrarEndereco";
+import EditarEndereco from "@/components/PerfilModal/Localizacao/EditarEndereco";
 
 export default function Perfil() {
   const [paginaAtiva, setPaginaAtiva] = useState("PerfilUsuario");
   const aba = useSearchParams().get("aba");
   const [ProdutoId, setProdutoId] = useState(null);
   const [PedidoId, setPedidoId] = useState(null);
+  const [enderecoId, setEnderecoId] = useState(null);
   const [role, setRole] = useState("");
   const router = useRouter();
   const [dadosCheckout, setDadosCheckout] = useState({ total: 0, qTotal: 0 });
@@ -101,20 +103,21 @@ export default function Perfil() {
             )}
             <span
               className={`flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 transition text-[15px]
-        ${paginaAtiva === "Informacao" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
-              onClick={() => setPaginaAtiva("Informacao")}
-            >
-              <Info className="w-4 h-4" />
-              Informações
-            </span>
-            <span
-              className={`flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 transition text-[15px]
         ${paginaAtiva === "Vendas" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
               onClick={() => setPaginaAtiva("Vendas")}
             >
               <UserRoundPen className="w-4 h-4" />
               Vendas
             </span>
+            <span
+              className={`flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 transition text-[15px]
+        ${paginaAtiva === "Informacao" ? "border-blue-500 text-blue-500 bg-blue-50" : "border-transparent text-gray-500 hover:border-blue-300 hover:bg-gray-50"}`}
+              onClick={() => setPaginaAtiva("Informacao")}
+            >
+              <Info className="w-4 h-4" />
+              Informações
+            </span>
+
             <span
               onClick={logout}
               className="flex gap-2 items-center py-3 px-4 cursor-pointer w-full border-l-4 border-transparent text-gray-500 hover:border-red-300 hover:text-red-500 hover:bg-red-50 transition text-[15px]"
@@ -145,11 +148,20 @@ export default function Perfil() {
             setProdutoId={setProdutoId}
           />
         )}
+        {paginaAtiva === "EditarEndereco" && (
+          <EditarEndereco
+            setPaginaAtiva={setPaginaAtiva}
+            enderecoId={enderecoId}
+          />
+        )}
         {paginaAtiva === "CadastroEndereco" && (
           <CadastroEndereco setPaginaAtiva={setPaginaAtiva} />
         )}
         {paginaAtiva === "Localizacao" && (
-          <Localizacao setPaginaAtiva={setPaginaAtiva} />
+          <Localizacao
+            setPaginaAtiva={setPaginaAtiva}
+            setEnderecoId={setEnderecoId}
+          />
         )}
         {paginaAtiva === "Informacao" && (
           <Informacao setPaginaAtiva={setPaginaAtiva} />

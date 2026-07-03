@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import HeaderCadastro from "@/components/Header/HeaderCadastro";
 import api from "@/services/api";
+import { toast } from "react-toastify/unstyled";
 
 export default function Comprador() {
   const [form, setForm] = useState({
@@ -51,7 +52,7 @@ export default function Comprador() {
 
   const cadastrarComprador = async () => {
     if (form.senha !== form.confirmarSenha) {
-      alert("As senhas não coincidem");
+      toast.warning("As senhas não coincidem!");
       return;
     }
     try {
@@ -63,9 +64,10 @@ export default function Comprador() {
         senha: form.senha,
         role: form.role,
       });
-      console.log(response.data);
+      toast.success("Cadastro realizado com sucesso!");
       router.push("/");
     } catch (error) {
+      toast.error("Erro ao realizar cadastro!");
       console.log(error);
     }
   };

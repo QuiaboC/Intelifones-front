@@ -44,7 +44,7 @@ export default function Informacao({ setPaginaAtiva }) {
   let { value } = e.target;
 
   if (name === "cpf") {
-    value = value.replace(/\D/g, ""); // Remove tudo que não é número
+    value = value.replace(/\D/g, ""); 
 
     if (value.length <= 11) {
       value = value.replace(

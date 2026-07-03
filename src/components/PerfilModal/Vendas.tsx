@@ -16,7 +16,6 @@ export default function Vendas({ setPaginaAtiva, setPedidoId }) {
       .catch((error) => console.log(error));
   }, []);
 
-  console.log(vendas);
 
   const filtrosFiltrados = buscar
     ? vendas.filter((filtro) =>
@@ -56,7 +55,7 @@ export default function Vendas({ setPaginaAtiva, setPedidoId }) {
         <div className="flex flex-col w-full overflow-hidden">
           {filtrosFiltrados.map((item) => (
             <div
-              key={item.produto.id}
+              key={item.id}
               className="flex flex-col lg:flex-row justify-between gap-5 items-start lg:items-center p-5 border-b border-gray-200 hover:bg-gray-50 transition overflow-hidden"
             >
               <div className="flex gap-5 items-center min-w-0 flex-1">

@@ -28,7 +28,7 @@ export default function Compras({setPaginaAtiva}) {
 
   const filtro = busca
     ? produtoFiltrado.filter((filtro) =>
-        filtro.produto.nome.toLowerCase().includes(busca.toLowerCase()),
+        filtro.pedidos?.produto?.nome?.toLowerCase().includes(busca.toLowerCase()),
       )
     : produtoFiltrado;
 
@@ -40,7 +40,7 @@ export default function Compras({setPaginaAtiva}) {
         categoria === "Todos"
           ? response.data
           : response.data.filter(
-              (item) => item.produto.categoria.nome === categoria.nome,
+              (item) => item.pedidos.produto.categoria.nome === categoria.nome,
             );
 
       setProdutoFiltrado(dados);
@@ -109,44 +109,49 @@ export default function Compras({setPaginaAtiva}) {
           <span className="font-medium text-gray-700">Últimas compras</span>
         </div>
         <div className="flex flex-col w-full">
-          {filtro.map((item) => (
-            <div
-              key={item.id}
-              className="flex flex-col lg:flex-row justify-between gap-5 items-start lg:items-center p-5 border-b border-gray-200 hover:bg-gray-50 transition"
-            >
-              <div className="flex gap-5 items-center">
-                <img
-                  src={`http://localhost:8080/uploads/produtos/${item.produto.imagem}`}
-                  className="w-20 h-20 rounded-xl bg-amber-100 object-cover"
-                />
-                <div className="flex flex-col gap-1">
-                  <span className="font-semibold text-[16px]">
-                    {item.produto.nome}
-                  </span>
-                  <span className="text-blue-500 font-medium">
-                    R$ {item.produto.preco.toFixed(2)}
-                  </span>
-                  <span className="text-gray-500 text-sm">
-                    {item.produto.descricao}
-                  </span>
+          {filtro
+            .filter((item) => item?.produto)
+            .map((item) => {
+              const produto = item.produto;
+              return (
+                <div
+                  key={item.itemId}
+                  className="flex flex-col lg:flex-row justify-between gap-5 items-start lg:items-center p-5 border-b border-gray-200 hover:bg-gray-50 transition"
+                >
+                  <div className="flex gap-5 items-center">
+                    <img
+                      src={`http://localhost:8080/uploads/produtos/${produto.imagem}`}
+                      className="w-20 h-20 rounded-xl bg-amber-100 object-cover"
+                    />
+                    <div className="flex flex-col gap-1">
+                      <span className="font-semibold text-[16px]">
+                        {produto.nome}
+                      </span>
+                      <span className="text-blue-500 font-medium">
+                        R$ {Number(item.precoUnitario ?? 0).toFixed(2)}
+                      </span>
+                      <span className="text-gray-500 text-sm">
+                        Quantidade: {item.quantidade}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-2 w-full lg:w-[200px]">
+                    <a
+                      className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition cursor-pointer text-center text-sm"
+                      href={`/Detalhes/${produto.id}`}
+                    >
+                      Ver compra
+                    </a>
+                    <button
+                      className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition cursor-pointer text-sm"
+                      onClick={() => CompraProduto(produto.id)}
+                    >
+                      Comprar novamente
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <div className="flex flex-col gap-2 w-full lg:w-[200px]">
-                <a
-                  className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition cursor-pointer text-center text-sm"
-                  href={`/Detalhes/${item.produto.id}`}
-                >
-                  Ver compra
-                </a>
-                <button
-                  className="bg-green-500 text-white p-2 rounded-lg hover:bg-green-600 transition cursor-pointer text-sm"
-                  onClick={() => CompraProduto(item.produto.id)}
-                >
-                  Comprar novamente
-                </button>
-              </div>
-            </div>
-          ))}
+              );
+            })}
         </div>
       </div>
     </div>

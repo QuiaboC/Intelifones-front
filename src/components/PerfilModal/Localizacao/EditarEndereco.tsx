@@ -1,9 +1,9 @@
 import api from "@/services/api";
 import { ChevronRight, MapPin, Pencil } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify/unstyled";
 
-export default function CadastrarEndereco({ setPaginaAtiva }) {
+export default function EditarEndereco({ setPaginaAtiva, enderecoId }) {
   const [form, setForm] = useState({
     logradouro: "",
     numero: "",
@@ -14,6 +14,30 @@ export default function CadastrarEndereco({ setPaginaAtiva }) {
     cep: "",
     principal: true,
   });
+  useEffect(() => {
+    api
+      .get("/usuarios/enderecos")
+      .then((res) => {
+        const endereco = res.data.find(
+          (endereco) => endereco.id === enderecoId,
+        );
+
+        if (!endereco) return;
+
+        setForm({
+          logradouro: endereco.logradouro,
+          numero: endereco.numero,
+          complemento: endereco.complemento,
+          bairro: endereco.bairro,
+          cidade: endereco.cidade,
+          uf: endereco.uf,
+          cep: endereco.cep,
+          principal: endereco.principal,
+        });
+      })
+      .catch((error) => console.log(error));
+  }, [enderecoId]);
+
   const handleLimpar = () => {
     setForm({
       logradouro: "",
@@ -47,11 +71,11 @@ export default function CadastrarEndereco({ setPaginaAtiva }) {
     }));
   };
 
-  const cadastrarEndereco = async (e) => {
+  const editarEndereco = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await api.post("/usuarios/enderecos", {
+      const res = await api.put(`/usuarios/enderecos/${enderecoId}`, {
         logradouro: form.logradouro,
         numero: form.numero,
         complemento: form.complemento,
@@ -62,10 +86,10 @@ export default function CadastrarEndereco({ setPaginaAtiva }) {
         principal: form.principal,
       });
 
-      toast.success("Endereço cadastrado com sucesso!");
+      toast.success("Endereço editado com sucesso!");
       setPaginaAtiva("Localizacao");
     } catch (error) {
-      toast.error("Erro ao cadastrar endereço!");
+      toast.error("Erro ao editar endereço!");
     }
   };
   return (
@@ -86,7 +110,7 @@ export default function CadastrarEndereco({ setPaginaAtiva }) {
       </div>
       <form
         className="w-full flex flex-col bg-white rounded-sm overflow-hidden shadow-sm max-w-5xl"
-        onSubmit={cadastrarEndereco}
+        onSubmit={editarEndereco}
       >
         <div className="p-4 border-b border-gray-200">
           <span className="font-semibold text-[17px] flex gap-2">
@@ -97,7 +121,8 @@ export default function CadastrarEndereco({ setPaginaAtiva }) {
           <div className="flex flex-col p-5 gap-5">
             <div className="flex flex-row gap-5">
               <div className="flex flex-col gap-2 flex-1">
-                <label className="text-sm text-gray-500 flex gap-2 items-center font-medium">
+                <label className="text-sm text-gray-500 flex gap-2 items-center">
+                  <Pencil className="text-blue-400 w-4 h-4" />
                   Logadouro
                 </label>
                 <input
@@ -110,7 +135,8 @@ export default function CadastrarEndereco({ setPaginaAtiva }) {
                 />
               </div>
               <div className="flex flex-col gap-2 flex-1">
-                <label className="text-sm text-gray-500 flex gap-2 items-center font-medium">
+                <label className="text-sm text-gray-500 flex gap-2 items-center">
+                  <Pencil className="text-blue-400 w-4 h-4" />
                   numero
                 </label>
                 <input
@@ -125,7 +151,8 @@ export default function CadastrarEndereco({ setPaginaAtiva }) {
             </div>
             <div className="flex flex-row gap-5">
               <div className="flex flex-col gap-2 flex-1">
-                <label className="text-sm text-gray-500 flex gap-2 items-center font-medium">
+                <label className="text-sm text-gray-500 flex gap-2 items-center">
+                  <Pencil className="text-blue-400 w-4 h-4" />
                   Complemento
                 </label>
                 <input
@@ -138,7 +165,8 @@ export default function CadastrarEndereco({ setPaginaAtiva }) {
                 />
               </div>
               <div className="flex flex-col gap-2 flex-1">
-                <label className="text-sm text-gray-500 flex gap-2 items-center font-medium">
+                <label className="text-sm text-gray-500 flex gap-2 items-center">
+                  <Pencil className="text-blue-400 w-4 h-4" />
                   Bairro
                 </label>
                 <input
@@ -153,7 +181,8 @@ export default function CadastrarEndereco({ setPaginaAtiva }) {
             </div>
             <div className="flex flex-row gap-5">
               <div className="flex flex-col gap-2 flex-1">
-                <label className="text-sm text-gray-500 flex gap-2 items-center font-medium">
+                <label className="text-sm text-gray-500 flex gap-2 items-center">
+                  <Pencil className="text-blue-400 w-4 h-4" />
                   Cidade
                 </label>
                 <input
@@ -166,7 +195,8 @@ export default function CadastrarEndereco({ setPaginaAtiva }) {
                 />
               </div>
               <div className="flex flex-col gap-2 flex-1">
-                <label className="text-sm text-gray-500 flex gap-2 items-center font-medium">
+                <label className="text-sm text-gray-500 flex gap-2 items-center">
+                  <Pencil className="text-blue-400 w-4 h-4" />
                   Uf
                 </label>
                 <input
@@ -179,7 +209,8 @@ export default function CadastrarEndereco({ setPaginaAtiva }) {
                 />
               </div>
               <div className="flex flex-col gap-2 flex-1">
-                <label className="text-sm text-gray-500 flex gap-2 items-center font-medium">
+                <label className="text-sm text-gray-500 flex gap-2 items-center">
+                  <Pencil className="text-blue-400 w-4 h-4" />
                   Cep
                 </label>
                 <input
@@ -204,7 +235,7 @@ export default function CadastrarEndereco({ setPaginaAtiva }) {
                 type="submit"
                 className="px-4 py-2 text-sm rounded-lg bg-blue-500 text-white hover:bg-blue-600 transition cursor-pointer"
               >
-                Cadastrar Produto
+                Editar Endereço
               </button>
             </div>
           </div>

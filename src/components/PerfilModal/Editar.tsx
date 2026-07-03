@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "@/services/api";
+import { toast } from "react-toastify/unstyled";
 
 export default function Editar({ setPaginaAtiva, id }) {
   const [categorias, setCategorias] = useState([]);
@@ -72,11 +73,11 @@ export default function Editar({ setPaginaAtiva, id }) {
         await api.post(`/produtos/${produto.id}/imagem`, formData);
       }
 
-      console.log("Produto cadastrado com sucesso!");
+      toast.success("Produto editado com sucesso!");
 
       setPaginaAtiva("MeusProdutos");
     } catch (error) {
-      console.log(error);
+      toast.error("Erro ao editar produto!");
     }
   };
 
