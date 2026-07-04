@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Inter, Poppins } from "next/font/google";
 import "./globals.css";
-import { ToastContainer } from "react-toastify/unstyled";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = Geist({
@@ -39,7 +39,7 @@ export default function RootLayout({
         {children}
         <ToastContainer
           position="top-right"
-          autoClose={3000}
+          autoClose={1200}
           toastStyle={{ background: "#1E293B", color: "#fff" }}
         />
       </body>

@@ -118,7 +118,6 @@ export default function Checkout({ setPaginaAtiva, dados }) {
           </span>
         </div>
         <div className="flex flex-col p-5 gap-5">
-          {/* Endereço */}
           <div className="flex flex-col gap-2">
             <label className="text-sm text-gray-500 font-medium">
               Endereço de entrega
@@ -128,7 +127,7 @@ export default function Checkout({ setPaginaAtiva, dados }) {
               <button
                 type="button"
                 className="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 text-blue-600 text-sm font-medium hover:bg-blue-100 transition cursor-pointer w-full"
-                onClick={() => setPaginaAtiva("CadastrarEndereco")}
+                onClick={() => setPaginaAtiva("CadastroEndereco")}
               >
                 <MapPin className="w-4 h-4 shrink-0" />
                 Nenhum endereço cadastrado. Clique para adicionar.

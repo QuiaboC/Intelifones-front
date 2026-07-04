@@ -7,6 +7,7 @@ import { useState } from "react";
 import api from "@/services/api";
 import { useRouter } from "next/navigation";
 
+
 export default function Home() {
   const router = useRouter();
   const [email, setEmail] = useState("");
@@ -75,6 +76,14 @@ export default function Home() {
             >
               Entrar
             </button>
+            <p className="text-center text-sm text-gray-400">
+              <Link
+                href="/Recuperar"
+                className="text-blue-500 cursor-pointer hover:underline"
+              >
+                Esqueceu sua senha?
+              </Link>
+            </p>
             <p className="text-center text-sm text-gray-400">
               Ainda não possui uma conta?{" "}
               <Link

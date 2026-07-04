@@ -1,7 +1,7 @@
 import api from "@/services/api";
 import { ChevronRight, MapPin, Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify/unstyled";
+import { toast } from "react-toastify";
 
 export default function EditarEndereco({ setPaginaAtiva, enderecoId }) {
   const [form, setForm] = useState({

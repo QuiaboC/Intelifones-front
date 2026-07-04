@@ -11,6 +11,7 @@ export default function Header() {
   const [modal, setModal] = useState(false);
   const [categorias, setCategorias] = useState([]);
   const [endereco, setEndereco] = useState([]);
+  const [carrinho, setCarrinho] = useState([]);
   const router = useRouter();
   const [logado, setLogado] = useState(false);
   const [usuario, setUsuario] = useState(null);
@@ -20,6 +21,15 @@ export default function Header() {
       try {
         const response = await api.get("/categorias");
         setCategorias(response.data);
+      } catch (error) {
+        console.error("error no response", error);
+      }
+    };
+
+    const carrinhoData = async () => {
+      try {
+        const response = await api.get("/carrinho");
+        setCarrinho(response.data);
       } catch (error) {
         console.error("error no response", error);
       }
@@ -55,8 +65,10 @@ export default function Header() {
     Endereco();
     categoriaData();
     verificarLogin();
+    carrinhoData();
   }, []);
-  console.log("Endereços:", endereco);
+
+  const totalItens = carrinho.reduce((soma, item) => soma + (item.quantidade || 1), 0);
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -139,7 +151,10 @@ export default function Header() {
       <div className="flex gap-3 items-center">
         {logado ? (
           <>
-            <div className="flex gap-2 items-center cursor-pointer" onClick={() => router.push("/Perfil")}>
+            <div
+              className="flex gap-2 items-center cursor-pointer"
+              onClick={() => router.push("/Perfil")}
+            >
               <img
                 src={
                   usuario?.imagem
@@ -147,7 +162,7 @@ export default function Header() {
                     : "/vetorHome.png"
                 }
                 alt="Imagem do usuário"
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full object-cover border"
               />
               <h1 className="text-white truncate max-w-[120px]">
                 {usuario?.nome}
@@ -167,7 +182,14 @@ export default function Header() {
               Sair
             </button>
             <Link href="/Perfil?aba=Carrinho">
-              <ShoppingCart className="text-white cursor-pointer hover:text-gray-300 transition" />
+              <div className="relative">
+                <ShoppingCart className="text-white cursor-pointer hover:text-gray-300 transition" />
+                {totalItens > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                    {totalItens}
+                  </span>
+                )}
+              </div>
             </Link>
           </>
         ) : (

@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify/unstyled";
+import { toast } from "react-toastify";
 
 export default function Testando() {
   const params = useParams();

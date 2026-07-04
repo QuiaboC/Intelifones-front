@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import api from "@/services/api";
-import { toast } from "react-toastify/unstyled";
+import { toast } from "react-toastify";
 
 export default function Cadastro({ setPaginaAtiva }) {
   const [categorias, setCategorias] = useState([]);

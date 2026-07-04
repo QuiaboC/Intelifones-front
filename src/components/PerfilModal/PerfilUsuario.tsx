@@ -4,8 +4,12 @@ import {
   LockKeyhole,
   MapPin,
   MessageSquare,
+  Package,
   Pencil,
   Shield,
+  ShoppingBag,
+  ShoppingCart,
+  Store,
   UserRoundPen,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -60,7 +64,7 @@ export default function PerfilUsuario({ setPaginaAtiva }) {
                   src={
                     usuario?.imagem
                       ? `http://localhost:8080/uploads/usuarios/${usuario.imagem}`
-                      : "/vetor.png"
+                      : "/vetorHome.png"
                   }
                   className="w-20 h-20 rounded-full object-cover border"
                 />
@@ -105,11 +109,11 @@ export default function PerfilUsuario({ setPaginaAtiva }) {
             <p className="text-gray-500 text-sm">Dados pessoais e da conta</p>
           </div>
 
-          <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
-            <Shield className="w-6 h-6 text-blue-500" />
-            <h1 className="font-semibold text-[15px]">Segurança</h1>
+          <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2" onClick={(e) => setPaginaAtiva("Compras")}>
+            <ShoppingBag className="w-6 h-6 text-blue-500" />
+            <h1 className="font-semibold text-[15px]">Compras</h1>
             <p className="text-gray-500 text-sm">
-              Você configurou a segurança da sua conta
+              Gerencie suas compras e pedidos
             </p>
           </div>
 
@@ -122,27 +126,31 @@ export default function PerfilUsuario({ setPaginaAtiva }) {
               Gerencie onde você pode ser encontrado
             </p>
           </div>
-          <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
-            <LockKeyhole className="w-6 h-6 text-blue-500" />
-            <h1 className="font-semibold text-[15px]">Privacidade</h1>
+          <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2" onClick={(e) => setPaginaAtiva("Carrinho")}>
+            <ShoppingCart className="w-6 h-6 text-blue-500" />
+            <h1 className="font-semibold text-[15px]">Carrinho</h1>
             <p className="text-gray-500 text-sm">
-              Gerencie suas preferências de privacidade
+              Gerencie seu carrinho de compras
             </p>
           </div>
-          <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
-            <CreditCard className="w-6 h-6 text-blue-500" />
-            <h1 className="font-semibold text-[15px]">Cartões</h1>
-            <p className="text-gray-500 text-sm">
-              Gerencie seus cartões de pagamento
-            </p>
-          </div>
-          <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2">
-            <MessageSquare className="w-6 h-6 text-blue-500" />
-            <h1 className="font-semibold text-[15px]">Comunicação</h1>
-            <p className="text-gray-500 text-sm">
-              Gerencie suas preferências de comunicação
-            </p>
-          </div>
+          {usuario?.role === "VENDEDOR" && (
+            <>
+              <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2" onClick={(e) => setPaginaAtiva("Vendas")}>
+                <Store className="w-6 h-6 text-blue-500" />
+                <h1 className="font-semibold text-[15px]">Minhas vendas</h1>
+                <p className="text-gray-500 text-sm">
+                  Gerencie suas vendas e transações
+                </p>
+              </div>
+              <div className="w-[350px] bg-white p-6 rounded-sm hover:bg-gray-100 hover:shadow-md transition cursor-pointer flex flex-col gap-2" onClick={(e) => setPaginaAtiva("MeusProdutos")}>
+                <Package className="w-6 h-6 text-blue-500" />
+                <h1 className="font-semibold text-[15px]">Meus Produtos</h1>
+                <p className="text-gray-500 text-sm">
+                  Gerencie seus produtos e inventário
+                </p>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

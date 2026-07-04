@@ -1,4 +1,3 @@
-import axios from "axios";
 import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
 

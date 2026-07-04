@@ -6,7 +6,7 @@ import { useState } from "react";
 import api from "@/services/api";
 import { useRouter } from "next/navigation";
 import HeaderCadastro from "@/components/Header/HeaderCadastro";
-import { toast } from "react-toastify/unstyled";
+import { toast } from "react-toastify";
 
 export default function Vendedor() {
   const [form, setForm] = useState({
